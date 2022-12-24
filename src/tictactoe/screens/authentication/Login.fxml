@@ -59,17 +59,17 @@
          <children>
             <FlowPane fx:id="ticTextFlowPane" layoutX="766.0" prefHeight="70.0" prefWidth="485.0">
                <children>
-                  <Text fx:id="ticText" fill="#33bbbb" layoutX="766.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic" x="766.0" y="50.0">
+                  <Text fx:id="ticText" fill="#33bbbb" layoutX="766.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);" text="Tic" x="766.0" y="50.0">
                      <font>
                         <Font name="Comic Sans MS Bold" size="96.0" />
                      </font>
                   </Text>
-                  <Text fx:id="tacText" fill="#fccf28" strokeType="OUTSIDE" strokeWidth="0.0" text="Tac">
+                  <Text fx:id="tacText" fill="#fccf28" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);" text="Tac">
                      <font>
                         <Font name="Comic Sans MS Bold" size="96.0" />
                      </font>
                   </Text>
-                  <Text fx:id="toeText" fill="#33bbbb" strokeType="OUTSIDE" strokeWidth="0.0" text="Toe">
+                  <Text fx:id="toeText" fill="#33bbbb" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);" text="Toe">
                      <font>
                         <Font name="Comic Sans MS Bold" size="96.0" />
                      </font>
