@@ -103,7 +103,7 @@ public class LocalBase extends BorderPane {
         personImage.setLayoutY(59.0);
         personImage.setPickOnBounds(true);
         personImage.setPreserveRatio(true);
-        personImage.setImage(new Image(getClass().getResource("../../../../../icons8-person-80.png").toExternalForm()));
+        personImage.setImage(new Image(getClass().getResource("/assets/images/username.png").toExternalForm()));
 
         secondPlayerTextField.setLayoutX(161.0);
         secondPlayerTextField.setLayoutY(155.0);
@@ -120,7 +120,7 @@ public class LocalBase extends BorderPane {
         personImage1.setLayoutY(164.0);
         personImage1.setPickOnBounds(true);
         personImage1.setPreserveRatio(true);
-        personImage1.setImage(new Image(getClass().getResource("../../../../../icons8-person-80.png").toExternalForm()));
+        personImage1.setImage(new Image(getClass().getResource("/assets/images/username.png").toExternalForm()));
         FlowPane.setMargin(fieldsFlowPane, new Insets(0.0, 0.0, 0.0, 300.0));
 
         startButton.setId("styles");
@@ -146,7 +146,7 @@ public class LocalBase extends BorderPane {
         logoImageView.setFitWidth(50.0);
         logoImageView.setPickOnBounds(true);
         logoImageView.setPreserveRatio(true);
-        logoImageView.setImage(new Image(getClass().getResource("../../../../../2022-12-22__17_-removebg-preview.png").toExternalForm()));
+        logoImageView.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
         FlowPane.setMargin(logoImageView, new Insets(10.0, 0.0, 0.0, 10.0));
 
         topTextFlowPane.setAlignment(javafx.geometry.Pos.CENTER);
