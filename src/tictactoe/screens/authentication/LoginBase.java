@@ -79,7 +79,7 @@ public class LoginBase extends BorderPane {
         logoImageView.setFitWidth(50.0);
         logoImageView.setPickOnBounds(true);
         logoImageView.setPreserveRatio(true);
-        logoImageView.setImage(new Image(getClass().getResource("../../../../../2022-12-22__17_-removebg-preview.png").toExternalForm()));
+        logoImageView.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
         FlowPane.setMargin(logoImageView, new Insets(10.0, 0.0, 0.0, 10.0));
 
         topTextFlowPane.setAlignment(javafx.geometry.Pos.CENTER);
@@ -166,7 +166,7 @@ public class LoginBase extends BorderPane {
         personImage.setLayoutY(59.0);
         personImage.setPickOnBounds(true);
         personImage.setPreserveRatio(true);
-        personImage.setImage(new Image(getClass().getResource("../../../../../icons8-person-80.png").toExternalForm()));
+        personImage.setImage(new Image(getClass().getResource("/assets/images/username.png").toExternalForm()));
 
         passwordField.setLayoutX(164.0);
         passwordField.setLayoutY(154.0);
@@ -183,7 +183,7 @@ public class LoginBase extends BorderPane {
         imageView.setLayoutY(163.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("../../../../../password.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("/assets/images/password.png").toExternalForm()));
         FlowPane.setMargin(fieldsFlowPane, new Insets(0.0, 0.0, 0.0, 300.0));
 
         loginButton.setId("styles");
