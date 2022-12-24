@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(#ffffff,#E5EDEE);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="97.0" prefWidth="1280.0">
+         <children>
+            <ImageView fx:id="logoImage" fitHeight="68.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@//F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets right="35.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#fccf28" strokeType="OUTSIDE" strokeWidth="0.0" text="Tac">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Toe">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets right="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox layoutX="400.0" layoutY="156.0" prefHeight="137.0" prefWidth="500.0">
+         <children>
+            <Text fx:id="ticText" fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="96.0" />
+               </font>
+            </Text>
+            <Text fx:id="tacText" fill="#facc28" strokeType="OUTSIDE" strokeWidth="0.0" text="Tac">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="96.0" />
+               </font>
+            </Text>
+            <Text fx:id="toeText" fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Toe">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="96.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="310.0" prefHeight="500.0" prefWidth="1280.0">
+         <children>
+            <Button fx:id="singleModeButton" mnemonicParsing="false" prefHeight="302.0" prefWidth="414.0" style="-fx-background-color: #fccf28; -fx-opacity: 0.7; -fx-background-radius: 42px;">
+               <HBox.margin>
+                  <Insets left="150.0" right="150.0" top="100.0" />
+               </HBox.margin>
+               <graphic>
+                  <VBox prefHeight="302.0" prefWidth="414.0">
+                     <children>
+                        <ImageView fitHeight="140.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@//F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/local.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="130.0" top="44.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Local">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="65.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="121.0" top="12.0" />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                  </VBox>
+               </graphic>
+            </Button>
+            <Button fx:id="dualModeButton" mnemonicParsing="false" prefHeight="302.0" prefWidth="414.0" style="-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;;">
+               <HBox.margin>
+                  <Insets right="150.0" top="100.0" />
+               </HBox.margin>
+               <graphic>
+                  <VBox prefHeight="200.0" prefWidth="414.0">
+                     <children>
+                        <ImageView fitHeight="134.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@//F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/online.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="130.0" top="40.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Online">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="65.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="110.0" top="22.0" />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                  </VBox>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
