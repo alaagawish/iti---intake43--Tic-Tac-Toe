@@ -1,8 +1,10 @@
 package tictactoe.screens.splash;
 
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -19,7 +21,7 @@ public class SplashBase extends AnchorPane {
         setId("AnchorPane");
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
-        setStyle("-fx-background-color: linear-gradient(to bottom, #1E595C, #3BB2B8);;");
+        setStyle("-fx-background-color: linear-gradient(to bottom, #1E595C, #3BB2B8);");
 
         logoImage.setFitHeight(410.0);
         logoImage.setFitWidth(390.0);
@@ -27,7 +29,7 @@ public class SplashBase extends AnchorPane {
         logoImage.setLayoutY(108.0);
         logoImage.setPickOnBounds(true);
         logoImage.setPreserveRatio(true);
-        logoImage.setImage(new Image(getClass().getResource("//F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/logo.png").toExternalForm()));
+        logoImage.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
 
         ticTacToeText.setFill(javafx.scene.paint.Color.valueOf("#ffdf59"));
         ticTacToeText.setLayoutX(297.0);
@@ -38,6 +40,14 @@ public class SplashBase extends AnchorPane {
         ticTacToeText.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         ticTacToeText.setWrappingWidth(724.13671875);
         ticTacToeText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(-10.0);
+        dropShadow.setOffsetY(10.0);
+        dropShadow.setColor(Color.color(0,0,0,.16));  
+        
+        ticTacToeText.setEffect(dropShadow);
 
         getChildren().add(logoImage);
         getChildren().add(ticTacToeText);
