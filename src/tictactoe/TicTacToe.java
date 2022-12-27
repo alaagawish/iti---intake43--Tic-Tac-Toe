@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import tictactoe.screens.dualmode.OnlineListBase;
 
 /**
@@ -20,12 +21,12 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = new OnlineListBase();
+
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
-//        stage.setWidth(1280);
-//        stage.setHeight(800);
+
         stage.show();
     }
 
