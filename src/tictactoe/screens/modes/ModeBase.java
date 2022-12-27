@@ -103,18 +103,24 @@ public class ModeBase extends AnchorPane {
         ticText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         ticText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         ticText.setStrokeWidth(0.0);
+        ticText.setStrokeWidth(1);
+        ticText.setStroke(Color.BLACK);
         ticText.setText("Tic");
         ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
         tacText.setFill(javafx.scene.paint.Color.valueOf("#facc28"));
         tacText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         tacText.setStrokeWidth(0.0);
+        tacText.setStrokeWidth(1);
+        tacText.setStroke(Color.BLACK);
         tacText.setText("Tac");
         tacText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
         toeText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         toeText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         toeText.setStrokeWidth(0.0);
+        toeText.setStrokeWidth(1);
+        toeText.setStroke(Color.BLACK);
         toeText.setText("Toe");
         toeText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
@@ -149,6 +155,8 @@ public class ModeBase extends AnchorPane {
         text2.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text2.setStrokeWidth(0.0);
         text2.setText("Single Mode");
+        text2.setStrokeWidth(1);
+        text2.setStroke(Color.BLACK);
         text2.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(text2, new Insets(21.0, 0.0, 0.0, 80.0));
         singleModeButton.setGraphic(vBox0);
@@ -174,6 +182,8 @@ public class ModeBase extends AnchorPane {
         text3.setFill(javafx.scene.paint.Color.WHITE);
         text3.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text3.setStrokeWidth(0.0);
+        text3.setStrokeWidth(1);
+        text3.setStroke(Color.BLACK);
         text3.setText("Dual Mode");
         text3.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(text3, new Insets(22.0, 0.0, 0.0, 103.0));
