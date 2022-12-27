@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tictactoe.screens.modes.ModeBase;
+import tictactoe.screens.dualmode.DualModeBase;
 
 /**
  *
@@ -20,13 +20,12 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = new ModeBase();
+        Parent root = new DualModeBase();
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
-//        stage.setWidth(1280);
-//        stage.setHeight(800);
+
         stage.show();
     }
 
