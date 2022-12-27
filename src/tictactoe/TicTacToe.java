@@ -5,14 +5,14 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tictactoe.screens.dualmode.OnlineListBase;
-import tictactoe.screens.splash.SplashBase;
+import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.game.GameBase;
 
 public class TicTacToe extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = new SplashBase();
+        Parent root = new DualModeBase();
 
         Scene scene = new Scene(root);
 
