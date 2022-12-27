@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tictactoe.screens.authentication.SignUpBase;
 
 import tictactoe.screens.authentication.LoginBase;
 
@@ -17,10 +18,7 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-
-        Parent root = new LoginBase();
-
-        
+        Parent root = new SignUpBase();
 
         
         Scene scene = new Scene(root);
