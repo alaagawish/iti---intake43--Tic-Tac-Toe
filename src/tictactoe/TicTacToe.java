@@ -13,20 +13,26 @@ import tictactoe.screens.profile.ProfileBase;
 
 
 
+
+import tictactoe.screens.dualmode.OnlineListBase;
+
+/**
+ *
+ * @author moazk
+ */
+
 public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
 
-
-        Parent root = new GameBase();
+        Parent root = new OnlineListBase();
 
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
-//        stage.setWidth(1280);
-//        stage.setHeight(800);
+
         stage.show();
     }
 

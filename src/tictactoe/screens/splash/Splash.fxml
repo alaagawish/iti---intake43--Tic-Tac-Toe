@@ -17,10 +17,10 @@
       </ImageView>
 
       <Text fx:id="ticTacToeText" fill="#ffdf59" layoutX="297.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TicTacToe" textAlignment="CENTER" wrappingWidth="724.13671875">
+
          <font>
             <Font name="Comic Sans MS Bold" size="96.0" />
          </font>
       </Text>
    </children>
-
 </AnchorPane>
