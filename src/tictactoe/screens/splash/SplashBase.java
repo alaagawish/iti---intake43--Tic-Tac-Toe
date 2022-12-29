@@ -1,5 +1,9 @@
 package tictactoe.screens.splash;
 
+
+import javafx.animation.FadeTransition;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,13 +11,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import tictactoe.screens.modes.ModeBase;
 
 public class SplashBase extends AnchorPane {
 
     protected final ImageView logoImage;
     protected final Text ticTacToeText;
 
-    public SplashBase() {
+    public SplashBase(Stage stage) {
 
         logoImage = new ImageView();
         ticTacToeText = new Text();
@@ -51,6 +58,24 @@ public class SplashBase extends AnchorPane {
 
         getChildren().add(logoImage);
         getChildren().add(ticTacToeText);
+        
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), this);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.setCycleCount(1);
+        
+        fadeIn.play();
+        
+        try{
+            fadeIn.setOnFinished((e) -> {
+            Parent pane = new ModeBase();
+            Scene scene = new Scene( pane );
+            stage.setScene(scene);
+        });
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+ 
 
     }
 }
