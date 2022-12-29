@@ -5,14 +5,17 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tictactoe.screens.dualmode.DualModeBase;
-import tictactoe.screens.game.GameBase;
+
+import tictactoe.screens.modes.ModeBase;
+
 
 public class TicTacToe extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = new DualModeBase();
+
+        Parent root = new ModeBase();
+        
 
         Scene scene = new Scene(root);
 
