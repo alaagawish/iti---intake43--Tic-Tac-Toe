@@ -2,12 +2,10 @@ package tictactoe.screens.singlemode;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -16,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import tictactoe.screens.authentication.LoginBase;
 import tictactoe.screens.game.GameBase;
 
 public class LevelsBase extends BorderPane {
@@ -330,31 +327,36 @@ public class LevelsBase extends BorderPane {
         buttonsFlowPane.getChildren().add(hardButton);
         flowPane0.getChildren().add(buttonsFlowPane);
 
-        
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         easyButton.setEffect(dropShadow);
         mediumButton.setEffect(dropShadow);
         hardButton.setEffect(dropShadow);
-        
+
         easyButton.setOnAction((event) -> {
-            Parent pane = new GameBase();
-           stage.getScene().setRoot(pane);
-        });
-        
-        mediumButton.setOnAction((event) -> {
-            Parent pane = new GameBase();
+
+            Parent pane = new GameBase(stage);
             stage.getScene().setRoot(pane);
+
         });
-        
+
+        mediumButton.setOnAction((event) -> {
+
+            Parent pane = new GameBase(stage);
+            stage.getScene().setRoot(pane);
+
+        });
+
         hardButton.setOnAction((event) -> {
-            Parent pane = new GameBase();
-             stage.getScene().setRoot(pane);
+
+            Parent pane = new GameBase(stage);
+            stage.getScene().setRoot(pane);
+
         });
-        
+
     }
 }

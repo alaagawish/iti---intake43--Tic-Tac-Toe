@@ -2,7 +2,6 @@ package tictactoe.screens.dualmode;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -192,10 +191,11 @@ public class LocalBase extends BorderPane {
         topTextFlowPane.getChildren().add(tacTopText);
         topTextFlowPane.getChildren().add(toeTopText);
         topFlowPane.getChildren().add(topTextFlowPane);
-        
+
         startButton.setOnAction((event) -> {
-            Parent pane = new GameBase();
-             stage.getScene().setRoot(pane);
+            Parent pane = new GameBase(stage);
+            stage.getScene().setRoot(pane);
+
         });
 
     }

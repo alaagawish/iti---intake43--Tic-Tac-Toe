@@ -32,7 +32,7 @@ public class GameBase extends AnchorPane {
     protected final Text secondPlayerNameText;
     protected final Text secondPlayerSignText;
 
-    public GameBase() {
+    public GameBase(Stage stage) {
 
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();

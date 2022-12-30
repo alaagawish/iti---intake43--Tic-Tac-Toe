@@ -142,13 +142,13 @@ public class ModeBase extends AnchorPane {
         singleModeButton.setPrefWidth(414.0);
         singleModeButton.setStyle("-fx-background-color: #fccf28; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(singleModeButton, new Insets(100.0, 150.0, 0.0, 150.0));
-        
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         singleModeButton.setEffect(dropShadow);
 
         vBox0.setPrefHeight(302.0);
@@ -175,7 +175,7 @@ public class ModeBase extends AnchorPane {
         dualModeButton.setPrefWidth(414.0);
         dualModeButton.setStyle("-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(dualModeButton, new Insets(100.0, 150.0, 0.0, 0.0));
-        
+
         dualModeButton.setEffect(dropShadow);
 
         vBox1.setPrefHeight(200.0);
@@ -215,17 +215,19 @@ public class ModeBase extends AnchorPane {
         vBox1.getChildren().add(text3);
         hBox1.getChildren().add(dualModeButton);
         getChildren().add(hBox1);
-        
+
         singleModeButton.setOnAction((ActionEvent event) -> {
             Parent pane = new LevelsBase(stage);
-             stage.getScene().setRoot(pane);
+
+            stage.getScene().setRoot(pane);
+
         });
-        
+
         dualModeButton.setOnAction((ActionEvent event) -> {
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
-        });
 
+        });
 
     }
 }

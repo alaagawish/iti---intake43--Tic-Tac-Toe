@@ -2,7 +2,6 @@ package tictactoe.screens.splash;
 
 import javafx.animation.FadeTransition;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -69,8 +68,8 @@ public class SplashBase extends AnchorPane {
         try {
             fadeIn.setOnFinished((e) -> {
                 Parent pane = new ModeBase(stage);
-                Scene scene = new Scene(pane);
-                stage.setScene(scene);
+                stage.getScene().setRoot(pane);
+
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());

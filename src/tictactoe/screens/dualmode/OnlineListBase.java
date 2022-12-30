@@ -1,14 +1,10 @@
 package tictactoe.screens.dualmode;
 
 import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -23,10 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import tictactoe.screens.game.GameBase;
 import tictactoe.screens.profile.ProfileBase;
 import tictactoe.utils.Dialogs;
 
@@ -260,8 +254,8 @@ public class OnlineListBase extends ScrollPane {
 
         profileCircle.setOnMouseClicked((event) -> {
             Parent pane = new ProfileBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
 
     }
