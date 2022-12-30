@@ -2,6 +2,7 @@ package tictactoe.screens.singlemode;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -15,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tictactoe.screens.game.GameBase;
+
 
 public class LevelsBase extends BorderPane {
 
@@ -48,8 +50,9 @@ public class LevelsBase extends BorderPane {
     protected final ImageView secondStarHardImageView;
     protected final ImageView thirdStarHardImageView;
     protected final Text hardText;
-
+ 
     public LevelsBase(Stage stage) {
+
 
         vBox = new VBox();
         logoImageView = new ImageView();
@@ -331,6 +334,7 @@ public class LevelsBase extends BorderPane {
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
+
         dropShadow.setColor(Color.color(0, 0, 0, .16));
 
         easyButton.setEffect(dropShadow);
@@ -351,5 +355,8 @@ public class LevelsBase extends BorderPane {
             Parent pane = new GameBase(stage);
             stage.getScene().setRoot(pane);
         });
+
+        
+
     }
 }

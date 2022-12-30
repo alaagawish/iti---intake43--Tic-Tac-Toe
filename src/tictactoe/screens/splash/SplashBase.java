@@ -1,5 +1,6 @@
 package tictactoe.screens.splash;
 
+
 import javafx.animation.FadeTransition;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
@@ -57,6 +58,7 @@ public class SplashBase extends AnchorPane {
         getChildren().add(logoImage);
         getChildren().add(ticTacToeText);
 
+
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), this);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
@@ -72,6 +74,7 @@ public class SplashBase extends AnchorPane {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
 
     }
 }
