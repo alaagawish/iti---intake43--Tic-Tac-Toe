@@ -3,13 +3,14 @@ package tictactoe.screens.dualmode;
 import com.jfoenix.controls.JFXDialog;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -19,9 +20,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
-
 import javafx.stage.Stage;
-
+import tictactoe.screens.profile.ProfileBase;
 import tictactoe.utils.Dialogs;
 
 public class OnlineListBase extends ScrollPane {
@@ -44,16 +44,17 @@ public class OnlineListBase extends ScrollPane {
     protected final HBox hBox0;
     protected final Label label0;
     protected final Button inviteButton3;
+    protected final ImageView backImageView;
     protected final DropShadow dropShadow1;
 
     public OnlineListBase(Stage stage) {
-
 
         listBorderPane = new BorderPane();
         borderPane = new BorderPane();
         profileCircle = new Circle();
         listVBox = new VBox();
         savedGamesLabel = new Label();
+        backImageView = new ImageView();
         gameHBox = new HBox();
         playerName = new Label();
         inviteButton = new Button();
@@ -88,7 +89,7 @@ public class OnlineListBase extends ScrollPane {
 
         profileCircle.setFill(javafx.scene.paint.Color.valueOf("#ffffff00"));
         profileCircle.setId("profileCircle");
-        profileCircle.setRadius(100.0);
+        profileCircle.setRadius(80.0);
         profileCircle.setStroke(javafx.scene.paint.Color.BLACK);
         profileCircle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         BorderPane.setMargin(profileCircle, new Insets(30.0, 60.0, 0.0, 0.0));
@@ -137,6 +138,14 @@ public class OnlineListBase extends ScrollPane {
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(listBorderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
+
+        backImageView.setFitHeight(106.0);
+        backImageView.setFitWidth(120.0);
+        backImageView.setPickOnBounds(true);
+        backImageView.setPreserveRatio(true);
+        backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
+        BorderPane.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
+        borderPane.setLeft(backImageView);
 
         JFXDialog dialog = Dialogs.createBlurRequestingDialog("Waiting Arwa To Accept the invitation ...", stackpane);
 
@@ -238,7 +247,6 @@ public class OnlineListBase extends ScrollPane {
         BorderPane.setMargin(listVBox, new Insets(0.0, 0.0, 0.0, 60.0));
         listBorderPane.setCenter(listVBox);
         setContent(stackpane);
-        //setContent(listBorderPane);
 
         listVBox.getChildren().add(savedGamesLabel);
         gameHBox.getChildren().add(playerName);
@@ -253,17 +261,17 @@ public class OnlineListBase extends ScrollPane {
         hBox0.getChildren().add(inviteButton3);
         listVBox.getChildren().add(hBox0);
 
+        profileCircle.setOnMouseClicked(e -> {
+            Parent root = new ProfileBase(stage);
+            stage.getScene().setRoot(root);
+        });
+
+        backImageView.setOnMousePressed(e -> {
+            Parent pane = new DualModeBase(stage);
+            stage.getScene().setRoot(pane);
+
+        });
 
     }
 
-    void showDialog(String text) {
-        Dialog<String> dialog = new Dialog();
-
-        dialog.setTitle("Dialog");
-        dialog.setContentText(text);
-
-        //ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-        //dialog.getDialogPane().getButtonTypes().add(type);
-        dialog.showAndWait();
-    }
 }
