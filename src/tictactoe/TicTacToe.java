@@ -1,12 +1,10 @@
 package tictactoe;
 
-import com.sun.javafx.applet.Splash;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import tictactoe.screens.modes.ModeBase;
 import tictactoe.screens.splash.SplashBase;
 
 

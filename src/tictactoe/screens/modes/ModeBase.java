@@ -1,6 +1,11 @@
 package tictactoe.screens.modes;
 
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -11,6 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.singlemode.LevelsBase;
 
 public class ModeBase extends AnchorPane {
 
@@ -34,7 +43,7 @@ public class ModeBase extends AnchorPane {
     protected final ImageView imageView0;
     protected final Text text3;
 
-    public ModeBase() {
+    public ModeBase(Stage stage) {
 
         vBox = new VBox();
         logoImage = new ImageView();
@@ -206,6 +215,19 @@ public class ModeBase extends AnchorPane {
         vBox1.getChildren().add(text3);
         hBox1.getChildren().add(dualModeButton);
         getChildren().add(hBox1);
+        
+        singleModeButton.setOnAction((ActionEvent event) -> {
+            Parent pane = new LevelsBase(stage);
+            Scene scene = new Scene( pane );
+            stage.setScene(scene);
+        });
+        
+        dualModeButton.setOnAction((ActionEvent event) -> {
+            Parent pane = new DualModeBase(stage);
+            Scene scene = new Scene( pane );
+            stage.setScene(scene);
+        });
 
+       
     }
 }

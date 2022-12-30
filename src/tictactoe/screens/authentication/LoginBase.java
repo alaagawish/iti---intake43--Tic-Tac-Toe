@@ -1,17 +1,26 @@
 package tictactoe.screens.authentication;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import tictactoe.screens.dualmode.LocalBase;
+import tictactoe.screens.dualmode.OnlineListBase;
+import tictactoe.screens.game.GameBase;
 
 public class LoginBase extends BorderPane {
 
@@ -37,7 +46,7 @@ public class LoginBase extends BorderPane {
     protected final Text haveAccountText;
     protected final Text signUpText;
 
-    public LoginBase() {
+    public LoginBase(Stage stage) {
 
         topFlowPane = new FlowPane();
         logoImageView = new ImageView();
@@ -236,6 +245,24 @@ public class LoginBase extends BorderPane {
         hBox.getChildren().add(haveAccountText);
         hBox.getChildren().add(signUpText);
         centerFlowPane.getChildren().add(hBox);
+        
+        signUpText.setOnMouseClicked((MouseEvent event) -> {
+            Parent pane = new SignUpBase(stage);
+            Scene scene1 = new Scene(pane);
+            stage.setScene(scene1);
+        });
+        
+         loginButton.setOnAction((ActionEvent event) -> {
+            Parent pane = new OnlineListBase(stage);
+            Scene scene1 = new Scene(pane);
+            stage.setScene(scene1);
+        });
+        
+        
+        
+    }
+            
+        
 
     }
-}
+

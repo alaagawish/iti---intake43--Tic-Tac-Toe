@@ -8,6 +8,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class GameBase extends AnchorPane {
 
@@ -31,7 +32,7 @@ public class GameBase extends AnchorPane {
     protected final Text secondPlayerNameText;
     protected final Text secondPlayerSignText;
 
-    public GameBase() {
+    public GameBase(Stage stage) {
 
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
