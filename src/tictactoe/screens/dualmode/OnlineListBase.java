@@ -19,6 +19,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+
+import javafx.stage.Stage;
+
 import tictactoe.utils.Dialogs;
 
 public class OnlineListBase extends ScrollPane {
@@ -43,7 +46,8 @@ public class OnlineListBase extends ScrollPane {
     protected final Button inviteButton3;
     protected final DropShadow dropShadow1;
 
-    public OnlineListBase() {
+    public OnlineListBase(Stage stage) {
+
 
         listBorderPane = new BorderPane();
         borderPane = new BorderPane();
@@ -248,6 +252,7 @@ public class OnlineListBase extends ScrollPane {
         hBox0.getChildren().add(label0);
         hBox0.getChildren().add(inviteButton3);
         listVBox.getChildren().add(hBox0);
+
 
     }
 

@@ -1,6 +1,8 @@
 package tictactoe.screens.singlemode;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -12,6 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import tictactoe.screens.game.GameBase;
+
 
 public class LevelsBase extends BorderPane {
 
@@ -45,8 +50,9 @@ public class LevelsBase extends BorderPane {
     protected final ImageView secondStarHardImageView;
     protected final ImageView thirdStarHardImageView;
     protected final Text hardText;
+ 
+    public LevelsBase(Stage stage) {
 
-    public LevelsBase() {
 
         vBox = new VBox();
         logoImageView = new ImageView();
@@ -324,16 +330,33 @@ public class LevelsBase extends BorderPane {
         buttonsFlowPane.getChildren().add(hardButton);
         flowPane0.getChildren().add(buttonsFlowPane);
 
-        
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         easyButton.setEffect(dropShadow);
         mediumButton.setEffect(dropShadow);
         hardButton.setEffect(dropShadow);
+
+        easyButton.setOnAction(e -> {
+            Parent pane = new GameBase(stage);
+            stage.getScene().setRoot(pane);
+        });
+
+        mediumButton.setOnAction(e -> {
+            Parent pane = new GameBase(stage);
+            stage.getScene().setRoot(pane);
+        });
+
+        hardButton.setOnAction(e -> {
+            Parent pane = new GameBase(stage);
+            stage.getScene().setRoot(pane);
+        });
+
         
+
     }
 }

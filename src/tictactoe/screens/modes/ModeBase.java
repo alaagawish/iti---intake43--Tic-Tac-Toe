@@ -1,6 +1,8 @@
 package tictactoe.screens.modes;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -11,6 +13,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import javafx.stage.Stage;
+import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.game.GameBase;
+import tictactoe.screens.singlemode.LevelsBase;
 
 public class ModeBase extends AnchorPane {
 
@@ -34,7 +41,8 @@ public class ModeBase extends AnchorPane {
     protected final ImageView imageView0;
     protected final Text text3;
 
-    public ModeBase() {
+    public ModeBase(Stage stage) {
+
 
         vBox = new VBox();
         logoImage = new ImageView();
@@ -206,6 +214,18 @@ public class ModeBase extends AnchorPane {
         vBox1.getChildren().add(text3);
         hBox1.getChildren().add(dualModeButton);
         getChildren().add(hBox1);
+
+        
+        
+        dualModeButton.setOnAction(e -> {
+            Parent pane = new DualModeBase(stage);
+            stage.getScene().setRoot(pane);
+        });
+
+        singleModeButton.setOnAction(e -> {
+            Parent pane = new LevelsBase(stage);
+            stage.getScene().setRoot(pane);
+        });
 
     }
 }

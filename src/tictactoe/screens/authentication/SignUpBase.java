@@ -1,6 +1,9 @@
 package tictactoe.screens.authentication;
 
 import javafx.geometry.Insets;
+
+import javafx.scene.Parent;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,6 +15,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import javafx.stage.Stage;
+import tictactoe.screens.dualmode.OnlineListBase;
 
 public class SignUpBase extends BorderPane {
 
@@ -37,7 +43,7 @@ public class SignUpBase extends BorderPane {
     protected final Text tacTopText;
     protected final Text toeTopText;
 
-    public SignUpBase() {
+    public SignUpBase(Stage stage) {
 
         centerFlowPane = new FlowPane();
         ticTextFlowPane = new FlowPane();
@@ -239,6 +245,17 @@ public class SignUpBase extends BorderPane {
         topTextFlowPane.getChildren().add(tacTopText);
         topTextFlowPane.getChildren().add(toeTopText);
         topFlowPane.getChildren().add(topTextFlowPane);
+
+        
+        LoginText.setOnMouseClicked(e -> {
+            Parent pane = new LoginBase(stage);
+            stage.getScene().setRoot(pane);
+        });
+
+        SignUpButton.setOnAction(e -> {
+            Parent pane = new OnlineListBase(stage);
+            stage.getScene().setRoot(pane);
+        });
 
     }
 }
