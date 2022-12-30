@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<ScrollPane id="listScrollPane" fx:id="listScrollPane" prefWidth="1280.0" style="-fx-background-color: linear-gradient(#ffffff,#E5EDEE);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <BorderPane id="listBorderPane" fx:id="listBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(#ffffff,#E5EDEE);">
+         <top>
+            <BorderPane prefHeight="234.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+               <right>
+                  <Circle id="profileCircle" fx:id="profileCircle" fill="#ffffff00" radius="100.0" stroke="BLACK" strokeType="INSIDE">
+                     <BorderPane.margin>
+                        <Insets right="60.0" top="30.0" />
+                     </BorderPane.margin>
+                  </Circle>
+               </right>
+            </BorderPane>
+         </top>
+         <center>
+            <VBox id="listVBox" fx:id="listVBox" prefHeight="598.0" prefWidth="1280.0" style="-fx-background-color: rgba(255,255,255,0);">
+               <children>
+                  <Label fx:id="savedGamesLabel" layoutX="10.0" layoutY="10.0" prefHeight="56.0" prefWidth="833.0" text="Invitation List">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="40.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox fx:id="gameHBox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="playerName" prefHeight="56.0" prefWidth="880.0" text="Arwa Ashraf" textFill="#6dcfd0">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="30.0" />
+                           </font>
+                        </Label>
+                        <Button id="inviteButton" fx:id="inviteButton" mnemonicParsing="false" prefHeight="29.0" prefWidth="138.0" style="-fx-background-color: rgba(156, 216, 100,1); -fx-background-radius: 10;" text="Invite" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="24.0" />
+                           </font>
+                           <effect>
+                              <DropShadow color="#8c8c8c80" height="1.0" offsetX="-3.0" offsetY="3.0" radius="0.0" width="0.0" />
+                           </effect>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="60.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Line fx:id="gameLine" endX="1027.2928466796875" endY="71.29289245605469" startX="2154.585693359375" startY="70.58578491210938" stroke="#a4a4a4" strokeWidth="2.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="70.0" layoutY="326.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="56.0" prefWidth="880.0" text="Alaa Al Sayed" textFill="#6dcfd0">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="30.0" />
+                           </font>
+                        </Label>
+                        <Button id="inviteButton2" fx:id="inviteButton2" mnemonicParsing="false" prefHeight="29.0" prefWidth="138.0" style="-fx-background-color: rgba(156, 216, 100,1); -fx-background-radius: 10;" text="Invite" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="24.0" />
+                           </font>
+                           <effect>
+                              <DropShadow color="#8c8c8c80" height="1.0" offsetX="-3.0" offsetY="3.0" radius="0.0" width="0.0" />
+                           </effect>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="60.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Line endX="1027.2928466796875" endY="71.29289245605469" layoutX="-1017.0" layoutY="256.0" startX="2154.585693359375" startY="70.58578491210938" stroke="#a4a4a4" strokeWidth="2.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="432.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="56.0" prefWidth="880.0" text="Nada Al Sayed" textFill="#6dcfd0">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="30.0" />
+                           </font>
+                        </Label>
+                        <Button id="inviteButton3" fx:id="inviteButton3" mnemonicParsing="false" prefHeight="29.0" prefWidth="138.0" style="-fx-background-color: rgba(156, 216, 100,1); -fx-background-radius: 10;" text="Invite" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="24.0" />
+                           </font>
+                           <effect>
+                              <DropShadow color="#8c8c8c80" height="1.0" offsetX="-3.0" offsetY="3.0" radius="0.0" width="0.0" />
+                           </effect>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="60.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="60.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+      </BorderPane>
+   </content>
+</ScrollPane>
