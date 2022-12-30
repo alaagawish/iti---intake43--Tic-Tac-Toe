@@ -1,12 +1,9 @@
 package tictactoe.screens.dualmode;
 
 import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -21,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import tictactoe.utils.Dialogs;
 
@@ -94,8 +90,8 @@ public class OnlineListBase extends ScrollPane {
         BorderPane.setMargin(profileCircle, new Insets(30.0, 60.0, 0.0, 0.0));
         borderPane.setRight(profileCircle);
         listBorderPane.setTop(borderPane);
-        
-        Image profilePic = new Image("/assets/images/profilePicture.png",false);
+
+        Image profilePic = new Image("/assets/images/profilePicture.png", false);
         profileCircle.setFill(new ImagePattern(profilePic));
 
         listVBox.setId("listVBox");
@@ -127,34 +123,31 @@ public class OnlineListBase extends ScrollPane {
         inviteButton.setPrefWidth(138.0);
         inviteButton.setStyle("-fx-background-color: rgba(156, 216, 100,1); -fx-background-radius: 10;");
         inviteButton.setText("Invite");
-        
+
         inviteButton.setTextFill(javafx.scene.paint.Color.WHITE);
         inviteButton.setFont(new Font("Comic Sans MS Bold", 24.0));
-                     
+
         inviteButton2.setTextFill(javafx.scene.paint.Color.WHITE);
         inviteButton2.setFont(new Font("Comic Sans MS Bold", 24.0));
-        
-        
+
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(listBorderPane);
-        BoxBlur blur = new BoxBlur(3,3,3);
-                
-        JFXDialog dialog = Dialogs.createBlurRequestingDialog("Waiting Arwa To Accept the invitation ...",stackpane);
-        
+        BoxBlur blur = new BoxBlur(3, 3, 3);
+
+        JFXDialog dialog = Dialogs.createBlurRequestingDialog("Waiting Arwa To Accept the invitation ...", stackpane);
+
         dialog.setOnDialogClosed((event) -> {
             listBorderPane.setEffect(null);
         });
-        
+
         inviteButton.setOnAction((ActionEvent event) -> {
             dialog.show();
             listBorderPane.setEffect(blur);
-            
-        });
-        
-        
 
-        dropShadow.setColor(Color.rgb(140,140,140,1));
-        
+        });
+
+        dropShadow.setColor(Color.rgb(140, 140, 140, 1));
+
         dropShadow.setHeight(1.0);
         dropShadow.setOffsetX(-3.0);
         dropShadow.setOffsetY(3.0);
@@ -191,7 +184,7 @@ public class OnlineListBase extends ScrollPane {
         inviteButton2.setTextFill(javafx.scene.paint.Color.WHITE);
         inviteButton2.setFont(new Font("Comic Sans MS Bold", 24.0));
 
-        dropShadow0.setColor(Color.rgb(140,140,140,1));
+        dropShadow0.setColor(Color.rgb(140, 140, 140, 1));
         dropShadow0.setHeight(1.0);
         dropShadow0.setOffsetX(-3.0);
         dropShadow0.setOffsetY(3.0);
@@ -230,7 +223,7 @@ public class OnlineListBase extends ScrollPane {
         inviteButton3.setTextFill(javafx.scene.paint.Color.WHITE);
         inviteButton3.setFont(new Font("Comic Sans MS Bold", 24.0));
 
-        dropShadow1.setColor(Color.rgb(140,140,140,1));
+        dropShadow1.setColor(Color.rgb(140, 140, 140, 1));
         dropShadow1.setHeight(1.0);
         dropShadow1.setOffsetX(-3.0);
         dropShadow1.setOffsetY(3.0);
@@ -255,22 +248,17 @@ public class OnlineListBase extends ScrollPane {
         hBox0.getChildren().add(label0);
         hBox0.getChildren().add(inviteButton3);
         listVBox.getChildren().add(hBox0);
-        
-        
-        
 
     }
-    
-    void showDialog(String text){
+
+    void showDialog(String text) {
         Dialog<String> dialog = new Dialog();
-            
+
         dialog.setTitle("Dialog");
         dialog.setContentText(text);
 
         //ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-
         //dialog.getDialogPane().getButtonTypes().add(type);
-
         dialog.showAndWait();
     }
 }
