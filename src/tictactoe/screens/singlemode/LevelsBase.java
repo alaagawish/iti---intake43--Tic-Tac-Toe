@@ -330,34 +330,33 @@ public class LevelsBase extends BorderPane {
         buttonsFlowPane.getChildren().add(hardButton);
         flowPane0.getChildren().add(buttonsFlowPane);
 
-        
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         easyButton.setEffect(dropShadow);
         mediumButton.setEffect(dropShadow);
         hardButton.setEffect(dropShadow);
-        
+
         easyButton.setOnAction((event) -> {
             Parent pane = new GameBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
-        
+
         mediumButton.setOnAction((event) -> {
             Parent pane = new GameBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
-        
+
         hardButton.setOnAction((event) -> {
             Parent pane = new GameBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
-        
+
     }
 }

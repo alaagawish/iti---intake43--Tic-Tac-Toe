@@ -245,24 +245,18 @@ public class LoginBase extends BorderPane {
         hBox.getChildren().add(haveAccountText);
         hBox.getChildren().add(signUpText);
         centerFlowPane.getChildren().add(hBox);
-        
+
         signUpText.setOnMouseClicked((MouseEvent event) -> {
             Parent pane = new SignUpBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
-        
-         loginButton.setOnAction((ActionEvent event) -> {
+
+        loginButton.setOnAction((ActionEvent event) -> {
             Parent pane = new OnlineListBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
         });
-        
-        
-        
-    }
-            
-        
 
     }
 
+}

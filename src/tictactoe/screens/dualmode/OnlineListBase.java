@@ -260,8 +260,8 @@ public class OnlineListBase extends ScrollPane {
 
         profileCircle.setOnMouseClicked((event) -> {
             Parent pane = new ProfileBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
 
     }

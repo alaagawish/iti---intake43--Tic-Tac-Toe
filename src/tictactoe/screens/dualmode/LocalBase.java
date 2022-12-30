@@ -192,11 +192,11 @@ public class LocalBase extends BorderPane {
         topTextFlowPane.getChildren().add(tacTopText);
         topTextFlowPane.getChildren().add(toeTopText);
         topFlowPane.getChildren().add(topTextFlowPane);
-        
+
         startButton.setOnAction((event) -> {
             Parent pane = new GameBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
 
     }

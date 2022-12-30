@@ -151,13 +151,13 @@ public class DualModeBase extends AnchorPane {
         localButton.setPrefWidth(414.0);
         localButton.setStyle("-fx-background-color: #fccf28; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(localButton, new Insets(100.0, 150.0, 0.0, 150.0));
-        
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         localButton.setEffect(dropShadow);
 
         vBox0.setPrefHeight(302.0);
@@ -187,9 +187,9 @@ public class DualModeBase extends AnchorPane {
         onlineButton.setPrefWidth(414.0);
         onlineButton.setStyle("-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;;");
         HBox.setMargin(onlineButton, new Insets(100.0, 150.0, 0.0, 0.0));
-        
+
         onlineButton.setEffect(dropShadow);
-        
+
         vBox1.setPrefHeight(200.0);
         vBox1.setPrefWidth(414.0);
 
@@ -211,8 +211,6 @@ public class DualModeBase extends AnchorPane {
         text3.setFont(new Font("Comic Sans MS Bold", 65.0));
         VBox.setMargin(text3, new Insets(22.0, 0.0, 0.0, 110.0));
         onlineButton.setGraphic(vBox1);
-        
-        
 
         vBox.getChildren().add(logoImage);
         hBox.getChildren().add(text);
@@ -231,17 +229,17 @@ public class DualModeBase extends AnchorPane {
         vBox1.getChildren().add(text3);
         hBox1.getChildren().add(onlineButton);
         getChildren().add(hBox1);
-        
+
         localButton.setOnAction((ActionEvent event) -> {
             Parent pane = new LocalBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
-        
+
         onlineButton.setOnAction((ActionEvent event) -> {
             Parent pane = new LoginBase(stage);
-            Scene scene1 = new Scene(pane);
-            stage.setScene(scene1);
+            stage.getScene().setRoot(pane);
+
         });
 
     }

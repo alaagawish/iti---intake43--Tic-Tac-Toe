@@ -58,7 +58,7 @@ public class SplashBase extends AnchorPane {
         getChildren().add(logoImage);
         getChildren().add(ticTacToeText);
 
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), this);
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), this);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.setCycleCount(1);
@@ -68,8 +68,8 @@ public class SplashBase extends AnchorPane {
         try {
             fadeIn.setOnFinished((e) -> {
                 Parent pane = new ModeBase(stage);
-                Scene scene = new Scene(pane);
-                stage.setScene(scene);
+                stage.getScene().setRoot(pane);
+
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
