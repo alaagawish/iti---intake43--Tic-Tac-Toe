@@ -17,6 +17,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class ProfileBase extends ScrollPane {
 
@@ -51,7 +52,7 @@ public class ProfileBase extends ScrollPane {
     protected final Label label2;
     protected final ImageView imageView0;
 
-    public ProfileBase() {
+    public ProfileBase(Stage stage) {
 
         borderPane = new BorderPane();
         borderPane0 = new BorderPane();

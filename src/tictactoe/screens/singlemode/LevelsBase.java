@@ -1,10 +1,13 @@
 package tictactoe.screens.singlemode;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -12,6 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import tictactoe.screens.authentication.LoginBase;
+import tictactoe.screens.game.GameBase;
 
 public class LevelsBase extends BorderPane {
 
@@ -46,7 +52,7 @@ public class LevelsBase extends BorderPane {
     protected final ImageView thirdStarHardImageView;
     protected final Text hardText;
 
-    public LevelsBase() {
+    public LevelsBase(Stage stage) {
 
         vBox = new VBox();
         logoImageView = new ImageView();
@@ -334,6 +340,21 @@ public class LevelsBase extends BorderPane {
         easyButton.setEffect(dropShadow);
         mediumButton.setEffect(dropShadow);
         hardButton.setEffect(dropShadow);
+        
+        easyButton.setOnAction((event) -> {
+            Parent pane = new GameBase();
+           stage.getScene().setRoot(pane);
+        });
+        
+        mediumButton.setOnAction((event) -> {
+            Parent pane = new GameBase();
+            stage.getScene().setRoot(pane);
+        });
+        
+        hardButton.setOnAction((event) -> {
+            Parent pane = new GameBase();
+             stage.getScene().setRoot(pane);
+        });
         
     }
 }
