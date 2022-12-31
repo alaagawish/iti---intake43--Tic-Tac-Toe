@@ -277,7 +277,7 @@ public class LevelsBase extends BorderPane {
         backImageView.setPreserveRatio(true);
         backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
         HBox.setMargin(backImageView, new Insets(15.0, 1000.0, 0.0, 30.0));
-        
+
         secondStarHardImageView.setFitHeight(58.0);
         secondStarHardImageView.setFitWidth(48.0);
         secondStarHardImageView.setLayoutX(115.0);
