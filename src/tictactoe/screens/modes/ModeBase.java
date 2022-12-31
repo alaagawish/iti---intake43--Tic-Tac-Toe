@@ -2,7 +2,6 @@ package tictactoe.screens.modes;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -13,10 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import javafx.stage.Stage;
 import tictactoe.screens.dualmode.DualModeBase;
-import tictactoe.screens.game.GameBase;
 import tictactoe.screens.singlemode.LevelsBase;
 
 public class ModeBase extends AnchorPane {
@@ -78,30 +75,24 @@ public class ModeBase extends AnchorPane {
         logoImage.setPickOnBounds(true);
         logoImage.setPreserveRatio(true);
         logoImage.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
-        VBox.setMargin(logoImage, new Insets(10.0, 35.0, 0.0, 0.0));
+        VBox.setMargin(logoImage,  new Insets(10.0, 30.0, 0.0, 0.0));
 
         hBox.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         hBox.setPrefHeight(100.0);
         hBox.setPrefWidth(200.0);
 
         text.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text.setStrokeWidth(0.0);
         text.setText("Tic");
         text.setFont(new Font("Comic Sans MS Bold", 20.0));
 
         text0.setFill(javafx.scene.paint.Color.valueOf("#fccf28"));
-        text0.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text0.setStrokeWidth(0.0);
         text0.setText("Tac");
         text0.setFont(new Font("Comic Sans MS Bold", 20.0));
 
         text1.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        text1.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text1.setStrokeWidth(0.0);
         text1.setText("Toe");
         text1.setFont(new Font("Comic Sans MS Bold", 20.0));
-        VBox.setMargin(hBox, new Insets(0.0, 10.0, 0.0, 0.0));
+        VBox.setMargin(hBox,new Insets(0.0, 10.0, 0.0, 0.0));
 
         hBox0.setLayoutX(390.0);
         hBox0.setLayoutY(146.0);
@@ -109,26 +100,14 @@ public class ModeBase extends AnchorPane {
         hBox0.setPrefWidth(500.0);
 
         ticText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        ticText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        ticText.setStrokeWidth(0.0);
-        ticText.setStrokeWidth(1);
-        ticText.setStroke(Color.BLACK);
         ticText.setText("Tic");
         ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
         tacText.setFill(javafx.scene.paint.Color.valueOf("#facc28"));
-        tacText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        tacText.setStrokeWidth(0.0);
-        tacText.setStrokeWidth(1);
-        tacText.setStroke(Color.BLACK);
         tacText.setText("Tac");
         tacText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
         toeText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        toeText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        toeText.setStrokeWidth(0.0);
-        toeText.setStrokeWidth(1);
-        toeText.setStroke(Color.BLACK);
         toeText.setText("Toe");
         toeText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
@@ -160,11 +139,7 @@ public class ModeBase extends AnchorPane {
         imageView.setImage(new Image(getClass().getResource("/assets/images/single.png").toExternalForm()));
 
         text2.setFill(javafx.scene.paint.Color.WHITE);
-        text2.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text2.setStrokeWidth(0.0);
         text2.setText("Single Mode");
-        text2.setStrokeWidth(1);
-        text2.setStroke(Color.BLACK);
         text2.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(text2, new Insets(21.0, 0.0, 0.0, 80.0));
         singleModeButton.setGraphic(vBox0);
@@ -188,10 +163,6 @@ public class ModeBase extends AnchorPane {
         VBox.setMargin(imageView0, new Insets(60.0, 0.0, 0.0, 0.0));
 
         text3.setFill(javafx.scene.paint.Color.WHITE);
-        text3.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text3.setStrokeWidth(0.0);
-        text3.setStrokeWidth(1);
-        text3.setStroke(Color.BLACK);
         text3.setText("Dual Mode");
         text3.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(text3, new Insets(22.0, 0.0, 0.0, 103.0));
@@ -215,7 +186,16 @@ public class ModeBase extends AnchorPane {
         hBox1.getChildren().add(dualModeButton);
         getChildren().add(hBox1);
 
-        
+        DropShadow dropShadowText = new DropShadow();
+        dropShadowText.setRadius(5.0);
+        dropShadowText.setOffsetX(-10.0);
+        dropShadowText.setOffsetY(10.0);
+
+        dropShadowText.setColor(Color.color(0, 0, 0, .16));
+
+        ticText.setEffect(dropShadowText);
+        tacText.setEffect(dropShadowText);
+        toeText.setEffect(dropShadowText);
         
         dualModeButton.setOnAction(e -> {
             Parent pane = new DualModeBase(stage);
