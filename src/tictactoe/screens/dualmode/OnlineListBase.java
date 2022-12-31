@@ -89,7 +89,7 @@ public class OnlineListBase extends ScrollPane {
 
         profileCircle.setFill(javafx.scene.paint.Color.valueOf("#ffffff00"));
         profileCircle.setId("profileCircle");
-        profileCircle.setRadius(80.0);
+        profileCircle.setRadius(60.0);
         profileCircle.setStroke(javafx.scene.paint.Color.BLACK);
         profileCircle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         BorderPane.setMargin(profileCircle, new Insets(30.0, 60.0, 0.0, 0.0));
@@ -110,7 +110,7 @@ public class OnlineListBase extends ScrollPane {
         savedGamesLabel.setPrefWidth(833.0);
         savedGamesLabel.setText("Invitation List");
         savedGamesLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
-        VBox.setMargin(savedGamesLabel, new Insets(30.0, 0.0, 0.0, 0.0));
+        VBox.setMargin(savedGamesLabel, new Insets(0.0, 0.0, 0.0, 0.0));
 
         gameHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         gameHBox.setPrefHeight(100.0);
@@ -139,8 +139,8 @@ public class OnlineListBase extends ScrollPane {
         stackpane.getChildren().add(listBorderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
 
-        backImageView.setFitHeight(106.0);
-        backImageView.setFitWidth(120.0);
+        backImageView.setFitHeight(90.0);
+        backImageView.setFitWidth(110.0);
         backImageView.setPickOnBounds(true);
         backImageView.setPreserveRatio(true);
         backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
@@ -260,16 +260,16 @@ public class OnlineListBase extends ScrollPane {
         hBox0.getChildren().add(label0);
         hBox0.getChildren().add(inviteButton3);
         listVBox.getChildren().add(hBox0);
-
-        profileCircle.setOnMouseClicked(e -> {
-            Parent root = new ProfileBase(stage);
-            stage.getScene().setRoot(root);
-        });
-
+        
         backImageView.setOnMousePressed(e -> {
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
 
+        });
+
+        profileCircle.setOnMouseClicked(e -> {
+            Parent root = new ProfileBase(stage);
+            stage.getScene().setRoot(root);
         });
 
     }
