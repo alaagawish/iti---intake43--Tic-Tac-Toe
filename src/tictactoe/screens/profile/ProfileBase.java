@@ -1,6 +1,7 @@
 package tictactoe.screens.profile;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -18,6 +19,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import tictactoe.screens.dualmode.OnlineListBase;
 
 public class ProfileBase extends ScrollPane {
 
@@ -51,6 +54,7 @@ public class ProfileBase extends ScrollPane {
     protected final HBox hBox1;
     protected final Label label2;
     protected final ImageView imageView0;
+    protected final ImageView backImageView, backImageView2;
 
     public ProfileBase(Stage stage) {
 
@@ -84,6 +88,8 @@ public class ProfileBase extends ScrollPane {
         hBox1 = new HBox();
         label2 = new Label();
         imageView0 = new ImageView();
+        backImageView = new ImageView();
+        backImageView2 = new ImageView();
 
         setId("profileScrollPane");
         setPrefWidth(1280.0);
@@ -119,12 +125,10 @@ public class ProfileBase extends ScrollPane {
         profileCircle.setRadius(100.0);
         profileCircle.setStroke(javafx.scene.paint.Color.AQUA);
         profileCircle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-        
-        
+
         profileCircle.setStroke(Color.GRAY);
-        Image profilePic = new Image("/assets/images/profilePicture.png",false);
+        Image profilePic = new Image("/assets/images/profilePicture.png", false);
         profileCircle.setFill(new ImagePattern(profilePic));
-        
 
         hBox.setPrefHeight(56.0);
         hBox.setPrefWidth(175.0);
@@ -142,7 +146,8 @@ public class ProfileBase extends ScrollPane {
         scoreLabel.setText("44");
         scoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#fccf28"));
         scoreLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
-        borderPane0.setBottom(vBox);
+        borderPane0.setCenter(vBox);
+        BorderPane.setMargin(vBox, new Insets(90.0, 0.0, 30.0, 0.0));
         borderPane.setTop(borderPane0);
 
         profileVBox.setPrefHeight(598.0);
@@ -168,14 +173,30 @@ public class ProfileBase extends ScrollPane {
         editInfoButton.setFont(new Font("Comic Sans MS Bold", 24.0));
         HBox.setMargin(editInfoButton, new Insets(0.0, 0.0, 0.0, 60.0));
 
-        dropShadow.setColor(Color.rgb(140,140,140));
+        backImageView.setFitHeight(106.0);
+        backImageView.setFitWidth(120.0);
+        backImageView.setPickOnBounds(true);
+        backImageView.setPreserveRatio(true);
+        backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
+        borderPane0.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
+        borderPane0.setLeft(backImageView);
+
+        backImageView2.setFitHeight(106.0);
+        backImageView2.setFitWidth(120.0);
+        backImageView2.setPickOnBounds(true);
+        backImageView2.setPreserveRatio(true);
+        backImageView2.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
+        backImageView2.setVisible(false);
+        borderPane0.setRight(backImageView2);
+
+        dropShadow.setColor(Color.rgb(140, 140, 140));
         dropShadow.setHeight(1.0);
         dropShadow.setOffsetX(-3.0);
         dropShadow.setOffsetY(3.0);
         dropShadow.setRadius(0.0);
         dropShadow.setWidth(0.0);
         editInfoButton.setEffect(dropShadow);
-        VBox.setMargin(infoHBox, new Insets(30.0, 0.0, 0.0, 0.0));
+        VBox.setMargin(infoHBox, new Insets(60.0, 0.0, 0.0, 0.0));
 
         usernameHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         usernameHBox.setStyle("-fx-background-color: #ffffff00;");
@@ -329,10 +350,12 @@ public class ProfileBase extends ScrollPane {
         hBox1.getChildren().add(label2);
         hBox1.getChildren().add(imageView0);
         profileVBox.getChildren().add(hBox1);
-        
-        
-        
-        
+
+        backImageView.setOnMousePressed(e -> {
+            Parent pane = new OnlineListBase(stage);
+            stage.getScene().setRoot(pane);
+
+        });
 
     }
 }
