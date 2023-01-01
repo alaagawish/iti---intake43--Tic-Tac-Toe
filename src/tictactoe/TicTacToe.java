@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tictactoe.network.Network;
 import tictactoe.screens.splash.SplashBase;
 
 public class TicTacToe extends Application {
@@ -22,6 +23,8 @@ public class TicTacToe extends Application {
     }
 
     public static void main(String[] args) {
+        new Network();
+       
         launch(args);
     }
 

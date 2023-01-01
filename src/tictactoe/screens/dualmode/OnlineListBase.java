@@ -147,7 +147,7 @@ public class OnlineListBase extends ScrollPane {
         BorderPane.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
         borderPane.setLeft(backImageView);
 
-        JFXDialog dialog = Dialogs.createBlurRequestingDialog("Waiting Arwa To Accept the invitation ...", stackpane);
+        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Waiting Arwa To Accept the invitation ...", stackpane,"-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
 
         dialog.setOnDialogClosed((event) -> {
             listBorderPane.setEffect(null);
