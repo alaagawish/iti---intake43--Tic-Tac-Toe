@@ -10,46 +10,56 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(#ffffff,#E5EDEE);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="97.0" prefWidth="1280.0">
+      <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <ImageView fx:id="logoImage" fitHeight="68.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="backImageView" fitHeight="106.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@//F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/logo.png" />
+                  <Image url="@/F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/back.png" />
                </image>
-               <VBox.margin>
-                  <Insets right="35.0" top="10.0" />
-               </VBox.margin>
-            </ImageView>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <HBox.margin>
+                  <Insets left="30.0" right="1030.0" top="15.0" />
+               </HBox.margin></ImageView>
+            <VBox alignment="TOP_RIGHT" prefHeight="97.0" prefWidth="1280.0">
                <children>
-                  <Text fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic">
-                     <font>
-                        <Font name="Comic Sans MS Bold" size="20.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#fccf28" strokeType="OUTSIDE" strokeWidth="0.0" text="Tac">
-                     <font>
-                        <Font name="Comic Sans MS Bold" size="20.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Toe">
-                     <font>
-                        <Font name="Comic Sans MS Bold" size="20.0" />
-                     </font>
-                     <HBox.margin>
+                  <ImageView fx:id="logoImage" fitHeight="68.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@//F:/ITI/Java/Final%20Project/iti---intake43--Tic-Tac-Toe/src/assets/images/logo.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets right="35.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#fccf28" strokeType="OUTSIDE" strokeWidth="0.0" text="Tac">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Toe">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                     <VBox.margin>
                         <Insets right="10.0" />
-                     </HBox.margin>
-                  </Text>
+                     </VBox.margin>
+                  </HBox>
                </children>
-               <VBox.margin>
-                  <Insets right="10.0" />
-               </VBox.margin>
-            </HBox>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
       <HBox layoutX="400.0" layoutY="156.0" prefHeight="137.0" prefWidth="500.0">
          <children>
             <Text fx:id="ticText" fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic">
