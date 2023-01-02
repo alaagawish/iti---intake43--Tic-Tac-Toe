@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.network;
 
 import java.io.IOException;
@@ -16,102 +11,108 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author moazk
- */
-public class Network implements Runnable{
-    
-    Socket mySocket;
-    
-    String msg;
-    
-    Thread th;
-    
-    OutputStream outputStream ;
+public class Network implements Runnable {
+
+    Socket socket;
+    String messages;
+    Thread thread;
+    OutputStream outputStream;
     ObjectOutputStream objectOutputStream;
-    
     InputStream inputStream;
     ObjectInputStream objectInputStream;
-    
-    
+
     List<String> sendMessages;
-    
-    
+
     public Network() {
-        
+
         sendMessages = new ArrayList<>();
-        
+
         sendMessages.add("Login");
-        sendMessages.add("192.168.0.22");
-        sendMessages.add("moaz");
-        sendMessages.add("123456789");
-        
+        sendMessages.add("Alaa");
+        sendMessages.add("23458");
+
         try {
-            mySocket = new Socket("127.0.0.1", 5005);
-            
-            outputStream = mySocket.getOutputStream();
+            socket = new Socket("127.0.0.1", 5005);
+
+            outputStream = socket.getOutputStream();
             objectOutputStream = new ObjectOutputStream(outputStream);
-            
-            
-            inputStream = mySocket.getInputStream();
+
+            inputStream = socket.getInputStream();
             objectInputStream = new ObjectInputStream(inputStream);
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        th = new Thread(this);
-        th.start();
-        
-        
+        thread = new Thread(this);
+        thread.start();
+
     }
-    
-    public void closeConnection() {
+
+    public void closeConnection() throws IOException {
+        List<String> close = new ArrayList<>();
+
+        close.add("close");
+        close.add("close");
+
+        objectOutputStream.writeObject(close);
 
         try {
-            //ps.close();
-            //dis.close();
             objectOutputStream.close();
             objectInputStream.close();
-            mySocket.close();
-            th.stop();
+            inputStream.close();
+            outputStream.close();
+            socket.close();
+            thread.stop();
         } catch (IOException e) {
-            System.out.println("Error: "+e.getMessage());            
+            System.out.println("Error: " + e.getMessage());
         }
 
     }
 
     @Override
     public void run() {
-        
-        while(true){
+
+        while (true) {
             try {
-                if(mySocket.isConnected()){
+                if (socket.isConnected()) {
+
                     objectOutputStream.writeObject(sendMessages);
-                    
+
                     List<String> recievedMessages = (List<String>) objectInputStream.readObject();
-                
-                    if(recievedMessages.size() > 0){
+
+                    if (recievedMessages.size() > 1) {
                         System.out.println("Received [" + recievedMessages.size() + "]");
-                        System.out.println("All messages:");
-                        recievedMessages.forEach((msg)-> System.out.println(msg));
+                        recievedMessages.forEach((msg) -> System.out.println(msg));
+                        recievedMessages.clear();
+                        recievedMessages.add("finish");
                     }
-                    recievedMessages.clear();
+
+                    sendMessages.clear();
+                    sendMessages.add("Login");
+                    sendMessages.add("Alaa");
+                    sendMessages.add("2345");
+                    sendMessages.add("Login");
+
+                    Thread.sleep(1000);
+                    sendMessages.clear();
+                    sendMessages.add("Login");
+                    sendMessages.add("Alaa");
+                    sendMessages.add("2345");
+                    sendMessages.add("Login");
+
                 }
-                
-                sendMessages.clear();
-                //Thread.sleep(2000);
+
             } catch (IOException ex) {
-                    System.out.println("Error: "+ex.getMessage());  
+                System.out.println("EX Error: " + ex.getLocalizedMessage());
             } catch (ClassNotFoundException ex) {
+                System.out.println("EX Error: " + ex.getLocalizedMessage());
+
+            } catch (InterruptedException ex) {
                 Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-    
-    
-    
-    
+
 }
