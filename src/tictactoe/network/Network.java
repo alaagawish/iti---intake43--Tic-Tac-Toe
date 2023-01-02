@@ -8,8 +8,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Network implements Runnable {
 
@@ -22,6 +20,7 @@ public class Network implements Runnable {
     ObjectInputStream objectInputStream;
 
     List<String> sendMessages;
+    List<String> recievedMessages;
 
     public Network() {
 
@@ -78,29 +77,40 @@ public class Network implements Runnable {
                 if (socket.isConnected()) {
 
                     objectOutputStream.writeObject(sendMessages);
-
-                    List<String> recievedMessages = (List<String>) objectInputStream.readObject();
-
-                    if (recievedMessages.size() > 1) {
-                        System.out.println("Received [" + recievedMessages.size() + "]");
-                        recievedMessages.forEach((msg) -> System.out.println(msg));
-                        recievedMessages.clear();
-                        recievedMessages.add("finish");
+                    System.out.println(sendMessages);
+                    while (true) {
+                        recievedMessages = (List<String>) objectInputStream.readObject();
+                        if (recievedMessages.size() > 0) {
+                            break;
+                        }
                     }
+                    System.out.println(recievedMessages);
 
+                    if (recievedMessages.size() > 0) {
+                        if (recievedMessages.get(0).equals("Login")) {
+                            System.out.println("Received [" + recievedMessages.size() + "]");
+                            recievedMessages.forEach((msg) -> System.out.println(msg));
+                        }
+
+                    }
+                    recievedMessages.clear();
                     sendMessages.clear();
+
                     sendMessages.add("Login");
                     sendMessages.add("Alaa");
                     sendMessages.add("2345");
-                    sendMessages.add("Login");
 
-                    Thread.sleep(1000);
-                    sendMessages.clear();
-                    sendMessages.add("Login");
-                    sendMessages.add("Alaa");
-                    sendMessages.add("2345");
-                    sendMessages.add("Login");
-
+//                    System.out.println(sendMessages);
+//                    sendMessages.clear();
+//                    sendMessages.add("Login");
+//                    sendMessages.add("Alaa");
+//                    sendMessages.add("23456");
+//                    sendMessages.add("Login");
+//                     sendMessages.clear();
+//                    sendMessages.add("Login");
+//                    sendMessages.add("Nada");
+//                    sendMessages.add("1234");
+//                    sendMessages.add("Login");
                 }
 
             } catch (IOException ex) {
@@ -108,8 +118,6 @@ public class Network implements Runnable {
             } catch (ClassNotFoundException ex) {
                 System.out.println("EX Error: " + ex.getLocalizedMessage());
 
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
