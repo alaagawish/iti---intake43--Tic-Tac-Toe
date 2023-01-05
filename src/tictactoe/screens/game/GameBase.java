@@ -41,8 +41,6 @@ public class GameBase extends AnchorPane {
 
     public char board[][];
     LocalGame localGame;
-    JFrame mediaTest;
-    URL mediaURL;
 
     public GameBase(Stage stage, String level, Player playerOne, Player playerTwo) {
 
@@ -345,16 +343,18 @@ public class GameBase extends AnchorPane {
             flipTurn();
         });
         button01.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button01.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button01.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-            }
-            button01.setText(localGame.gameManager.getTurn() + "");
-            button01.setDisable(true);
-            board[0][1] = localGame.gameManager.getTurn();
+            if (level.equals("local")) {
+                if (localGame.gameManager.getTurn() == GameSymbol.X) {
+                    button01.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
+                } else {
+                    button01.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+                }
+                button01.setText(localGame.gameManager.getTurn() + "");
+                button01.setDisable(true);
+                board[0][1] = localGame.gameManager.getTurn();
 
-            flipTurn();
+                flipTurn();
+            }
         });
         button02.setOnAction(e -> {
             if (localGame.gameManager.getTurn() == GameSymbol.X) {
@@ -456,20 +456,16 @@ public class GameBase extends AnchorPane {
             localGame.gameManager.setTurn(GameSymbol.X);
 
         }
-        char winnerChar = localGame.gameManager.checkWinner();
-        if (winnerChar == GameSymbol.X) {
-            System.out.println("winnnnnnnnnnnner is x ");
+        int winner = localGame.gameManager.checkWinner();
+        if (winner == 2) {
             disableButtons();
 
-        } else if (winnerChar == GameSymbol.O) {
-            System.out.println("winnnnnnnnnnnner is o ");
+        } else if (winner == -2) {
             disableButtons();
 
-        } else if (winnerChar == 'D') {
-            System.out.println("no winner");
-
+        } else if (winner == 0) {
+            //x=o
         } else {
-            System.out.println("game not completed");
         }
     }
 

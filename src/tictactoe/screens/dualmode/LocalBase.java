@@ -341,7 +341,6 @@ public class LocalBase extends BorderPane {
                 stage.getScene().setRoot(pane);
                 System.out.println("done");
             } else {
-                System.out.println("error");
                 if (firstPlayerTextField.getText().length() == 0) {
                     JOptionPane.showMessageDialog(jFrame, "Enter your name", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
