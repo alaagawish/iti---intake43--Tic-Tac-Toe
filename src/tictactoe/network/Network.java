@@ -1,44 +1,27 @@
 package tictactoe.network;
 
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Network implements Runnable {
 
     Socket socket;
     String messages;
     Thread thread;
-    OutputStream outputStream;
-    ObjectOutputStream objectOutputStream;
-    InputStream inputStream;
-    ObjectInputStream objectInputStream;
+    PrintStream printStream;
+    DataInputStream dataInputStream;
 
-    List<String> sendMessages;
-    List<String> recievedMessages;
+    String messageSentToServer;
 
     public Network() {
 
-        sendMessages = new ArrayList<>();
-
-        sendMessages.add("Login");
-        sendMessages.add("Alaa");
-        sendMessages.add("23458");
-
+        messageSentToServer = "Login,Alaa,2345";
         try {
             socket = new Socket("127.0.0.1", 5005);
-
-            outputStream = socket.getOutputStream();
-            objectOutputStream = new ObjectOutputStream(outputStream);
-
-            inputStream = socket.getInputStream();
-            objectInputStream = new ObjectInputStream(inputStream);
-
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            printStream = new PrintStream(socket.getOutputStream());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -49,18 +32,12 @@ public class Network implements Runnable {
     }
 
     public void closeConnection() throws IOException {
-        List<String> close = new ArrayList<>();
 
-        close.add("close");
-        close.add("close");
-
-        objectOutputStream.writeObject(close);
-
+        printStream.println("close");
         try {
-            objectOutputStream.close();
-            objectInputStream.close();
-            inputStream.close();
-            outputStream.close();
+
+            dataInputStream.close();
+            printStream.close();
             socket.close();
             thread.stop();
         } catch (IOException e) {
@@ -76,48 +53,27 @@ public class Network implements Runnable {
             try {
                 if (socket.isConnected()) {
 
-                    objectOutputStream.writeObject(sendMessages);
-                    System.out.println(sendMessages);
-                    while (true) {
-                        recievedMessages = (List<String>) objectInputStream.readObject();
-                        if (recievedMessages.size() > 0) {
-                            break;
-                        }
-                    }
-                    System.out.println(recievedMessages);
+                    printStream.println(messageSentToServer);
+                    System.out.println(messageSentToServer);
 
-                    if (recievedMessages.size() > 0) {
-                        if (recievedMessages.get(0).equals("Login")) {
-                            System.out.println("Received [" + recievedMessages.size() + "]");
-                            recievedMessages.forEach((msg) -> System.out.println(msg));
+                    String messageReceivedFromServer = dataInputStream.readLine();
+                    System.out.println(messageReceivedFromServer);
+                    if (messageReceivedFromServer.length() > 0) {
+                        String[] arr = messageReceivedFromServer.split(",");
+                        if (arr[0].equals("Login")) {
+
+                            for (int i = 0; i < arr.length; i++) {
+                                System.out.println(arr[i]);
+                            }
                         }
 
                     }
-                    recievedMessages.clear();
-                    sendMessages.clear();
-
-                    sendMessages.add("Login");
-                    sendMessages.add("Alaa");
-                    sendMessages.add("2345");
-
-//                    System.out.println(sendMessages);
-//                    sendMessages.clear();
-//                    sendMessages.add("Login");
-//                    sendMessages.add("Alaa");
-//                    sendMessages.add("23456");
-//                    sendMessages.add("Login");
-//                     sendMessages.clear();
-//                    sendMessages.add("Login");
-//                    sendMessages.add("Nada");
-//                    sendMessages.add("1234");
-//                    sendMessages.add("Login");
+                    messageReceivedFromServer = null;
+                    messageSentToServer = "Login,Alaa,23435";
                 }
 
             } catch (IOException ex) {
                 System.out.println("EX Error: " + ex.getLocalizedMessage());
-            } catch (ClassNotFoundException ex) {
-                System.out.println("EX Error: " + ex.getLocalizedMessage());
-
             }
         }
 
