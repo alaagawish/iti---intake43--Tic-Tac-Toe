@@ -19,6 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import tictactoe.models.Player;
+import tictactoe.screens.game.GameBase;
+import tictactoe.screens.game.LocalGame;
 
 public class LocalBase extends BorderPane {
 
@@ -46,6 +51,8 @@ public class LocalBase extends BorderPane {
     protected final ImageView personImage1;
     protected final FlowPane localTextFlowPane;
     protected final Text LocalText;
+    protected JFrame jFrame;
+    Player playerOne, playerTwo;
 
     public LocalBase(Stage stage) {
 
@@ -65,6 +72,8 @@ public class LocalBase extends BorderPane {
         startButton = new Button();
         hBox = new HBox();
 
+        playerOne = new Player();
+        playerTwo = new Player();
         localTextFlowPane = new FlowPane();
         LocalText = new Text();
         firstPlayerTextField = new TextField();
@@ -75,7 +84,7 @@ public class LocalBase extends BorderPane {
         ticLogoText = new Text();
         tacLogoText = new Text();
         toeLogoText = new Text();
-
+        jFrame = new JFrame();
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -324,8 +333,18 @@ public class LocalBase extends BorderPane {
         headerHBox.getChildren().add(vBox);
 
         startButton.setOnAction(e -> {
-            Parent pane = new OnlineListBase(stage);
-            stage.getScene().setRoot(pane);
+
+            if (firstPlayerTextField.getText().length() > 0 && secondPlayerTextField.getText().length() > 0) {
+                playerOne.setUsername(firstPlayerTextField.getText());
+                playerTwo.setUsername(secondPlayerTextField.getText());
+                Parent pane = new GameBase(stage, "local", playerOne, playerTwo);
+                stage.getScene().setRoot(pane);
+                System.out.println("done");
+            } else {
+                if (firstPlayerTextField.getText().length() == 0) {
+                    JOptionPane.showMessageDialog(jFrame, "Enter your name", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
 
         backImageView.setOnMousePressed(e -> {

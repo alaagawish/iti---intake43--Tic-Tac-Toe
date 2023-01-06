@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.models.Player;
 import tictactoe.screens.game.GameBase;
 import tictactoe.screens.modes.ModeBase;
 
@@ -54,6 +55,8 @@ public class LevelsBase extends BorderPane {
     protected final Text hardText;
     protected final HBox headerHBox;
 
+    Player playerOne, computer;
+
     public LevelsBase(Stage stage) {
 
         vBox = new VBox();
@@ -88,6 +91,8 @@ public class LevelsBase extends BorderPane {
         secondStarHardImageView = new ImageView();
         thirdStarHardImageView = new ImageView();
         hardText = new Text();
+        playerOne = new Player();
+        computer = new Player();
 
         setMaxWidth(1280.0);
         setMinHeight(800.0);
@@ -171,7 +176,6 @@ public class LevelsBase extends BorderPane {
         easyAnchorPane.setPrefHeight(292.0);
         easyAnchorPane.setPrefWidth(293.0);
         easyAnchorPane.setStyle("-fx-background-color: rgba(130,213,49,0.7); -fx-background-radius: 69;");
-
         BorderPane.setAlignment(headerHBox, javafx.geometry.Pos.CENTER);
         headerHBox.setPrefHeight(100.0);
         headerHBox.setPrefWidth(200.0);
@@ -256,9 +260,7 @@ public class LevelsBase extends BorderPane {
         hardButton.setMnemonicParsing(false);
         hardButton.setStyle("-fx-background-radius: 69; -fx-background-color: #ffffff00;");
         FlowPane.setMargin(hardButton, new Insets(0.0, 95.0, 0.0, 95.0));
-
         setTop(headerHBox);
-
         hardAnchorPane.setPrefHeight(200.0);
         hardAnchorPane.setPrefWidth(200.0);
         hardAnchorPane.setStyle("-fx-background-radius: 69; -fx-background-color: rgba(235, 59, 62,1);");
@@ -270,14 +272,12 @@ public class LevelsBase extends BorderPane {
         firstStarHardImageView.setPickOnBounds(true);
         firstStarHardImageView.setPreserveRatio(true);
         firstStarHardImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-
         backImageView.setFitHeight(106.0);
         backImageView.setFitWidth(120.0);
         backImageView.setPickOnBounds(true);
         backImageView.setPreserveRatio(true);
         backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
         HBox.setMargin(backImageView, new Insets(15.0, 1000.0, 0.0, 30.0));
-
         secondStarHardImageView.setFitHeight(58.0);
         secondStarHardImageView.setFitWidth(48.0);
         secondStarHardImageView.setLayoutX(115.0);
@@ -330,40 +330,36 @@ public class LevelsBase extends BorderPane {
         flowPane0.getChildren().add(buttonsFlowPane);
         headerHBox.getChildren().add(backImageView);
         headerHBox.getChildren().add(vBox);
-
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
         dropShadow.setColor(Color.color(0, 0, 0, .16));
-
         ticText.setEffect(dropShadow);
         tacText.setEffect(dropShadow);
         toeText.setEffect(dropShadow);
-
         easyButton.setEffect(dropShadow);
         mediumButton.setEffect(dropShadow);
         hardButton.setEffect(dropShadow);
-
+        playerOne.setUsername("Player");
+        computer.setUsername("Root");
         easyButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage);
+            Parent pane = new GameBase(stage, "easy", playerOne, computer);
             stage.getScene().setRoot(pane);
         });
-
         mediumButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage);
+            Parent pane = new GameBase(stage, "medium", playerOne, computer);
             stage.getScene().setRoot(pane);
         });
 
         hardButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage);
+            Parent pane = new GameBase(stage, "hard", playerOne, computer);
             stage.getScene().setRoot(pane);
         });
 
         backImageView.setOnMousePressed(e -> {
             Parent pane = new ModeBase(stage);
             stage.getScene().setRoot(pane);
-
         });
     }
 }
