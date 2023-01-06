@@ -15,7 +15,8 @@ enum Level {
 public class GameManager {
 
     private static Player xPlayer;
-    private static Player oPlaye;
+    private static Player oPlayer;
+
     private static char turn;
 
     private static char[][] board;
@@ -29,6 +30,7 @@ public class GameManager {
         counter = 0;
         turn = GameSymbol.X;
         this.board = board;
+
     }
 
     public static int checkWinner() {
@@ -73,10 +75,7 @@ public class GameManager {
     }
 
     public static boolean haveTheSameValue(char x, char y, char z) {
-        if (x == y && x == z && x != ' ') {
-            return true;
-        }
-        return false;
+        return x == y && x == z && x != ' ';
     }
 
     public static Player getxPlayer() {
@@ -87,12 +86,13 @@ public class GameManager {
         GameManager.xPlayer = xPlayer;
     }
 
-    public static Player getoPlaye() {
-        return oPlaye;
+    public static Player getoPlayer() {
+        return oPlayer;
     }
 
-    public static void setoPlaye(Player oPlaye) {
-        GameManager.oPlaye = oPlaye;
+    public static void setoPlayer(Player oPlayer) {
+        GameManager.oPlayer = oPlayer;
+
     }
 
     public static char getTurn() {
