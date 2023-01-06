@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Network implements Runnable {
 
@@ -31,17 +33,20 @@ public class Network implements Runnable {
 
     }
 
-    public void closeConnection() throws IOException {
+    public void closeConnection() {
 
         printStream.println("close");
-        try {
 
+        try {
+            thread.sleep(100);
             dataInputStream.close();
             printStream.close();
             socket.close();
             thread.stop();
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -64,6 +69,19 @@ public class Network implements Runnable {
 
                             for (int i = 0; i < arr.length; i++) {
                                 System.out.println(arr[i]);
+                            }
+                        } else if (messageReceivedFromServer.equals("close")) {
+
+                            try {
+                                thread.sleep(100);
+                                dataInputStream.close();
+                                printStream.close();
+                                socket.close();
+                                thread.stop();
+                            } catch (IOException e) {
+                                System.out.println("Error: " + e.getMessage());
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
 
