@@ -1,11 +1,14 @@
 package tictactoe.network;
 
+import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tictactoe.models.Message;
+import tictactoe.models.Player;
 
 public class Network implements Runnable {
 
@@ -15,11 +18,12 @@ public class Network implements Runnable {
     PrintStream printStream;
     DataInputStream dataInputStream;
 
-    String messageSentToServer;
+    String messageSentToServer, username, password;
 
     public Network() {
 
-        messageSentToServer = "Login,Alaa,2345";
+        username = "Alaa";
+        password = "2345";
         try {
             socket = new Socket("127.0.0.1", 5005);
             dataInputStream = new DataInputStream(socket.getInputStream());
@@ -57,20 +61,31 @@ public class Network implements Runnable {
         while (true) {
             try {
                 if (socket.isConnected()) {
+                    Gson gson = new Gson();
+                    Message messageSent = new Message();
+                    messageSent.setOperation("Login");
+                    Player player = new Player(username, password);
+
+                    String playerToString = gson.toJson(player);
+                    messageSent.setPlayers(player);
+                    String messageSentToServer = gson.toJson(messageSent);
 
                     printStream.println(messageSentToServer);
-                    System.out.println(messageSentToServer);
+                    String messageReceivedFromServer = "";
+                    messageReceivedFromServer = dataInputStream.readLine();
+                    messageReceivedFromServer = messageReceivedFromServer.replaceAll("\r?\n", "");
+                    if (!messageReceivedFromServer.isEmpty()) {
 
-                    String messageReceivedFromServer = dataInputStream.readLine();
-                    System.out.println(messageReceivedFromServer);
-                    if (messageReceivedFromServer.length() > 0) {
-                        String[] arr = messageReceivedFromServer.split(",");
-                        if (arr[0].equals("Login")) {
+                        Message messageReceived = new Gson().fromJson(messageReceivedFromServer, Message.class);
 
-                            for (int i = 0; i < arr.length; i++) {
-                                System.out.println(arr[i]);
+                        if (messageReceived.getOperation().equals("Login")) {
+                            if (messageReceived.isStatus()) {
+                                System.out.println("Done login.......");
+                            } else {
+                                System.out.println("something wrong, check password or username..");
                             }
-                        } else if (messageReceivedFromServer.equals("close")) {
+
+                        } else if (messageReceived.getOperation().equals("close")) {
 
                             try {
                                 thread.sleep(100);
@@ -86,8 +101,9 @@ public class Network implements Runnable {
                         }
 
                     }
-                    messageReceivedFromServer = null;
-                    messageSentToServer = "Login,Alaa,23435";
+
+                    username = "Alaa";
+                    password = "23444";
                 }
 
             } catch (IOException ex) {
