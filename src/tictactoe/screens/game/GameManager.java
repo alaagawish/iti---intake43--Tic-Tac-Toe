@@ -34,10 +34,10 @@ public class GameManager {
         //  1: Countinue
         for (int i = 0; i < 3; i++) {
             if (haveTheSameValue(board[i][0], board[i][1], board[i][2])) {
-                if(board[i][0] == Constants.O){
+                if (board[i][0] == Constants.O) {
                     setWinner(oPlayer);
                     return 2;
-                }else{
+                } else {
                     setWinner(xPlayer);
                     return -2;
                 }
@@ -45,10 +45,10 @@ public class GameManager {
         }
         for (int i = 0; i < 3; i++) {
             if (haveTheSameValue(board[0][i], board[1][i], board[2][i])) {
-                if(board[0][i] == Constants.O){
+                if (board[0][i] == Constants.O) {
                     setWinner(oPlayer);
                     return 2;
-                }else{
+                } else {
                     setWinner(xPlayer);
                     return -2;
                 }
@@ -56,20 +56,20 @@ public class GameManager {
         }
 
         if (haveTheSameValue(board[0][0], board[1][1], board[2][2])) {
-            if(board[0][0] == Constants.O){
+            if (board[0][0] == Constants.O) {
                 setWinner(oPlayer);
                 return 2;
-            }else{
+            } else {
                 setWinner(xPlayer);
                 return -2;
             }
         }
 
         if (haveTheSameValue(board[2][0], board[1][1], board[0][2])) {
-            if(board[2][0] == Constants.O){
+            if (board[2][0] == Constants.O) {
                 setWinner(oPlayer);
                 return 2;
-            }else{
+            } else {
                 setWinner(xPlayer);
                 return -2;
             }
@@ -155,20 +155,20 @@ public class GameManager {
     public void reset() {
 
     }
-    
+
     private Move findBestMove(char board[][]) {
         int bestVal = Integer.MIN_VALUE;
         Move bestMove = new Move();
         bestMove.row = -1;
         bestMove.column = -1;
-       
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
                 if (board[i][j] == ' ') {
                     board[i][j] = 'O';
-                    int moveVal = minimax(100, false,board);
-                    board[i][j] = ' ';                                        
+                    int moveVal = minimax(100, false, board);
+                    board[i][j] = ' ';
                     if (moveVal > bestVal) {
                         bestMove.row = i;
                         bestMove.column = j;
@@ -176,11 +176,11 @@ public class GameManager {
                     }
                 }
             }
-        }       
+        }
         return bestMove;
     }
 
-    private int minimax(int depth, boolean isMaximizing,char board[][]) {
+    private int minimax(int depth, boolean isMaximizing, char board[][]) {
         int gameState = GameManager.checkWinner();
         if (gameState != 1 || depth == 0) {
             return gameState;
@@ -193,7 +193,7 @@ public class GameManager {
                     // Is the cell available?
                     if (board[i][j] == ' ') {
                         board[i][j] = 'O';
-                        int score = minimax(depth - 1, false,board);
+                        int score = minimax(depth - 1, false, board);
                         bestScore = Integer.max(score, bestScore);
                         board[i][j] = ' ';
                     }
@@ -201,15 +201,14 @@ public class GameManager {
             }
 
             return bestScore;
-        } 
-        else {
+        } else {
             int bestScore = Integer.MAX_VALUE;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Is the cell available?
                     if (board[i][j] == ' ') {
                         board[i][j] = 'X';
-                        int score = minimax(depth - 1, true,board);
+                        int score = minimax(depth - 1, true, board);
                         bestScore = Integer.min(score, bestScore);
                         board[i][j] = ' ';
                     }
@@ -218,34 +217,33 @@ public class GameManager {
             return bestScore;
         }
     }
-    
-     public Move playComputer(char [][]board , Level levelMode) {
-        Move bestMove = new Move();            
-            switch (levelMode) {
-                case Easy:
-                    bestMove = findRandomMove(board);
-                    break;
-                case MEDIUM:
-                    //TODO chanege find findRandomMove by findMediumMove
-                    bestMove = findRandomMove(board);
-                    break;
-                case HARD:
-                    //TODO chanege find findRandomMove by findBestMove
-                    bestMove = findBestMove(board);
-                    break;
-                default:
-                    break;
-            }
+
+    public Move playComputer(char[][] board, Level levelMode) {
+        Move bestMove = new Move();
+        switch (levelMode) {
+            case Easy:
+                bestMove = findRandomMove(board);
+                break;
+            case MEDIUM:
+                bestMove = findMediumMove(board);
+                break;
+            case HARD:
+                bestMove = findBestMove(board);
+                break;
+            default:
+                break;
+        }
         return bestMove;
     }
-    
+
+
     private Move findRandomMove(char board[][]) {
         Move move = new Move();
         move.row = -1;
         move.column = -1;
-        if(computerRound < 5){
+        if (computerRound < 5) {
             Random rand = new Random();
-            
+
             int x;
             int y;
 
@@ -257,9 +255,24 @@ public class GameManager {
             move.row = x;
             move.column = y;
         }
-        
-        computerRound ++;
+
+        computerRound++;
         return move;
     }
     
+       private Move findMediumMove(char board[][]) {
+
+        Move move = new Move();
+        move.row = -1;
+        move.column = -1;
+
+        if (computerRound == 3 ) {
+            move = findRandomMove(board);
+        } else {
+            move = findBestMove(board);
+        }
+        computerRound++;
+        return move;
+    }
+
 }
