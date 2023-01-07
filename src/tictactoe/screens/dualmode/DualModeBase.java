@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.network.Network;
 import tictactoe.screens.authentication.LoginBase;
 import tictactoe.screens.modes.ModeBase;
 
@@ -40,6 +41,7 @@ public class DualModeBase extends AnchorPane {
     protected final ImageView imageView0;
     protected final Text text3;
     protected final ImageView backImageView;
+    public static Network network;
 
     public DualModeBase(Stage stage) {
 
@@ -218,6 +220,7 @@ public class DualModeBase extends AnchorPane {
         getChildren().add(hBox1);
 
         onlineButton.setOnAction(e -> {
+            network = new Network();
             Parent pane = new LoginBase(stage);
             stage.getScene().setRoot(pane);
         });

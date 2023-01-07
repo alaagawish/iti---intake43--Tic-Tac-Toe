@@ -8,7 +8,7 @@ public class Message {
     String operation;
     boolean status;
     List<Player> players;
-    
+
     public boolean isStatus() {
         return status;
     }
@@ -16,6 +16,7 @@ public class Message {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
     public Message() {
         this.players = new ArrayList<>();
     }

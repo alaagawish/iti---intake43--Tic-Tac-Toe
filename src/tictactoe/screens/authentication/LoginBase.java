@@ -74,7 +74,6 @@ public class LoginBase extends BorderPane {
         tacLogoText = new Text();
         toeLogoText = new Text();
 
-        
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -290,11 +289,11 @@ public class LoginBase extends BorderPane {
         });
 
         loginButton.setOnAction(e -> {
-            Parent pane = new OnlineListBase(stage);
-            stage.getScene().setRoot(pane);
+
         });
 
         backImageView.setOnMousePressed(e -> {
+            DualModeBase.network.closeConnection();
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
 

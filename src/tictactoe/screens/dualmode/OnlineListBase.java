@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import tictactoe.models.Player;
 import tictactoe.screens.profile.ProfileBase;
 import tictactoe.utils.Dialogs;
 
@@ -47,7 +48,7 @@ public class OnlineListBase extends ScrollPane {
     protected final ImageView backImageView;
     protected final DropShadow dropShadow1;
 
-    public OnlineListBase(Stage stage) {
+    public OnlineListBase(Stage stage, Player player) {
 
         listBorderPane = new BorderPane();
         borderPane = new BorderPane();
@@ -147,7 +148,7 @@ public class OnlineListBase extends ScrollPane {
         BorderPane.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
         borderPane.setLeft(backImageView);
 
-        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Waiting Arwa To Accept the invitation ...", stackpane,"-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
+        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Waiting Arwa To Accept the invitation ...", stackpane, "-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
 
         dialog.setOnDialogClosed((event) -> {
             listBorderPane.setEffect(null);
@@ -260,15 +261,16 @@ public class OnlineListBase extends ScrollPane {
         hBox0.getChildren().add(label0);
         hBox0.getChildren().add(inviteButton3);
         listVBox.getChildren().add(hBox0);
-        
+
         backImageView.setOnMousePressed(e -> {
+            DualModeBase.network.closeConnection();
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
 
         });
 
         profileCircle.setOnMouseClicked(e -> {
-            Parent root = new ProfileBase(stage);
+            Parent root = new ProfileBase(stage, player);
             stage.getScene().setRoot(root);
         });
 

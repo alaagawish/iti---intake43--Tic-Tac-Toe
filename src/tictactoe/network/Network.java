@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,17 +18,32 @@ public class Network implements Runnable {
     Thread thread;
     PrintStream printStream;
     DataInputStream dataInputStream;
-
+    int localPortNum;
     String messageSentToServer, username, password;
+    Gson gson;
+    Message messageSent, messageReceived;
+    String playerToString;
+    public static String result;
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 
     public Network() {
 
-        username = "Alaa";
-        password = "2345";
         try {
-            socket = new Socket("127.0.0.1", 5005);
+            socket = new Socket(InetAddress.getLoopbackAddress(), 5005);
+            System.out.println("local addr:" + InetAddress.getLocalHost());
             dataInputStream = new DataInputStream(socket.getInputStream());
             printStream = new PrintStream(socket.getOutputStream());
+            localPortNum = socket.getLocalPort();
+            gson = new Gson();
+
+            System.out.println("socket : " + socket + " \nportNumber on client: " + localPortNum);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -38,8 +54,10 @@ public class Network implements Runnable {
     }
 
     public void closeConnection() {
-
-        printStream.println("close");
+        messageSent = new Message();
+        messageSent.setOperation("close");
+        messageSentToServer = gson.toJson(messageSent);
+        printStream.println(messageSentToServer);
 
         try {
             thread.sleep(100);
@@ -61,31 +79,15 @@ public class Network implements Runnable {
         while (true) {
             try {
                 if (socket.isConnected()) {
-                    Gson gson = new Gson();
-                    Message messageSent = new Message();
-                    messageSent.setOperation("Login");
-                    Player player = new Player(username, password);
 
-                    String playerToString = gson.toJson(player);
-                    messageSent.setPlayers(player);
-                    String messageSentToServer = gson.toJson(messageSent);
-
-                    printStream.println(messageSentToServer);
                     String messageReceivedFromServer = "";
+                    System.out.println("messageReceivedFromServer: " + messageReceivedFromServer);
                     messageReceivedFromServer = dataInputStream.readLine();
                     messageReceivedFromServer = messageReceivedFromServer.replaceAll("\r?\n", "");
                     if (!messageReceivedFromServer.isEmpty()) {
 
-                        Message messageReceived = new Gson().fromJson(messageReceivedFromServer, Message.class);
-
-                        if (messageReceived.getOperation().equals("Login")) {
-                            if (messageReceived.isStatus()) {
-                                System.out.println("Done login.......");
-                            } else {
-                                System.out.println("something wrong, check password or username..");
-                            }
-
-                        } else if (messageReceived.getOperation().equals("close")) {
+                        messageReceived = new Gson().fromJson(messageReceivedFromServer, Message.class);
+                        if (messageReceived.getOperation().equals("close")) {
 
                             try {
                                 thread.sleep(100);
@@ -102,8 +104,8 @@ public class Network implements Runnable {
 
                     }
 
-                    username = "Alaa";
-                    password = "23444";
+                    messageReceivedFromServer = null;
+                    messageReceived = null;
                 }
 
             } catch (IOException ex) {

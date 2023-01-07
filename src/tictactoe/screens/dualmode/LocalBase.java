@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import tictactoe.screens.game.GameBase;
 
 public class LocalBase extends BorderPane {
 
@@ -324,7 +325,7 @@ public class LocalBase extends BorderPane {
         headerHBox.getChildren().add(vBox);
 
         startButton.setOnAction(e -> {
-            Parent pane = new OnlineListBase(stage);
+            Parent pane = new GameBase(stage);
             stage.getScene().setRoot(pane);
         });
 
