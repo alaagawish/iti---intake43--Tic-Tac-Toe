@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import tictactoe.models.Player;
 import tictactoe.screens.profile.ProfileBase;
 import tictactoe.utils.Dialogs;
 
@@ -47,7 +48,7 @@ public class OnlineListBase extends ScrollPane {
     protected final ImageView backImageView;
     protected final DropShadow dropShadow1;
 
-    public OnlineListBase(Stage stage) {
+    public OnlineListBase(Stage stage, Player player) {
 
         listBorderPane = new BorderPane();
         borderPane = new BorderPane();
@@ -89,7 +90,7 @@ public class OnlineListBase extends ScrollPane {
 
         profileCircle.setFill(javafx.scene.paint.Color.valueOf("#ffffff00"));
         profileCircle.setId("profileCircle");
-        profileCircle.setRadius(80.0);
+        profileCircle.setRadius(60.0);
         profileCircle.setStroke(javafx.scene.paint.Color.BLACK);
         profileCircle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         BorderPane.setMargin(profileCircle, new Insets(30.0, 60.0, 0.0, 0.0));
@@ -110,7 +111,7 @@ public class OnlineListBase extends ScrollPane {
         savedGamesLabel.setPrefWidth(833.0);
         savedGamesLabel.setText("Invitation List");
         savedGamesLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
-        VBox.setMargin(savedGamesLabel, new Insets(30.0, 0.0, 0.0, 0.0));
+        VBox.setMargin(savedGamesLabel, new Insets(0.0, 0.0, 0.0, 0.0));
 
         gameHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         gameHBox.setPrefHeight(100.0);
@@ -138,16 +139,14 @@ public class OnlineListBase extends ScrollPane {
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(listBorderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
-
-        backImageView.setFitHeight(106.0);
-        backImageView.setFitWidth(120.0);
+        backImageView.setFitHeight(90.0);
+        backImageView.setFitWidth(110.0);
         backImageView.setPickOnBounds(true);
         backImageView.setPreserveRatio(true);
         backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
         BorderPane.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
         borderPane.setLeft(backImageView);
-
-        JFXDialog dialog = Dialogs.createBlurRequestingDialog("Waiting Arwa To Accept the invitation ...", stackpane);
+        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Waiting Arwa To Accept the invitation ...", stackpane, "-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
 
         dialog.setOnDialogClosed((event) -> {
             listBorderPane.setEffect(null);
@@ -260,16 +259,16 @@ public class OnlineListBase extends ScrollPane {
         hBox0.getChildren().add(label0);
         hBox0.getChildren().add(inviteButton3);
         listVBox.getChildren().add(hBox0);
-
-        profileCircle.setOnMouseClicked(e -> {
-            Parent root = new ProfileBase(stage);
-            stage.getScene().setRoot(root);
-        });
-
         backImageView.setOnMousePressed(e -> {
+            DualModeBase.network.closeConnection();
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
 
+        });
+
+        profileCircle.setOnMouseClicked(e -> {
+            Parent root = new ProfileBase(stage, player);
+            stage.getScene().setRoot(root);
         });
 
     }

@@ -290,8 +290,14 @@ public class SignUpBase extends BorderPane {
         });
 
         signUpButton.setOnAction(e -> {
-            Parent pane = new OnlineListBase(stage);
+//            Parent pane = new OnlineListBase(stage);
+//            stage.getScene().setRoot(pane);
+        });
+        backImageView.setOnMousePressed(e -> {
+            DualModeBase.network.closeConnection();
+            Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
+
         });
 
         backImageView.setOnMousePressed(e -> {

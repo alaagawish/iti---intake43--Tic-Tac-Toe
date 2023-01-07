@@ -71,9 +71,6 @@ public class LocalBase extends BorderPane {
         imageView = new ImageView();
         startButton = new Button();
         hBox = new HBox();
-
-        playerOne = new Player();
-        playerTwo = new Player();
         localTextFlowPane = new FlowPane();
         LocalText = new Text();
         firstPlayerTextField = new TextField();
@@ -84,6 +81,10 @@ public class LocalBase extends BorderPane {
         ticLogoText = new Text();
         tacLogoText = new Text();
         toeLogoText = new Text();
+
+        playerOne = new Player();
+        playerTwo = new Player();
+
         jFrame = new JFrame();
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);

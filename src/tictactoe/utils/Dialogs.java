@@ -12,13 +12,15 @@ import javafx.scene.text.Font;
 
 public class Dialogs {
 
-    public static JFXDialog createBlurSimpleDialog(String text, StackPane stackpane) {
+    public static JFXDialog createBlurSimpleDialog(String text, StackPane stackpane, String style) {
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         JFXDialog dialog = new JFXDialog(stackpane, dialogLayout, JFXDialog.DialogTransition.TOP);
 
-        dialogLayout.setStyle("-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
-
+//        -fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;
+        dialogLayout.setStyle(style);
+        
         Label dialogLabel = new Label(text);
+        dialogLabel.setStyle("-fx-color: rgb(255,255,255 )");
         dialogLabel.setFont(new Font("Comic Sans MS Bold", 20.0));
         dialogLayout.setBody(dialogLabel);
 
@@ -67,6 +69,6 @@ public class Dialogs {
 
         return dialog;
     }
-
+    
 }
 

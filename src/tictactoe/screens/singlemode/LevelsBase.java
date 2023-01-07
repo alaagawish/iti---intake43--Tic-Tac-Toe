@@ -22,7 +22,7 @@ import tictactoe.screens.game.GameBase;
 import tictactoe.screens.modes.ModeBase;
 
 public class LevelsBase extends BorderPane {
-    
+
     protected final VBox vBox;
     protected final ImageView logoImageView;
     protected final FlowPane TicTacToeFlowPane;
@@ -56,9 +56,9 @@ public class LevelsBase extends BorderPane {
     protected final Text hardText;
     protected final HBox headerHBox;
     Player playerOne, computer;
-    
+
     public LevelsBase(Stage stage) {
-        
+
         vBox = new VBox();
         logoImageView = new ImageView();
         TicTacToeFlowPane = new FlowPane();
@@ -93,65 +93,64 @@ public class LevelsBase extends BorderPane {
         hardText = new Text();
         playerOne = new Player();
         computer = new Player();
-        
+
         setMaxWidth(1280.0);
         setMinHeight(800.0);
         setMinWidth(1280.0);
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
         setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
-        
+
         vBox.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         vBox.setPrefHeight(150.0);
         vBox.setPrefWidth(140.0);
-        
         logoImageView.setFitHeight(68.0);
         logoImageView.setFitWidth(65.0);
         logoImageView.setPickOnBounds(true);
         logoImageView.setPreserveRatio(true);
         logoImageView.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
         VBox.setMargin(logoImageView, new Insets(10.0, 20.0, 0.0, 0.0));
-        
+
         TicTacToeFlowPane.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         TicTacToeFlowPane.setPrefHeight(20.0);
         TicTacToeFlowPane.setPrefWidth(72.0);
-        
+
         ticLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         ticLogoText.setText("Tic");
         ticLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
-        
+
         tacLogoText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         tacLogoText.setText("Tac");
         tacLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
-        
+
         toeLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         toeLogoText.setText("Toe");
         toeLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
         FlowPane.setMargin(toeLogoText, new Insets(0.0));
         VBox.setMargin(TicTacToeFlowPane, new Insets(0.0));
         setTop(vBox);
-        
+
         BorderPane.setAlignment(flowPane0, javafx.geometry.Pos.CENTER);
         flowPane0.setNodeOrientation(javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
         flowPane0.setOrientation(javafx.geometry.Orientation.VERTICAL);
         flowPane0.setPrefHeight(200.0);
         flowPane0.setPrefWidth(200.0);
         flowPane0.setStyle("-fx-border-radius: 42;");
-        
+
         flowPane1.setPrefHeight(137.0);
         flowPane1.setPrefWidth(500.0);
-        
+
         ticText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         ticText.setText("Tic");
         ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
-        
+
         tacText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         tacText.setLayoutX(10.0);
         tacText.setLayoutY(116.0);
         tacText.setText("Tac");
         tacText.setWrappingWidth(169.453125);
         tacText.setFont(new Font("Comic Sans MS Bold", 96.0));
-        
+
         toeText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         toeText.setLayoutX(10.0);
         toeText.setLayoutY(251.0);
@@ -159,11 +158,11 @@ public class LevelsBase extends BorderPane {
         toeText.setWrappingWidth(177.953125);
         toeText.setFont(new Font("Comic Sans MS Bold", 96.0));
         FlowPane.setMargin(flowPane1, new Insets(40.0, 390.0, 0.0, 390.0));
-        
+
         buttonsFlowPane.setMinWidth(1280.0);
         buttonsFlowPane.setPrefHeight(300.0);
         buttonsFlowPane.setPrefWidth(1280.0);
-        
+
         easyButton.setMinHeight(300.0);
         easyButton.setMinWidth(300.0);
         easyButton.setMnemonicParsing(false);
@@ -172,15 +171,15 @@ public class LevelsBase extends BorderPane {
         easyButton.setStyle("-fx-background-color: #ffffff00; -fx-background-radius: 69px;");
         easyButton.setTextFill(javafx.scene.paint.Color.valueOf("#ffffff00"));
         FlowPane.setMargin(easyButton, new Insets(0.0, 0.0, 0.0, 95.0));
-        
+
         easyAnchorPane.setPrefHeight(292.0);
         easyAnchorPane.setPrefWidth(293.0);
         easyAnchorPane.setStyle("-fx-background-color: rgba(130,213,49,0.7); -fx-background-radius: 69;");
-        
+
         BorderPane.setAlignment(headerHBox, javafx.geometry.Pos.CENTER);
         headerHBox.setPrefHeight(100.0);
         headerHBox.setPrefWidth(200.0);
-        
+
         firstStarEasyImageView.setFitHeight(58.0);
         firstStarEasyImageView.setFitWidth(48.0);
         firstStarEasyImageView.setLayoutX(40.0);
@@ -188,7 +187,7 @@ public class LevelsBase extends BorderPane {
         firstStarEasyImageView.setPickOnBounds(true);
         firstStarEasyImageView.setPreserveRatio(true);
         firstStarEasyImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-        
+
         secondStarEasyImageView.setFitHeight(58.0);
         secondStarEasyImageView.setFitWidth(48.0);
         secondStarEasyImageView.setLayoutX(115.0);
@@ -196,7 +195,7 @@ public class LevelsBase extends BorderPane {
         secondStarEasyImageView.setPickOnBounds(true);
         secondStarEasyImageView.setPreserveRatio(true);
         secondStarEasyImageView.setImage(new Image(getClass().getResource("/assets/images/emptyStar.png").toExternalForm()));
-        
+
         thirdStarEasyImageView.setFitHeight(58.0);
         thirdStarEasyImageView.setFitWidth(48.0);
         thirdStarEasyImageView.setLayoutX(190.0);
@@ -204,24 +203,24 @@ public class LevelsBase extends BorderPane {
         thirdStarEasyImageView.setPickOnBounds(true);
         thirdStarEasyImageView.setPreserveRatio(true);
         thirdStarEasyImageView.setImage(new Image(getClass().getResource("/assets/images/emptyStar.png").toExternalForm()));
-        
+
         easyText.setFill(javafx.scene.paint.Color.WHITE);
         easyText.setLayoutX(71.0);
         easyText.setLayoutY(245.0);
         easyText.setText("Easy");
         easyText.setFont(new Font("Comic Sans MS Bold", 56.0));
         easyButton.setGraphic(easyAnchorPane);
-        
+
         mediumButton.setMinHeight(300.0);
         mediumButton.setMinWidth(300.0);
         mediumButton.setMnemonicParsing(false);
         mediumButton.setStyle("-fx-background-radius: 50; -fx-background-color: #ffffff00;");
         FlowPane.setMargin(mediumButton, new Insets(0.0, 0.0, 0.0, 95.0));
-        
+
         mediumAnchorPane.setPrefHeight(200.0);
         mediumAnchorPane.setPrefWidth(200.0);
         mediumAnchorPane.setStyle("-fx-background-radius: 69; -fx-background-color: rgba(252, 207, 40,0.7);");
-        
+
         firstStarMediumImageView.setFitHeight(58.0);
         firstStarMediumImageView.setFitWidth(48.0);
         firstStarMediumImageView.setLayoutX(40.0);
@@ -229,7 +228,7 @@ public class LevelsBase extends BorderPane {
         firstStarMediumImageView.setPickOnBounds(true);
         firstStarMediumImageView.setPreserveRatio(true);
         firstStarMediumImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-        
+
         secondStarMediumImageView.setFitHeight(58.0);
         secondStarMediumImageView.setFitWidth(48.0);
         secondStarMediumImageView.setLayoutX(115.0);
@@ -237,7 +236,7 @@ public class LevelsBase extends BorderPane {
         secondStarMediumImageView.setPickOnBounds(true);
         secondStarMediumImageView.setPreserveRatio(true);
         secondStarMediumImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-        
+
         thirdStarMediumImageView.setFitHeight(58.0);
         thirdStarMediumImageView.setFitWidth(48.0);
         thirdStarMediumImageView.setLayoutX(190.0);
@@ -245,14 +244,14 @@ public class LevelsBase extends BorderPane {
         thirdStarMediumImageView.setPickOnBounds(true);
         thirdStarMediumImageView.setPreserveRatio(true);
         thirdStarMediumImageView.setImage(new Image(getClass().getResource("/assets/images/emptyStar.png").toExternalForm()));
-        
+
         mediumText.setFill(javafx.scene.paint.Color.WHITE);
         mediumText.setLayoutX(39.0);
         mediumText.setLayoutY(245.0);
         mediumText.setText("Medium");
         mediumText.setFont(new Font("Comic Sans MS Bold", 56.0));
         mediumButton.setGraphic(mediumAnchorPane);
-        
+
         hardButton.setLayoutX(75.0);
         hardButton.setLayoutY(10.0);
         hardButton.setMaxHeight(300.0);
@@ -261,13 +260,12 @@ public class LevelsBase extends BorderPane {
         hardButton.setMnemonicParsing(false);
         hardButton.setStyle("-fx-background-radius: 69; -fx-background-color: #ffffff00;");
         FlowPane.setMargin(hardButton, new Insets(0.0, 95.0, 0.0, 95.0));
-        
         setTop(headerHBox);
-        
+
         hardAnchorPane.setPrefHeight(200.0);
         hardAnchorPane.setPrefWidth(200.0);
         hardAnchorPane.setStyle("-fx-background-radius: 69; -fx-background-color: rgba(235, 59, 62,1);");
-        
+
         firstStarHardImageView.setFitHeight(58.0);
         firstStarHardImageView.setFitWidth(48.0);
         firstStarHardImageView.setLayoutX(190.0);
@@ -275,14 +273,14 @@ public class LevelsBase extends BorderPane {
         firstStarHardImageView.setPickOnBounds(true);
         firstStarHardImageView.setPreserveRatio(true);
         firstStarHardImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-        
+
         backImageView.setFitHeight(106.0);
         backImageView.setFitWidth(120.0);
         backImageView.setPickOnBounds(true);
         backImageView.setPreserveRatio(true);
         backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
         HBox.setMargin(backImageView, new Insets(15.0, 1000.0, 0.0, 30.0));
-        
+
         secondStarHardImageView.setFitHeight(58.0);
         secondStarHardImageView.setFitWidth(48.0);
         secondStarHardImageView.setLayoutX(115.0);
@@ -290,7 +288,7 @@ public class LevelsBase extends BorderPane {
         secondStarHardImageView.setPickOnBounds(true);
         secondStarHardImageView.setPreserveRatio(true);
         secondStarHardImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-        
+
         thirdStarHardImageView.setFitHeight(58.0);
         thirdStarHardImageView.setFitWidth(48.0);
         thirdStarHardImageView.setLayoutX(40.0);
@@ -298,7 +296,7 @@ public class LevelsBase extends BorderPane {
         thirdStarHardImageView.setPickOnBounds(true);
         thirdStarHardImageView.setPreserveRatio(true);
         thirdStarHardImageView.setImage(new Image(getClass().getResource("/assets/images/fullStar.png").toExternalForm()));
-        
+
         hardText.setFill(javafx.scene.paint.Color.WHITE);
         hardText.setLayoutX(71.0);
         hardText.setLayoutY(245.0);
@@ -307,7 +305,7 @@ public class LevelsBase extends BorderPane {
         hardButton.setGraphic(hardAnchorPane);
         FlowPane.setMargin(buttonsFlowPane, new Insets(110.0, 0.0, 0.0, 0.0));
         setCenter(flowPane0);
-        
+
         vBox.getChildren().add(logoImageView);
         TicTacToeFlowPane.getChildren().add(ticLogoText);
         TicTacToeFlowPane.getChildren().add(tacLogoText);
@@ -335,17 +333,15 @@ public class LevelsBase extends BorderPane {
         flowPane0.getChildren().add(buttonsFlowPane);
         headerHBox.getChildren().add(backImageView);
         headerHBox.getChildren().add(vBox);
-        
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
         dropShadow.setColor(Color.color(0, 0, 0, .16));
-        
         ticText.setEffect(dropShadow);
         tacText.setEffect(dropShadow);
         toeText.setEffect(dropShadow);
-        
         easyButton.setEffect(dropShadow);
         mediumButton.setEffect(dropShadow);
         hardButton.setEffect(dropShadow);
@@ -355,21 +351,21 @@ public class LevelsBase extends BorderPane {
             Parent pane = new GameBase(stage, Level.Easy, playerOne, computer);
             stage.getScene().setRoot(pane);
         });
-        
+
         mediumButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage,Level.MEDIUM, playerOne, computer);
+            Parent pane = new GameBase(stage, Level.MEDIUM, playerOne, computer);
             stage.getScene().setRoot(pane);
         });
-        
+
         hardButton.setOnAction(e -> {
             Parent pane = new GameBase(stage, Level.HARD, playerOne, computer);
             stage.getScene().setRoot(pane);
         });
-        
+
         backImageView.setOnMousePressed(e -> {
             Parent pane = new ModeBase(stage);
             stage.getScene().setRoot(pane);
-            
+
         });
     }
 }

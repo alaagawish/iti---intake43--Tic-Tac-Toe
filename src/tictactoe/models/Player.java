@@ -14,6 +14,8 @@ public class Player {
     private Status status;
     private int score;
     private Connection connection;
+    int id;
+    int portNum;
 
     public Player() {
     }
@@ -27,6 +29,15 @@ public class Player {
         this.connection = connection;
     }
 
+    public Player(String username, String password, int score, Status status, int id) {
+
+        this.username = username;
+        this.password = password;
+        this.score = score;
+        this.id = id;
+        this.status = status;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -37,14 +48,12 @@ public class Player {
 
     }
 
-    public String getPassword() {
-        return password;
+    public int getId() {
+        return id;
     }
 
-    public void setPassword(String password) {
-
-        this.password = password;
-
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIpAddress() {
@@ -53,6 +62,15 @@ public class Player {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+
+        this.password = password;
     }
 
     public Status getStatus() {
@@ -79,4 +97,10 @@ public class Player {
         this.connection = connection;
     }
 
+    @Override
+    public String toString() {
+//               return "Player{" + "id=" + id + ", playerName=" + playerName + ", ipAddress=" + ipAddress + ", status=" + status + ", password=" + password + ", score=" + score + '}';
+        return "Player{" + ", username=" + username + ", password=" + password + '}';
+
+    }
 }
