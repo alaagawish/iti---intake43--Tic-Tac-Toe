@@ -1,20 +1,18 @@
 package tictactoe.screens.game;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+import tictactoe.constants.Constants;
+import tictactoe.constants.Level;
+import tictactoe.models.Move;
 import tictactoe.models.Player;
 
 public class GameBase extends AnchorPane {
@@ -40,9 +38,9 @@ public class GameBase extends AnchorPane {
     protected final Text secondPlayerSignText;
 
     public char board[][];
-    LocalGame localGame;
+    GameManager gameManager;
 
-    public GameBase(Stage stage, String level, Player playerOne, Player playerTwo) {
+    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
 
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
@@ -96,6 +94,7 @@ public class GameBase extends AnchorPane {
         button00.setPrefHeight(171.0);
         button00.setPrefWidth(225.0);
         button00.setText(" ");
+        button00.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button00.setFont(new Font("Comic Sans MS Bold", 130.0));
         button00.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
         button00.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
@@ -128,6 +127,7 @@ public class GameBase extends AnchorPane {
         button02.setPrefWidth(225.0);
         button02.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button02.setText(" ");
+        button02.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button02.setFont(new Font("Comic Sans MS Bold", 130.0));
         button02.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
@@ -143,6 +143,7 @@ public class GameBase extends AnchorPane {
         button10.setPrefWidth(225.0);
         button10.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button10.setText(" ");
+        button10.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button10.setFont(new Font("Comic Sans MS Bold", 130.0));
         button10.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
@@ -158,6 +159,7 @@ public class GameBase extends AnchorPane {
         button11.setPrefWidth(225.0);
         button11.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button11.setText(" ");
+        button11.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button11.setFont(new Font("Comic Sans MS Bold", 130.0));
         button11.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
 
@@ -173,6 +175,7 @@ public class GameBase extends AnchorPane {
         button12.setPrefWidth(225.0);
         button12.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button12.setText(" ");
+        button12.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button12.setFont(new Font("Comic Sans MS Bold", 130.0));
         button12.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
@@ -188,6 +191,7 @@ public class GameBase extends AnchorPane {
         button20.setPrefWidth(225.0);
         button20.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button20.setText(" ");
+        button20.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button20.setFont(new Font("Comic Sans MS Bold", 130.0));
         button20.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
@@ -203,6 +207,7 @@ public class GameBase extends AnchorPane {
         button21.setPrefWidth(225.0);
         button21.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button21.setText(" ");
+        button21.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button21.setFont(new Font("Comic Sans MS Bold", 130.0));
         button21.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
@@ -217,6 +222,8 @@ public class GameBase extends AnchorPane {
         button22.setPrefHeight(171.0);
         button22.setPrefWidth(225.0);
         button22.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button22.setText(" ");
+        button22.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         button22.setFont(new Font("Comic Sans MS Bold", 130.0));
         button22.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
@@ -323,149 +330,214 @@ public class GameBase extends AnchorPane {
         firstPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
         secondPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
 
-        if (level.equals("local")) {
-            localGame = new LocalGame(playerOne, playerTwo, board);
-            firstPlayerNameText.setText(playerOne.getUsername());
-            secondPlayerNameText.setText(playerTwo.getUsername());
+        firstPlayerNameText.setText(playerOne.getUsername());
+        secondPlayerNameText.setText(playerTwo.getUsername());
+        gameManager = new GameManager(playerOne, playerTwo, board,level);
 
-        }
         button00.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button00.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button00.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+            button00.setTextFill(javafx.scene.paint.Color.valueOf(
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
 
-            }
-            button00.setText(localGame.gameManager.getTurn() + "");
+            button00.setText(GameManager.getTurn() + "");
             button00.setDisable(true);
-            board[0][0] = localGame.gameManager.getTurn();
-
+            board[0][0] = GameManager.getTurn();
             flipTurn();
-        });
-        button01.setOnAction(e -> {
-            if (level.equals("local")) {
-                if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                    button01.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-                } else {
-                    button01.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
                 }
-                button01.setText(localGame.gameManager.getTurn() + "");
-                button01.setDisable(true);
-                board[0][1] = localGame.gameManager.getTurn();
-
-                flipTurn();
+                
             }
         });
+        
+        button01.setOnAction(e -> {
+            button01.setTextFill(javafx.scene.paint.Color.valueOf(
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+            
+            button01.setText(GameManager.getTurn() + "");
+            button01.setDisable(true);
+            board[0][1] = GameManager.getTurn();
+            flipTurn();
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }
+            }
+        });
+        
         button02.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button02.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button02.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-
-            }
-            button02.setText(localGame.gameManager.getTurn() + "");
+            button02.setTextFill(javafx.scene.paint.Color.valueOf(
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+            
+            button02.setText(GameManager.getTurn() + "");
             button02.setDisable(true);
-            board[0][2] = localGame.gameManager.getTurn();
-
+            board[0][2] = GameManager.getTurn();
             flipTurn();
-        });
-        button10.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button10.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button10.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-
+            
+           if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
             }
-            button10.setText(localGame.gameManager.getTurn() + "");
+        });
+        
+        button10.setOnAction(e -> {
+            
+            button10.setTextFill(javafx.scene.paint.Color.valueOf(
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+            
+            button10.setText(GameManager.getTurn() + "");
             button10.setDisable(true);
-            board[1][0] = localGame.gameManager.getTurn();
-
+            board[1][0] = GameManager.getTurn();
             flipTurn();
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
+            }
         });
         button11.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button11.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button11.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-            }
-            button11.setText(localGame.gameManager.getTurn() + "");
+            button11.setTextFill(javafx.scene.paint.Color.valueOf(
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+            
+            button11.setText(GameManager.getTurn() + "");
             button11.setDisable(true);
-            board[1][1] = localGame.gameManager.getTurn();
-
+            board[1][1] = GameManager.getTurn();
             flipTurn();
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
+            }
         });
+        
         button12.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button12.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button12.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-
-            }
-            button12.setText(localGame.gameManager.getTurn() + "");
+            button12.setTextFill(javafx.scene.paint.Color.valueOf(
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+            
+            button12.setText(GameManager.getTurn() + "");
             button12.setDisable(true);
-            board[1][2] = localGame.gameManager.getTurn();
-
+            board[1][2] = GameManager.getTurn();
             flipTurn();
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
+            }
         });
+        
         button20.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button20.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button20.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-            }
-            button20.setText(localGame.gameManager.getTurn() + "");
+            button20.setTextFill(javafx.scene.paint.Color.valueOf(
+                            GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+                    ));
+            
+            button20.setText(GameManager.getTurn() + "");
             button20.setDisable(true);
-            board[2][0] = localGame.gameManager.getTurn();
-
+            board[2][0] = GameManager.getTurn();
             flipTurn();
-        });
-        button21.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button21.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button21.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
             }
-            button21.setText(localGame.gameManager.getTurn() + "");
+        });
+        
+        button21.setOnAction(e -> {
+            button21.setTextFill(javafx.scene.paint.Color.valueOf(
+                            GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+                    ));
+            
+            button21.setText(GameManager.getTurn() + "");
             button21.setDisable(true);
-            board[2][1] = localGame.gameManager.getTurn();
-
+            board[2][1] = GameManager.getTurn();
             flipTurn();
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
+            }
         });
         button22.setOnAction(e -> {
-            if (localGame.gameManager.getTurn() == GameSymbol.X) {
-                button22.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-            } else {
-                button22.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-
-            }
-            button22.setText(localGame.gameManager.getTurn() + "");
+            button22.setTextFill(javafx.scene.paint.Color.valueOf(
+                            GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+                    ));
+            
+            button22.setText(GameManager.getTurn() + "");
             button22.setDisable(true);
-            board[2][2] = localGame.gameManager.getTurn();
-
+            board[2][2] = GameManager.getTurn();
             flipTurn();
+            
+            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+                Move pcMove = gameManager.playComputer(board, level);
+                if(pcMove.row != -1 || pcMove.column != -1){
+                    board[pcMove.row][pcMove.column] = GameManager.getTurn();
+                    computerMove(pcMove);
+                    flipTurn();
+                }                
+            }
         });
 
     }
 
     public void flipTurn() {
 
-        if (localGame.gameManager.getTurn() == GameSymbol.X) {
-            localGame.gameManager.setTurn(GameSymbol.O);
+        if (GameManager.getTurn() == Constants.X) {
+            GameManager.setTurn(Constants.O);
 
         } else {
-            localGame.gameManager.setTurn(GameSymbol.X);
+            GameManager.setTurn(Constants.X);
 
         }
-        int winner = localGame.gameManager.checkWinner();
-        if (winner == 2) {
-            disableButtons();
-
-        } else if (winner == -2) {
-            disableButtons();
-
-        } else if (winner == 0) {
-            //x=o
-        } else {
+        int winner = GameManager.checkWinner();
+        switch (winner) {
+            case 2:
+                disableButtons();
+                break;
+            case -2:
+                disableButtons();
+                break;
+            case 0:
+                //x=o
+                break;
+            default:
+                break;
         }
     }
 
@@ -491,4 +563,34 @@ public class GameBase extends AnchorPane {
         button22.setDisable(true);
     }
 
+    public void computerMove(Move move) {
+        if (move.row == 0 && move.column == 0) {
+            button00.setText(GameManager.getTurn() + "");
+            button00.setDisable(true);
+        } else if (move.row == 0 && move.column == 1) {
+            button01.setText(GameManager.getTurn() + "");
+            button01.setDisable(true);
+        } else if (move.row == 0 && move.column == 2) {
+            button02.setText(GameManager.getTurn() + "");
+            button02.setDisable(true);
+        } else if (move.row == 1 && move.column == 0) {
+            button10.setText(GameManager.getTurn() + "");
+            button10.setDisable(true);
+        } else if (move.row == 1 && move.column == 1) {
+            button11.setText(GameManager.getTurn() + "");
+            button11.setDisable(true);
+        } else if (move.row == 1 && move.column == 2) {
+            button12.setText(GameManager.getTurn() + "");
+            button12.setDisable(true);
+        } else if (move.row == 2 && move.column == 0) {
+            button20.setText(GameManager.getTurn() + "");
+            button20.setDisable(true);
+        } else if (move.row == 2 && move.column == 1) {
+            button21.setText(GameManager.getTurn() + "");
+            button21.setDisable(true);
+        } else if (move.row == 2 && move.column == 2) {
+            button22.setText(GameManager.getTurn() + "");
+            button22.setDisable(true);
+        }
+    }
 }
