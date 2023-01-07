@@ -1,6 +1,8 @@
 
 package tictactoe.screens.game;
 
+import tictactoe.constants.Level;
+import tictactoe.models.Move;
 import tictactoe.models.Player;
 
 
@@ -78,9 +80,9 @@ public class LevelGame {
         }
     }
     
-    public Move playComputer(char [][]board , String levelMode) {
+    public Move playComputer(char [][]board , Level levelMode) {
         Move bestMove = new Move();
-        if(levelMode == "Hard"){
+        if(levelMode == Level.HARD){
             bestMove = findBestMove(board);
         }
 //        else if(levelMode == "Easy"){
@@ -94,7 +96,7 @@ public class LevelGame {
     
 }
 
-class Move {
-    public int row;
-    public int column;
-}
+//class Move {
+//    public int row;
+//    public int column;
+//}

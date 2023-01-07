@@ -1,4 +1,5 @@
 package tictactoe.screens.game;
+import tictactoe.constants.Level;
 import tictactoe.models.Player;
 
 public class LocalGame {

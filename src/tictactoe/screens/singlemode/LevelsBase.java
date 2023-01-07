@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.game.GameBase;
 import tictactoe.screens.modes.ModeBase;
@@ -351,17 +352,17 @@ public class LevelsBase extends BorderPane {
         playerOne.setUsername("Player");
         computer.setUsername("Root");
         easyButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage, "easy", playerOne, computer);
+            Parent pane = new GameBase(stage, Level.Easy, playerOne, computer);
             stage.getScene().setRoot(pane);
         });
         
         mediumButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage, "medium", playerOne, computer);
+            Parent pane = new GameBase(stage,Level.MEDIUM, playerOne, computer);
             stage.getScene().setRoot(pane);
         });
         
         hardButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage, "hard", playerOne, computer);
+            Parent pane = new GameBase(stage, Level.HARD, playerOne, computer);
             stage.getScene().setRoot(pane);
         });
         
