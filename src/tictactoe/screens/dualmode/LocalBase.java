@@ -21,9 +21,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.game.GameBase;
-import tictactoe.screens.game.LocalGame;
 
 public class LocalBase extends BorderPane {
 
@@ -337,7 +337,7 @@ public class LocalBase extends BorderPane {
             if (firstPlayerTextField.getText().length() > 0 && secondPlayerTextField.getText().length() > 0) {
                 playerOne.setUsername(firstPlayerTextField.getText());
                 playerTwo.setUsername(secondPlayerTextField.getText());
-                Parent pane = new GameBase(stage, "local", playerOne, playerTwo);
+                Parent pane = new GameBase(stage, Level.LOCAL, playerOne, playerTwo);
                 stage.getScene().setRoot(pane);
                 System.out.println("done");
             } else {
