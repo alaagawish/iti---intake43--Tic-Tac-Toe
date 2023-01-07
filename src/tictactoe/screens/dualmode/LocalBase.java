@@ -24,7 +24,6 @@ import javax.swing.JOptionPane;
 import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.game.GameBase;
-import tictactoe.screens.game.LocalGame;
 
 public class LocalBase extends BorderPane {
 
