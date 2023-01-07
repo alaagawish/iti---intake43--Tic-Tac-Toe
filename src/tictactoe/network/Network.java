@@ -68,9 +68,10 @@ public class Network implements Runnable {
         while (true) {
             System.out.println("resultt:" + this.getResult());
             if (this.getResult() != null) {
-//               Player playerLogin = new Gson().fromJson(this.getResult(), Player.class);
-                System.out.println("doneeeeeeeeeeeeeeeeeeeeeee");
-                return player;
+                Player playerLogin = player;
+                System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + player + " " + playerToString);
+                this.setResult(null);
+                return playerLogin;
             } else {
                 return null;
 
@@ -79,24 +80,23 @@ public class Network implements Runnable {
     }
 
     public Player editPassword(String username, String newPassword) {
-        this.username = username;
-        this.password = password;
-
         messageSent = new Message();
         messageSent.setOperation("Edit");
 //        messageSent.setNewPassword(newPassword);
-        Player player = new Player(username, password);
+        Player player = new Player(username, newPassword);
 
         playerToString = gson.toJson(player);
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
+        System.out.println("newpa:" + newPassword);
         printStream.println(messageSentToServer);
         while (true) {
             System.out.println("resultt:" + this.getResult());
             if (this.getResult() != null) {
-//               Player playerLogin = new Gson().fromJson(this.getResult(), Player.class);
+                Player playerEdited = player;
                 System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + player + " " + playerToString);
-                return player;
+                this.setResult(null);
+                return playerEdited;
             } else {
                 return null;
 
