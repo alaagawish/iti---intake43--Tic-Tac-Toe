@@ -1,5 +1,6 @@
 package tictactoe.screens.profile;
 
+import com.jfoenix.controls.JFXDialog;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -7,11 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -22,7 +25,7 @@ import javafx.stage.Stage;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
-import tictactoe.screens.modes.ModeBase;
+import tictactoe.utils.Dialogs;
 
 public class ProfileBase extends ScrollPane {
 
@@ -57,6 +60,7 @@ public class ProfileBase extends ScrollPane {
     protected final Label label2;
     protected final ImageView imageView0;
     protected final ImageView backImageView, backImageView2;
+    protected boolean toggleFlag;
 
     public ProfileBase(Stage stage, Player player) {
 
@@ -92,6 +96,7 @@ public class ProfileBase extends ScrollPane {
         imageView0 = new ImageView();
         backImageView = new ImageView();
         backImageView2 = new ImageView();
+        toggleFlag = false;
 
         setId("profileScrollPane");
         setPrefWidth(1280.0);
@@ -231,7 +236,7 @@ public class ProfileBase extends ScrollPane {
         passordLabel.setText("Password:");
         passordLabel.setFont(new Font("Comic Sans MS", 24.0));
 
-        passwordField.setDisable(true);
+//        passwordField.setDisable(true);
         passwordField.setId("passwordField");
         passwordField.setMaxHeight(65.0);
         passwordField.setMaxWidth(365.0);
@@ -239,7 +244,6 @@ public class ProfileBase extends ScrollPane {
         passwordField.setPrefHeight(65.0);
         passwordField.setPrefWidth(391.0);
         passwordField.getStylesheets().add("/tictactoe/screens/profile/profile.css");
-        passwordField.setText("123456789");
         HBox.setMargin(passwordField, new Insets(0.0, 0.0, 0.0, 28.0));
         VBox.setMargin(passwordHBox, new Insets(10.0, 0.0, 0.0, 60.0));
 
@@ -359,6 +363,39 @@ public class ProfileBase extends ScrollPane {
         backImageView.setOnMousePressed(e -> {
             Parent pane = new OnlineListBase(stage, player);
             stage.getScene().setRoot(pane);
+
+        });
+
+        StackPane stackpane = new StackPane();
+        stackpane.getChildren().add(borderPane);
+        BoxBlur blur = new BoxBlur(3, 3, 3);
+        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Password length must be more than 8", stackpane, "-fx-background-color: rgba(235, 59, 62,1); -fx-background-radius: 10 10 10 10 ;");
+
+        dialog.setOnDialogClosed((event) -> {
+            borderPane.setEffect(null);
+        });
+        setContent(stackpane);
+
+        editInfoButton.setOnAction(e -> {
+
+            if (!toggleFlag) {
+                toggleFlag = !toggleFlag;
+                passwordField.setEditable(true);
+                editInfoButton.setText("Save");
+
+            } else {
+                String newPassword = passwordField.getText();
+                if (newPassword.length() > 8) {
+                    passwordField.setEditable(false);
+                    editInfoButton.setText("Edit");
+                    toggleFlag = !toggleFlag;
+                    Player playerEdited = DualModeBase.network.editPassword(player.getUsername(),  passwordField.getText());
+
+                } else {
+                    dialog.show();
+                    borderPane.setEffect(blur);
+                }
+            }
 
         });
 
