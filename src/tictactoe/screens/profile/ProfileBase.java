@@ -150,7 +150,7 @@ public class ProfileBase extends ScrollPane {
         scoreLabel.setLayoutX(10.0);
         scoreLabel.setLayoutY(10.0);
         scoreLabel.getStylesheets().add("/tictactoe/screens/profile/profile.css");
-        scoreLabel.setText("44");
+        scoreLabel.setText(player.getScore() + "");
         scoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#fccf28"));
         scoreLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
         borderPane0.setCenter(vBox);
@@ -236,7 +236,7 @@ public class ProfileBase extends ScrollPane {
         passordLabel.setText("Password:");
         passordLabel.setFont(new Font("Comic Sans MS", 24.0));
 
-//        passwordField.setDisable(true);
+        passwordField.setDisable(true);
         passwordField.setId("passwordField");
         passwordField.setMaxHeight(65.0);
         passwordField.setMaxWidth(365.0);
@@ -381,15 +381,18 @@ public class ProfileBase extends ScrollPane {
             if (!toggleFlag) {
                 toggleFlag = !toggleFlag;
                 passwordField.setEditable(true);
+                passwordField.setDisable(false);
                 editInfoButton.setText("Save");
 
             } else {
                 String newPassword = passwordField.getText();
-                if (newPassword.length() > 8) {
+                if (newPassword.length() >= 8) {
                     passwordField.setEditable(false);
+                    passwordField.setDisable(true);
                     editInfoButton.setText("Edit");
+                    System.out.println("new pass:" + newPassword);
                     toggleFlag = !toggleFlag;
-                    Player playerEdited = DualModeBase.network.editPassword(player.getUsername(),  passwordField.getText());
+                    Player playerEdited = DualModeBase.network.editPassword(player.getUsername(), newPassword);
 
                 } else {
                     dialog.show();

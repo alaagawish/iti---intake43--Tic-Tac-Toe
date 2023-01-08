@@ -290,11 +290,10 @@ public class LoginBase extends BorderPane {
         });
 
         loginButton.setOnAction(e -> {
-            if (DualModeBase.network.login(userNameTextField.getText(), passwordField.getText()) != null) {
+            Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
+            if (player != null) {
                 System.out.println("loginBase doneeeeeeeeee+");
-                Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
-
-                Parent pane = new OnlineListBase(stage,player);
+                Parent pane = new OnlineListBase(stage, player);
                 stage.getScene().setRoot(pane);
             } else {
                 userNameTextField.setText("");
