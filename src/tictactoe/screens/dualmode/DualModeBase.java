@@ -222,7 +222,7 @@ public class DualModeBase extends AnchorPane {
         onlineButton.setOnAction(e -> {
             network = new Network();
             Parent pane = new LoginBase(stage);
-            stage.getScene().setRoot(pane);
+            stage.getScene().setRoot(pane);           
         });
 
         localButton.setOnAction(e -> {

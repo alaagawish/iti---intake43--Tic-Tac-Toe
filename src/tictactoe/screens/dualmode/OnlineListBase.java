@@ -1,6 +1,7 @@
 package tictactoe.screens.dualmode;
 
 import com.jfoenix.controls.JFXDialog;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -49,6 +50,12 @@ public class OnlineListBase extends ScrollPane {
     protected final DropShadow dropShadow1;
 
     public OnlineListBase(Stage stage, Player player) {
+       
+        List<Player> players = DualModeBase.network.getOnlineList();
+
+        if(players != null){
+            System.err.println("Players:" + players);
+        }
 
         listBorderPane = new BorderPane();
         borderPane = new BorderPane();

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tictactoe.models.Message;
@@ -235,6 +236,18 @@ public class Network implements Runnable {
                                 thread.sleep(100);
                             }
 
+                        }else if (messageReceived.getOperation().equals("getOnlineList")) {
+                            if (messageReceived.getStatus() == "done") {
+                                System.out.println("Done getOnlineList.......");
+                                System.out.println(messageReceived.getPlayers());
+                                
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                System.out.println("something wrong");
+                            }
+                            
+                            
+                            
+//                            this.setResult(null);
                         }
 
                     }
@@ -252,6 +265,26 @@ public class Network implements Runnable {
             }
         }
 
+    }
+    
+    public List<Player> getOnlineList() {
+        messageSent = new Message();
+        messageSent.setOperation("getOnlineList");
+        messageSentToServer = gson.toJson(messageSent);
+        printStream.println(messageSentToServer);
+        try {
+            thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("resultt:" + messageReceived.getPlayers());
+        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
+            return messageReceived.getPlayers();
+        } else {
+            return null;
+        }
     }
 
 }
