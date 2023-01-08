@@ -1,5 +1,6 @@
 package tictactoe.screens.game;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -8,6 +9,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.screens.dualmode.DualModeBase;
 
 public class winnerFXMLBase extends AnchorPane {
 
@@ -18,8 +20,6 @@ public class winnerFXMLBase extends AnchorPane {
     public winnerFXMLBase(Stage stage) {
 
         headerTextView = new Text();
-//        Media video = new Media("/assets/images/winnerVideo.mp4");
-//        MediaPlayer mp = new MediaPlayer(video);
         winMediaView = new MediaView();
         backButton = new Button();
 
@@ -42,14 +42,6 @@ public class winnerFXMLBase extends AnchorPane {
         winMediaView.setFitWidth(500.0);
         winMediaView.setLayoutX(390.0);
         winMediaView.setLayoutY(170.0);
-        //winMediaView.fitWidthProperty().bind(stage.widthProperty());
-//        winMediaView.setFitWidth(width);
-//        winMediaView.setTranslateX(-width/2.0); 
-//        winMediaView.setScaleX(-scale);
-//
-//        winMediaView.setFitHeight(height);
-//        winMediaView.setTranslateY(-height/2.0);
-//        winMediaView.setScaleY(scale);
 
         Media media = new Media(getClass().getResource("/assets/images/winnerVideo.mp4").toExternalForm());  
 
@@ -57,14 +49,7 @@ public class winnerFXMLBase extends AnchorPane {
          
         MediaPlayer mediaPlayer = new MediaPlayer(media); 
         winMediaView.setMediaPlayer(mediaPlayer);
-//        if(mode==0)
-//        {
-//            mediaView.setScaleX(1.19);
-//            mediaView.setScaleY(1.5);
-//        }else 
-//        {
-//          mediaView.setScaleY(1.2);
-//        }
+
         mediaPlayer.setAutoPlay(true);
 
         backButton.setLayoutX(567.0);
@@ -74,6 +59,13 @@ public class winnerFXMLBase extends AnchorPane {
         backButton.setText("Back");
         backButton.setTextFill(javafx.scene.paint.Color.valueOf("#fffefe"));
         backButton.setFont(new Font("Comic Sans MS", 50.0));
+        
+        backButton.setOnMousePressed(e -> {
+            Parent pane = new DualModeBase(stage);
+            stage.getScene().setRoot(pane);
+            mediaPlayer.stop();
+
+        });
 
         getChildren().add(headerTextView);
         getChildren().add(winMediaView);

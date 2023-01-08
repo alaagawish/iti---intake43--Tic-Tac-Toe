@@ -3,6 +3,7 @@ package tictactoe.screens.game;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
@@ -41,9 +42,11 @@ public class GameBase extends AnchorPane {
 
     public char board[][];
     GameManager gameManager;
-    Stage stage;
+    Stage stageVideo;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
+        
+        this.stageVideo = stage;
 
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
@@ -516,6 +519,11 @@ public class GameBase extends AnchorPane {
                 }                
             }
         });
+        
+//        if(gameManager.checkWinner() == 2 || gameManager.checkWinner() == -2){
+//            Parent pane = new winnerFXMLBase(stage);
+//            stage.getScene().setRoot(pane);
+//        }
 
     }
 
@@ -531,16 +539,15 @@ public class GameBase extends AnchorPane {
         }
         int winner = GameManager.checkWinner();
         switch (winner) {
-            
             case 2:
                 disableButtons();
-                pane = new winnerFXMLBase(stage);
-                stage.getScene().setRoot(pane);
+                pane = new winnerFXMLBase(stageVideo);
+                stageVideo.getScene().setRoot(pane);
                 break;
             case -2:
                 disableButtons();
-                pane = new winnerFXMLBase(stage);
-                stage.getScene().setRoot(pane);
+                pane = new winnerFXMLBase(stageVideo);
+                stageVideo.getScene().setRoot(pane);
                 break;
             case 0:
                 //x=o
