@@ -3,20 +3,20 @@ package tictactoe.screens.game;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import javafx.stage.Stage;
 import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
-import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.modes.ModeBase;
 
 public class GameBase extends AnchorPane {
 
@@ -45,6 +45,8 @@ public class GameBase extends AnchorPane {
     Stage stageVideo;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
+
+        this.stageVideo = stage;
 
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
@@ -532,25 +534,27 @@ public class GameBase extends AnchorPane {
         }
         int winner = GameManager.checkWinner();
         switch (winner) {
-
             case 2:
                 disableButtons();
-                pane = new winnerFXMLBase();
+                winnerFXMLBase.video = "/assets/images/losser.mp4";
+                winnerFXMLBase.message = "Hard Luck Next Time";
+                pane = new winnerFXMLBase(stageVideo);
                 stageVideo.getScene().setRoot(pane);
-                stageVideo = new Stage();
-                stageVideo.setScene(new Scene(pane, 1280.0, 800));
-                stageVideo.show();
                 break;
             case -2:
                 disableButtons();
-                pane = new winnerFXMLBase();
-                stageVideo = new Stage();
-                stageVideo.setScene(new Scene(pane, 1280.0, 800));
-                stageVideo.show();
-
+                winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
+                winnerFXMLBase.message = "Winner Winner Chiken Dinner";
+                pane = new winnerFXMLBase(stageVideo);
+                stageVideo.getScene().setRoot(pane);
                 break;
             case 0:
                 //x=o
+                winnerFXMLBase.video = "/assets/images/draw.mp4";
+                winnerFXMLBase.message = "No Winner, Try Play Again";
+                pane = new winnerFXMLBase(stageVideo);
+                stageVideo.getScene().setRoot(pane);
+
                 break;
             default:
                 break;
