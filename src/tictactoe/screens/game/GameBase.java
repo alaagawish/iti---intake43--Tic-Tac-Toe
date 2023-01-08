@@ -3,6 +3,7 @@ package tictactoe.screens.game;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
@@ -41,7 +42,7 @@ public class GameBase extends AnchorPane {
 
     public char board[][];
     GameManager gameManager;
-    Stage stage;
+    Stage stageVideo;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
 
@@ -335,7 +336,7 @@ public class GameBase extends AnchorPane {
 
         firstPlayerNameText.setText(playerOne.getUsername());
         secondPlayerNameText.setText(playerTwo.getUsername());
-        gameManager = new GameManager(playerOne, playerTwo, board,level);
+        gameManager = new GameManager(playerOne, playerTwo, board, level);
 
         button00.setOnAction(e -> {
             button00.setTextFill(javafx.scene.paint.Color.valueOf(
@@ -346,174 +347,174 @@ public class GameBase extends AnchorPane {
             button00.setDisable(true);
             board[0][0] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
                 }
-                
+
             }
         });
-        
+
         button01.setOnAction(e -> {
             button01.setTextFill(javafx.scene.paint.Color.valueOf(
                     GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
             ));
-            
+
             button01.setText(GameManager.getTurn() + "");
             button01.setDisable(true);
             board[0][1] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
                 }
             }
         });
-        
+
         button02.setOnAction(e -> {
             button02.setTextFill(javafx.scene.paint.Color.valueOf(
                     GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
             ));
-            
+
             button02.setText(GameManager.getTurn() + "");
             button02.setDisable(true);
             board[0][2] = GameManager.getTurn();
             flipTurn();
-            
-           if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
-        
+
         button10.setOnAction(e -> {
-            
+
             button10.setTextFill(javafx.scene.paint.Color.valueOf(
                     GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
             ));
-            
+
             button10.setText(GameManager.getTurn() + "");
             button10.setDisable(true);
             board[1][0] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
         button11.setOnAction(e -> {
             button11.setTextFill(javafx.scene.paint.Color.valueOf(
                     GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
             ));
-            
+
             button11.setText(GameManager.getTurn() + "");
             button11.setDisable(true);
             board[1][1] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
-        
+
         button12.setOnAction(e -> {
             button12.setTextFill(javafx.scene.paint.Color.valueOf(
                     GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
             ));
-            
+
             button12.setText(GameManager.getTurn() + "");
             button12.setDisable(true);
             board[1][2] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
-        
+
         button20.setOnAction(e -> {
             button20.setTextFill(javafx.scene.paint.Color.valueOf(
-                            GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
-                    ));
-            
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+
             button20.setText(GameManager.getTurn() + "");
             button20.setDisable(true);
             board[2][0] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
-        
+
         button21.setOnAction(e -> {
             button21.setTextFill(javafx.scene.paint.Color.valueOf(
-                            GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
-                    ));
-            
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+
             button21.setText(GameManager.getTurn() + "");
             button21.setDisable(true);
             board[2][1] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
         button22.setOnAction(e -> {
             button22.setTextFill(javafx.scene.paint.Color.valueOf(
-                            GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
-                    ));
-            
+                    GameManager.getTurn() == Constants.X ? "#ffde59" : "#3dc0c2"
+            ));
+
             button22.setText(GameManager.getTurn() + "");
             button22.setDisable(true);
             board[2][2] = GameManager.getTurn();
             flipTurn();
-            
-            if (level == Level.Easy || level == Level.MEDIUM ||level == Level.HARD){
+
+            if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
                 Move pcMove = gameManager.playComputer(board, level);
-                if(pcMove.row != -1 || pcMove.column != -1){
+                if (pcMove.row != -1 || pcMove.column != -1) {
                     board[pcMove.row][pcMove.column] = GameManager.getTurn();
                     computerMove(pcMove);
                     flipTurn();
-                }                
+                }
             }
         });
 
@@ -531,16 +532,22 @@ public class GameBase extends AnchorPane {
         }
         int winner = GameManager.checkWinner();
         switch (winner) {
-            
+
             case 2:
                 disableButtons();
-                pane = new winnerFXMLBase(stage);
-                stage.getScene().setRoot(pane);
+                pane = new winnerFXMLBase();
+                stageVideo.getScene().setRoot(pane);
+                stageVideo = new Stage();
+                stageVideo.setScene(new Scene(pane, 1280.0, 800));
+                stageVideo.show();
                 break;
             case -2:
                 disableButtons();
-                pane = new winnerFXMLBase(stage);
-                stage.getScene().setRoot(pane);
+                pane = new winnerFXMLBase();
+                stageVideo = new Stage();
+                stageVideo.setScene(new Scene(pane, 1280.0, 800));
+                stageVideo.show();
+
                 break;
             case 0:
                 //x=o
