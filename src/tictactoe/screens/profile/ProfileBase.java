@@ -236,7 +236,7 @@ public class ProfileBase extends ScrollPane {
         passordLabel.setText("Password:");
         passordLabel.setFont(new Font("Comic Sans MS", 24.0));
 
-//        passwordField.setDisable(true);
+        passwordField.setDisable(true);
         passwordField.setId("passwordField");
         passwordField.setMaxHeight(65.0);
         passwordField.setMaxWidth(365.0);
@@ -381,12 +381,14 @@ public class ProfileBase extends ScrollPane {
             if (!toggleFlag) {
                 toggleFlag = !toggleFlag;
                 passwordField.setEditable(true);
+                passwordField.setDisable(false);
                 editInfoButton.setText("Save");
 
             } else {
                 String newPassword = passwordField.getText();
                 if (newPassword.length() >= 8) {
                     passwordField.setEditable(false);
+                    passwordField.setDisable(true);
                     editInfoButton.setText("Edit");
                     System.out.println("new pass:" + newPassword);
                     toggleFlag = !toggleFlag;

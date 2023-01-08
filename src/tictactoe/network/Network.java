@@ -24,6 +24,15 @@ public class Network implements Runnable {
     Message messageSent, messageReceived;
     String playerToString;
     public static Player result;
+    public static String flag;
+
+    public static String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public Player getResult() {
         return result;
@@ -42,6 +51,8 @@ public class Network implements Runnable {
             printStream = new PrintStream(socket.getOutputStream());
             localPortNum = socket.getLocalPort();
             gson = new Gson();
+            this.setFlag(null);
+            this.setResult(null);
 
             System.out.println("socket : " + socket + " \nportNumber on client: " + localPortNum);
         } catch (IOException ex) {
@@ -54,54 +65,56 @@ public class Network implements Runnable {
     }
 
     public Player login(String username, String password) {
-        this.username = username;
-        this.password = password;
-
         messageSent = new Message();
         messageSent.setOperation("Login");
         Player player = new Player(username, password);
-
-        playerToString = gson.toJson(player);
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
         printStream.println(messageSentToServer);
-        while (true) {
-            System.out.println("resultt:" + this.getResult());
-            if (this.getResult() != null) {
-                Player playerLogin = player;
-                System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + player + " " + playerToString);
-                this.setResult(null);
-                return playerLogin;
-            } else {
-                return null;
-
-            }
+        try {
+            //        while (true) {
+            thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        System.out.println("resultt:" + messageReceived.getPlayers().get(0));
+        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+
+            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
+            return messageReceived.getPlayers().get(0);
+        } else {
+            return null;
+
+        }
+
     }
 
     public Player editPassword(String username, String newPassword) {
         messageSent = new Message();
         messageSent.setOperation("Edit");
-//        messageSent.setNewPassword(newPassword);
         Player player = new Player(username, newPassword);
 
-        playerToString = gson.toJson(player);
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
         System.out.println("newpa:" + newPassword);
         printStream.println(messageSentToServer);
-        while (true) {
-            System.out.println("resultt:" + this.getResult());
-            if (this.getResult() != null) {
-                Player playerEdited = player;
-                System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + player + " " + playerToString);
-                this.setResult(null);
-                return playerEdited;
-            } else {
-                return null;
-
-            }
+        try {
+            thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        System.out.println("resultt:" + messageReceived.getPlayers().get(0));
+        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+
+            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
+            return messageReceived.getPlayers().get(0);
+        } else {
+            return null;
+
+        }
+
     }
 
     public void closeConnection() {
@@ -118,8 +131,10 @@ public class Network implements Runnable {
             thread.stop();
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
+
         } catch (InterruptedException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Network.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -135,56 +150,66 @@ public class Network implements Runnable {
                     System.out.println("messageReceivedFromServer: " + messageReceivedFromServer);
                     messageReceivedFromServer = dataInputStream.readLine();
                     messageReceivedFromServer = messageReceivedFromServer.replaceAll("\r?\n", "");
+                    System.out.println("meeeee:::" + messageReceivedFromServer);
+
                     if (!messageReceivedFromServer.isEmpty()) {
 
-                        messageReceived = new Gson().fromJson(messageReceivedFromServer, Message.class);
+                        messageReceived = new Gson().fromJson(messageReceivedFromServer, Message.class
+                        );
                         if (messageReceived.getOperation().equalsIgnoreCase("close")) {
 
                             try {
-                                thread.sleep(100);
+//                                thread.sleep(100);
                                 dataInputStream.close();
                                 printStream.close();
                                 socket.close();
                                 thread.stop();
                             } catch (IOException e) {
                                 System.out.println("Error: " + e.getMessage());
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         } else if (messageReceived.getOperation().equalsIgnoreCase("Login")) {
-                            if (messageReceived.isStatus()) {
+                            if (messageReceived.getStatus() == "done") {
+                                this.setFlag("done");
                                 System.out.println("Done login......." + messageReceived.getPlayers().get(0));
                                 this.setResult(messageReceived.getPlayers().get(0));
                                 thread.sleep(100);
-                            } else {
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                this.setFlag("wrong");
+
                                 System.out.println("something wrong, check password or username..");
                                 this.setResult(null);
                                 thread.sleep(100);
                             }
 
                         } else if (messageReceived.getOperation().equalsIgnoreCase("Edit")) {
-                            if (messageReceived.isStatus()) {
+                            if (messageReceived.getStatus() == "done") {
+                                this.setFlag("done");
+
                                 System.out.println("Done login......." + messageReceived.getPlayers().get(0));
                                 this.setResult(messageReceived.getPlayers().get(0));
-                                thread.sleep(100);
-                            } else {
+//                                thread.sleep(100);
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                this.setFlag("wrong");
+
                                 System.out.println("something wrong, check password or username..");
                                 this.setResult(null);
-                                thread.sleep(100);
+//                                thread.sleep(100);
                             }
 
                         }
 
                     }
 
-                    messageReceivedFromServer = null;
-                    messageReceived = null;
+//                    messageReceivedFromServer = null;
+//                    messageReceived = null;
                 }
 
             } catch (IOException ex) {
                 System.out.println("EX Error: " + ex.getLocalizedMessage());
+
             } catch (InterruptedException ex) {
-                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Network.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
 

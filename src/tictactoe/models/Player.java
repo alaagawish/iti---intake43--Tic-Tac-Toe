@@ -7,44 +7,21 @@ public class Player {
     String ipAddress;
     String status;
     int score;
-    int id;
-    int portNum;
-
-    public Player(String username, String password) {
-
-        this.username = username;
-        this.password = password;
-    }
-
-    public Player() {
-
-    }
-
-    public Player(String username, String password, int score, String status, int id) {
-
-        this.username = username;
-        this.password = password;
-        this.score = score;
-        this.id = id;
-        this.status = status;
-    }
 
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
-
         this.username = username;
-
     }
 
-    public int getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getIpAddress() {
@@ -63,21 +40,40 @@ public class Player {
         this.status = status;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-
-        this.password = password;
-    }
-
     public int getScore() {
         return score;
     }
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    int id;
+
+    public Player(String username, String password) {
+
+        this.username = username;
+        this.password = password;
+    }
+
+    public Player() {
+
+    }
+
+    public Player(String username, String password, int score, String status, int id) {
+
+        this.username = username;
+        this.password = password;
+        this.score = score;
+        this.id = id;
+        this.status = status;
     }
 
     @Override
