@@ -6,8 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(#ffffff,#E5EDEE);" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(#ffffff,#E5EDEE);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fx:id="headerTextView" fill="#3dc0c2" layoutX="319.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player X is Winner">
          <font>
@@ -15,7 +14,7 @@
          </font>
       </Text>
       <MediaView fx:id="winMediaView" fitHeight="400.0" fitWidth="880.0" layoutX="190.0" layoutY="170.0" />
-      <Button fx:id="backButton" layoutX="567.0" layoutY="612.0" mnemonicParsing="false" style="-fx-background-color: #3dc0c2;" text="Back" textFill="#fffefe">
+      <Button fx:id="backButton" layoutX="567.0" layoutY="612.0" mnemonicParsing="false" style="-fx-background-color: #3dc0c2; -fx-background-radius: 45; -fx-effect: dropshadow( one-pass-box  , #BFBFC3 , 10 ,0.4 , -7, 7 );" text="Back" textFill="#fffefe">
          <font>
             <Font name="Comic Sans MS" size="50.0" />
          </font>

@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.game.winnerFXMLBase;
 import tictactoe.screens.splash.SplashBase;
 
 public class TicTacToe extends Application {

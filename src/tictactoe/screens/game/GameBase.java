@@ -2,6 +2,7 @@ package tictactoe.screens.game;
 
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
@@ -14,6 +15,7 @@ import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
+import tictactoe.screens.dualmode.DualModeBase;
 
 public class GameBase extends AnchorPane {
 
@@ -39,6 +41,7 @@ public class GameBase extends AnchorPane {
 
     public char board[][];
     GameManager gameManager;
+    Stage stage;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
 
@@ -518,6 +521,7 @@ public class GameBase extends AnchorPane {
 
     public void flipTurn() {
 
+        Parent pane;
         if (GameManager.getTurn() == Constants.X) {
             GameManager.setTurn(Constants.O);
 
@@ -527,11 +531,16 @@ public class GameBase extends AnchorPane {
         }
         int winner = GameManager.checkWinner();
         switch (winner) {
+            
             case 2:
                 disableButtons();
+                pane = new winnerFXMLBase(stage);
+                stage.getScene().setRoot(pane);
                 break;
             case -2:
                 disableButtons();
+                pane = new winnerFXMLBase(stage);
+                stage.getScene().setRoot(pane);
                 break;
             case 0:
                 //x=o
