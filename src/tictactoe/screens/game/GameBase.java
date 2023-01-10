@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -283,7 +284,7 @@ public class GameBase extends AnchorPane {
         firstPlayerNameText.setStrokeWidth(0.0);
         firstPlayerNameText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
         firstPlayerNameText.setText("Alaa");
-        firstPlayerNameText.setFont(new Font("Comic Sans MS Bold", 70.0));
+        firstPlayerNameText.setFont(new Font("Comic Sans MS Bold", 60.0));
 
         firstPlayerSignText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         firstPlayerSignText.setId("firstPlayerSignText");
@@ -293,7 +294,7 @@ public class GameBase extends AnchorPane {
         firstPlayerSignText.setStrokeWidth(0.0);
         firstPlayerSignText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
         firstPlayerSignText.setText("X");
-        firstPlayerSignText.setFont(new Font("Comic Sans MS Bold", 70.0));
+        firstPlayerSignText.setFont(new Font("Comic Sans MS Bold", 60.0));
 
         secondPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         secondPlayerNameText.setId("secondPlayerNameText");
@@ -377,13 +378,15 @@ public class GameBase extends AnchorPane {
             handleButton(button22, 2, 2, level);
         });
 
-        recordButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                recordFlag = true;
-                gameManager.setRecorded(true);
-                gameManager.createFile();
-            }
+        recordButton.setOnAction(e -> {
+            recordFlag = true;
+            gameManager.setRecorded(true);
+            gameManager.createFile();
+            recordButton.setDisable(true);
+            recordButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #e87251;");
+            recordButton.setText("Record");
+            recordButton.setTextFill(javafx.scene.paint.Color.valueOf("#ffffff"));
+
         });
 
     }
@@ -420,7 +423,7 @@ public class GameBase extends AnchorPane {
     }
 
     public void flipTurn() {
-
+        recordButton.setDisable(true);
         Parent pane;
         if (GameManager.getTurn() == Constants.X) {
 

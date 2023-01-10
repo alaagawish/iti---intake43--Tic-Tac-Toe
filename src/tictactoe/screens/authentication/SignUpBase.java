@@ -3,6 +3,8 @@ package tictactoe.screens.authentication;
 import javafx.geometry.Insets;
 
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -18,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 
@@ -290,8 +293,22 @@ public class SignUpBase extends BorderPane {
         });
 
         signUpButton.setOnAction(e -> {
-//            Parent pane = new OnlineListBase(stage);
-//            stage.getScene().setRoot(pane);
+            Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
+            if (player != null && passwordField.getText().length() > 8) {
+                System.out.println("register doneeeeeeeeee+");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                userNameTextField.setText("");
+                passwordField.setText("");
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("UserName is exist before or password is less than 8 character");
+                alert.showAndWait();
+
+            }
         });
         backImageView.setOnMousePressed(e -> {
             DualModeBase.network.closeConnection();
