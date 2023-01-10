@@ -6,6 +6,8 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
@@ -18,6 +20,7 @@ import tictactoe.constants.Level;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.theme.CustomColors;
+import tictactoe.screens.modes.ModeBase;
 
 public class GameBase extends AnchorPane {
 
