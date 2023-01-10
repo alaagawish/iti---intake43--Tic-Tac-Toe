@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 
@@ -289,6 +290,16 @@ public class LoginBase extends BorderPane {
         });
 
         loginButton.setOnAction(e -> {
+            Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
+            if (player != null) {
+                System.out.println("loginBase doneeeeeeeeee+");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                userNameTextField.setText("");
+                passwordField.setText("");
+
+            }
 
         });
 
