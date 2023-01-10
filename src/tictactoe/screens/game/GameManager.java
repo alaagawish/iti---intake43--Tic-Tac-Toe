@@ -1,30 +1,144 @@
 package tictactoe.screens.game;
 
+import java.sql.Timestamp;
 import java.util.Random;
 import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
+import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameManager {
 
     private static Player xPlayer;
     private static Player oPlayer;
-
     private static char turn;
-
     private static char[][] board;
     public static Level level;
-
     private static Player winner;
-
     private static int computerRound;
+    private List<Move> moves;
+    private GameModel gameModel;
+    private boolean recordFlag;
+    private File fileName;
+
+    public GameManager() {
+
+    }
 
     public GameManager(Player xPlayer, Player oPlayer, char[][] board, Level level) {
+        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<Move>();
         computerRound = 1;
         turn = Constants.X;
         GameManager.board = board;
+        recordFlag = false;
+        this.xPlayer = xPlayer;
+        this.oPlayer = oPlayer;
+        this.level = level;
+        gameModel = new GameModel();
+    }
 
+    public boolean isRecorded() {
+        return recordFlag;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(ArrayList<Move> moves) {
+        this.moves = moves;
+    }
+
+    public void setRecorded(boolean recordFlag) {
+        this.recordFlag = recordFlag;
+    }
+
+    public void createFile() {
+        String gameDirectoryName = Constants.RECORDEDGAMEPATH;
+
+        File gameDirectory = new File(gameDirectoryName);
+
+        if (!gameDirectory.exists()) {
+            gameDirectory.mkdir();
+        }
+
+        String playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername()).concat("arwa");
+        File playerDirectory = new File(playerDirectoryName);
+        if (!playerDirectory.exists()) {
+            playerDirectory.mkdir();
+        }
+        String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
+        String afterReplace = timeStamp.replace(":", "-");
+        fileName = new File(playerDirectoryName + "\\" + afterReplace + ".txt");
+        try {
+            if (fileName.createNewFile()) {
+                System.out.println("File created: " + fileName.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException from File :" + ex);
+            ex.printStackTrace();
+        }
+    }
+
+    public void saveGame() {
+        try {
+            gameModel.setxPlayer(xPlayer);
+            gameModel.setoPlayer(oPlayer);
+            gameModel.setMovesList(moves);
+            System.out.println(gameModel);
+
+            System.out.println(moves.get(0).getRow() + "inside save game");
+            System.out.println(gameModel.getoPlayer());
+            System.out.println(gameModel.getxPlayer());
+
+            FileWriter writer = new FileWriter(fileName.getAbsolutePath());
+
+            writer.write(gameModel.getxPlayer().getUsername());
+            writer.write("\r\n");
+            writer.write(gameModel.getoPlayer().getUsername());
+            writer.write("\r\n");
+            System.err.println(moves.get(0).getSymbol() + "symbol inside 0 cell at " + moves.get(0).getRow() + " " + moves.get(0).getColumn());
+            System.out.println(gameModel.toString());
+            for (int i = 0; i < moves.size(); i++) {
+                writer.write(Integer.toString(moves.get(i).getRow()).concat("-").
+                        concat(Integer.toString(moves.get(i).getColumn())).concat("-").
+                        concat(moves.get(i).getSymbol() + ""));
+                writer.write("\r\n");
+            }
+
+            writer.close();
+        } catch (IOException ex) {
+            System.out.println("Error from IOException in saveGame" + ex.getLocalizedMessage());;
+        }
+    }
+
+  
+    public void addMove(int i, int j, char turn) {
+        System.out.println(turn);
+        Move move = new Move(i, j, turn);
+        moves.add(move);
+    }
+
+    public void printArray() {
+        for (int i = 0; i < moves.size(); i++) {
+            System.out.println(moves.get(i).getSymbol());
+            System.out.println(moves.get(i).getRow());
+            System.out.println(moves.get(i).getColumn());
+        }
     }
 
     public static int checkWinner() {
@@ -152,15 +266,11 @@ public class GameManager {
         GameManager.computerRound = counter;
     }
 
-    public void reset() {
-
-    }
-
     private Move findBestMove(char board[][]) {
         int bestVal = Integer.MIN_VALUE;
         Move bestMove = new Move();
-        bestMove.row = -1;
-        bestMove.column = -1;
+        bestMove.setRow(-1);
+        bestMove.setColumn(-1);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -170,8 +280,8 @@ public class GameManager {
                     int moveVal = minimax(100, false, board);
                     board[i][j] = ' ';
                     if (moveVal > bestVal) {
-                        bestMove.row = i;
-                        bestMove.column = j;
+                        bestMove.setRow(i);
+                        bestMove.setColumn(j);
                         bestVal = moveVal;
                     }
                 }
@@ -236,11 +346,12 @@ public class GameManager {
         return bestMove;
     }
 
-
     private Move findRandomMove(char board[][]) {
         Move move = new Move();
-        move.row = -1;
-        move.column = -1;
+        move.setRow(-1);
+        move.setColumn(-1);
+        int gameState = GameManager.checkWinner();
+        
         if (computerRound < 5) {
             Random rand = new Random();
 
@@ -252,21 +363,21 @@ public class GameManager {
                 y = rand.nextInt(3);
             } while (board[x][y] != ' ');
 
-            move.row = x;
-            move.column = y;
+            move.setRow(x);
+            move.setColumn(y);
         }
 
         computerRound++;
         return move;
     }
-    
-       private Move findMediumMove(char board[][]) {
+
+    private Move findMediumMove(char board[][]) {
 
         Move move = new Move();
-        move.row = -1;
-        move.column = -1;
+        move.setRow(-1);
+        move.setColumn(-1);
 
-        if (computerRound == 3 ) {
+        if (computerRound == 3) {
             move = findRandomMove(board);
         } else {
             move = findBestMove(board);
