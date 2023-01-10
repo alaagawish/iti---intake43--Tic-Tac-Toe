@@ -24,7 +24,6 @@ public class winnerFXMLBase extends AnchorPane {
         headerTextView = new Text();
         winMediaView = new MediaView();
         backButton = new Button();
-
         setId("AnchorPane");
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
