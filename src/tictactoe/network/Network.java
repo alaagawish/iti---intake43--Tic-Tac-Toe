@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tictactoe.models.Message;
@@ -72,16 +73,13 @@ public class Network implements Runnable {
         messageSentToServer = gson.toJson(messageSent);
         printStream.println(messageSentToServer);
         try {
-            //        while (true) {
             thread.sleep(200);
         } catch (InterruptedException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println("resultt:" + messageReceived.getPlayers().get(0));
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
 
-            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
             return messageReceived.getPlayers().get(0);
         } else {
             return null;
@@ -97,7 +95,6 @@ public class Network implements Runnable {
 
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
-        System.out.println("newpa:" + newPassword);
         printStream.println(messageSentToServer);
         try {
             thread.sleep(200);
@@ -105,10 +102,31 @@ public class Network implements Runnable {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println("resultt:" + messageReceived.getPlayers().get(0));
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
 
-            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
+            return messageReceived.getPlayers().get(0);
+        } else {
+            return null;
+
+        }
+
+    }
+
+    public Player register(String username, String password) {
+        messageSent = new Message();
+        messageSent.setOperation("register");
+        Player player = new Player(username, password);
+        messageSent.setPlayers(player);
+        messageSentToServer = gson.toJson(messageSent);
+        printStream.println(messageSentToServer);
+        try {
+            thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+
             return messageReceived.getPlayers().get(0);
         } else {
             return null;
@@ -187,21 +205,41 @@ public class Network implements Runnable {
 
                                 System.out.println("Done login......." + messageReceived.getPlayers().get(0));
                                 this.setResult(messageReceived.getPlayers().get(0));
-//                                thread.sleep(100);
                             } else if (messageReceived.getStatus() == "wrong") {
                                 this.setFlag("wrong");
 
                                 System.out.println("something wrong, check password or username..");
                                 this.setResult(null);
-//                                thread.sleep(100);
                             }
 
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("register")) {
+                            if (messageReceived.getStatus() == "done") {
+                                this.setFlag("done");
+                                System.out.println("Done register......." + messageReceived.getPlayers().get(0));
+                                this.setResult(messageReceived.getPlayers().get(0));
+                                thread.sleep(100);
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                this.setFlag("wrong");
+
+                                System.out.println("something wrong, check password or username..");
+                                this.setResult(null);
+                                thread.sleep(100);
+                            }
+
+                        } else if (messageReceived.getOperation().equals("getOnlineList")) {
+                            if (messageReceived.getStatus() == "done") {
+                                System.out.println("Done getOnlineList.......");
+                                System.out.println(messageReceived.getPlayers());
+
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                System.out.println("something wrong");
+                            }
+
+//                            this.setResult(null);
                         }
 
                     }
 
-//                    messageReceivedFromServer = null;
-//                    messageReceived = null;
                 }
 
             } catch (IOException ex) {
@@ -213,6 +251,24 @@ public class Network implements Runnable {
             }
         }
 
+    }
+
+    public List<Player> getOnlineList() {
+        messageSent = new Message();
+        messageSent.setOperation("getOnlineList");
+        messageSentToServer = gson.toJson(messageSent);
+        printStream.println(messageSentToServer);
+        try {
+            thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+            return messageReceived.getPlayers();
+        } else {
+            return null;
+        }
     }
 
 }

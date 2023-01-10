@@ -6,8 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
@@ -20,7 +18,6 @@ import tictactoe.constants.Level;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.theme.CustomColors;
-import tictactoe.screens.modes.ModeBase;
 
 public class GameBase extends AnchorPane {
 
@@ -47,6 +44,7 @@ public class GameBase extends AnchorPane {
     protected char board[][];
     private GameManager gameManager;
     private Stage stageVideo;
+    private boolean recordFlag;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
 
@@ -71,7 +69,7 @@ public class GameBase extends AnchorPane {
         firstPlayerSignText = new Text();
         secondPlayerNameText = new Text();
         secondPlayerSignText = new Text();
-
+        recordFlag = false;
         setId("AnchorPane");
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
@@ -382,6 +380,7 @@ public class GameBase extends AnchorPane {
         recordButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                recordFlag = true;
                 gameManager.setRecorded(true);
                 gameManager.createFile();
             }
@@ -440,7 +439,9 @@ public class GameBase extends AnchorPane {
                 pane = new winnerFXMLBase(stageVideo);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
-                gameManager.saveGame();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
 //                gameManager.ReadFile();
                 break;
             case -2:
@@ -450,7 +451,9 @@ public class GameBase extends AnchorPane {
                 pane = new winnerFXMLBase(stageVideo);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
-                gameManager.saveGame();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
 //                gameManager.ReadFile();
                 break;
             case 0:
@@ -460,7 +463,9 @@ public class GameBase extends AnchorPane {
                 pane = new winnerFXMLBase(stageVideo);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
-                gameManager.saveGame();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
 //                gameManager.ReadFile();
                 break;
             default:

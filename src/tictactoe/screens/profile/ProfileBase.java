@@ -405,7 +405,6 @@ public class ProfileBase extends ScrollPane {
                     passwordField.setEditable(false);
                     passwordField.setDisable(true);
                     editInfoButton.setText("Edit");
-                    System.out.println("new pass:" + newPassword);
                     toggleFlag = !toggleFlag;
                     Player playerEdited = DualModeBase.network.editPassword(player.getUsername(), newPassword);
 

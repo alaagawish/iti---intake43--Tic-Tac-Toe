@@ -7,11 +7,7 @@ import tictactoe.constants.Level;
 import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,7 +96,6 @@ public class GameManager {
             gameModel.setoPlayer(oPlayer);
             gameModel.setMovesList(moves);
             System.out.println(gameModel);
-
             System.out.println(moves.get(0).getRow() + "inside save game");
             System.out.println(gameModel.getoPlayer());
             System.out.println(gameModel.getxPlayer());
