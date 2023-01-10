@@ -10,7 +10,7 @@ package tictactoe.constants;
  * @author moazk
  */
 public class Constants {
-
-    public final static char X = 'X';
+ public final static char X = 'X';
     public final static char O = 'O';
+    public final static String RECORDEDGAMEPATH = "C:\\tictactoe\\";
 }
