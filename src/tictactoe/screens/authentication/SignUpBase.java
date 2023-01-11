@@ -294,30 +294,23 @@ public class SignUpBase extends BorderPane {
 
         signUpButton.setOnAction(e -> {
             Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
-            if (player != null && passwordField.getText().length() > 8) {
-                System.out.println("register doneeeeeeeeee+");
+            if (player != null && passwordField.getText() != null) {
                 Parent pane = new OnlineListBase(stage, player);
                 stage.getScene().setRoot(pane);
             } else {
                 userNameTextField.setText("");
                 passwordField.setText("");
-
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText(null);
-                alert.setContentText("UserName is exist before or password is less than 8 character");
+                alert.setContentText("UserName is exist before or Empty Password.");
                 alert.showAndWait();
 
             }
         });
         backImageView.setOnMousePressed(e -> {
             DualModeBase.network.closeConnection();
-            Parent pane = new DualModeBase(stage);
-            stage.getScene().setRoot(pane);
 
-        });
-
-        backImageView.setOnMousePressed(e -> {
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
 

@@ -384,7 +384,7 @@ public class ProfileBase extends ScrollPane {
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(borderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
-        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Password length must be more than 8", stackpane, "-fx-background-color: rgba(235, 59, 62,1); -fx-background-radius: 10 10 10 10 ;");
+        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Password length must be more than 8", stackpane, "-fx-background-color: rgba(255,255,255,1); -fx-background-radius: 10 10 10 10 ;");
 
         dialog.setOnDialogClosed((event) -> {
             borderPane.setEffect(null);
