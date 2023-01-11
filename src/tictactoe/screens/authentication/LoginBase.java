@@ -292,7 +292,7 @@ public class LoginBase extends BorderPane {
         loginButton.setOnAction(e -> {
             Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
             if (player != null) {
-                System.out.println("loginBase doneeeeeeeeee+");
+                System.out.println("loginBase done");
                 Parent pane = new OnlineListBase(stage, player);
                 stage.getScene().setRoot(pane);
             } else {
@@ -304,13 +304,11 @@ public class LoginBase extends BorderPane {
         });
 
         backImageView.setOnMousePressed(e -> {
-            DualModeBase.network.closeConnection();
-            Parent pane = new DualModeBase(stage);
-            stage.getScene().setRoot(pane);
+            if (DualModeBase.networkFlag) {
+                DualModeBase.network.closeConnection();
+                System.out.println("close connection");
+            }
 
-        });
-
-        backImageView.setOnMousePressed(e -> {
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
 
