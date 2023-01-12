@@ -3,6 +3,7 @@ package tictactoe.screens.dualmode;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.game.GameBase;
@@ -44,6 +46,7 @@ public class OnlineListBase extends ScrollPane {
     protected final DropShadow dropShadow1;
     public List<Player> players;
     public static JFXDialog dialog2;
+    private String userName;
 
     public OnlineListBase(Stage stage, Player player) {
 
@@ -121,8 +124,9 @@ public class OnlineListBase extends ScrollPane {
         listVBox.getChildren().add(savedGamesLabel);
 
         for (int i = 0; i < players.size(); i++) {
-            if(players.get(i).getId()==player.getId())
+            if (players.get(i).getId() == player.getId()) {
                 continue;
+            }
             HBox hbox = new HBox();
             hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
             hbox.setPrefHeight(100.0);
@@ -209,15 +213,27 @@ public class OnlineListBase extends ScrollPane {
         setContent(stackpane);
 
         backImageView.setOnMousePressed(e -> {
+            userName = player.getUsername();
+            DualModeBase.network.logout(userName);
+            System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
             DualModeBase.network.closeConnection();
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
-
         });
 
         profileCircle.setOnMouseClicked(e -> {
             Parent root = new ProfileBase(stage, player);
             stage.getScene().setRoot(root);
+        });
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                userName = player.getUsername();
+                DualModeBase.network.logout(userName);
+                System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
+                DualModeBase.network.closeConnection();
+            }
         });
 
     }
