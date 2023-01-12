@@ -1,8 +1,7 @@
 package tictactoe.screens.game;
 
 import java.util.ArrayList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -15,23 +14,24 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
+import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.theme.CustomColors;
 
-public class GameBase extends AnchorPane {
+public class GameBase extends AnchorPane{
 
     protected final Circle firstPlayerCircle;
     protected final Circle secondPlayerCircle;
-    protected final Button button00;
-    protected final Button button01;
-    protected final Button button02;
-    protected final Button button10;
-    protected final Button button11;
-    protected final Button button12;
-    protected final Button button20;
-    protected final Button button21;
-    protected final Button button22;
+    public Button button00;
+    public Button button01;
+    public Button button02;
+    public Button button10;
+    public Button button11;
+    public Button button12;
+    public Button button20;
+    public Button button21;
+    public Button button22;
     protected final Text tacText;
     protected final Text toeText;
     protected final Text ticText;
@@ -45,9 +45,11 @@ public class GameBase extends AnchorPane {
     private GameManager gameManager;
     private Stage stageVideo;
     private boolean recordFlag;
+    private final GameModel recordedGame;
 
-    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
-
+    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo,GameModel recordedGame) {
+        this.recordedGame = recordedGame;
+                
         this.stageVideo = stage;
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
@@ -377,15 +379,25 @@ public class GameBase extends AnchorPane {
             handleButton(button22, 2, 2, level);
         });
 
-        recordButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                recordFlag = true;
-                gameManager.setRecorded(true);
-                gameManager.createFile();
-            }
+        recordButton.setOnAction(e -> {
+            recordFlag = true;
+            gameManager.setRecorded(true);
+            gameManager.createFile();
         });
-
+        
+        if(recordedGame != null){
+            disableButtons();
+            for(int i=0;i<recordedGame.getMovesList().size();i++){
+                System.out.println("move"+recordedGame.getMovesList().get(i));
+                computerMove(recordedGame.getMovesList().get(i));
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//                }
+            }
+        }
+        
     }
 
     private void handleButton(Button button, int i, int j, Level level) {
@@ -397,7 +409,7 @@ public class GameBase extends AnchorPane {
         button.setDisable(true);
         board[i][j] = GameManager.getTurn();
         recordGameSteps(i, j, board[i][j]);
-
+        
         flipTurn();
         if (gameManager.checkWinner() == 1) {
             if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
@@ -410,7 +422,7 @@ public class GameBase extends AnchorPane {
                 }
             }
         }
-
+        
     }
 
     private void recordGameSteps(int i, int j, char symbol) {
@@ -482,7 +494,7 @@ public class GameBase extends AnchorPane {
         }
     }
 
-    private void disableButtons() {
+    public void disableButtons() {
 
         button00.setDisable(true);
         button01.setDisable(true);
@@ -497,41 +509,57 @@ public class GameBase extends AnchorPane {
 
     public void computerMove(Move move) {
         if (move.getRow() == 0 && move.getColumn() == 0) {
-            button00.setText(GameManager.getTurn() + "");
+            button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
 
         } else if (move.getRow() == 0 && move.getColumn() == 1) {
-            button01.setText(GameManager.getTurn() + "");
+            button01.setText(move.getSymbol() + "");
             button01.setDisable(true);
 
         } else if (move.getRow() == 0 && move.getColumn() == 2) {
-            button02.setText(GameManager.getTurn() + "");
+            button02.setText(move.getSymbol() + "");
             button02.setDisable(true);
 
         } else if (move.getRow() == 1 && move.getColumn() == 0) {
-            button10.setText(GameManager.getTurn() + "");
+            button10.setText(move.getSymbol() + "");
             button10.setDisable(true);
 
         } else if (move.getRow() == 1 && move.getColumn() == 1) {
-            button11.setText(GameManager.getTurn() + "");
+            button11.setText(move.getSymbol() + "");
             button11.setDisable(true);
 
         } else if (move.getRow() == 1 && move.getColumn() == 2) {
-            button12.setText(GameManager.getTurn() + "");
+            button12.setText(move.getSymbol() + "");
             button12.setDisable(true);
 
         } else if (move.getRow() == 2 && move.getColumn() == 0) {
-            button20.setText(GameManager.getTurn() + "");
+            button20.setText(move.getSymbol() + "");
             button20.setDisable(true);
 
         } else if (move.getRow() == 2 && move.getColumn() == 1) {
-            button21.setText(GameManager.getTurn() + "");
+            button21.setText(move.getSymbol() + "");
             button21.setDisable(true);
 
         } else if (move.getRow() == 2 && move.getColumn() == 2) {
-            button22.setText(GameManager.getTurn() + "");
+            button22.setText(move.getSymbol() + "");
             button22.setDisable(true);
 
         }
     }
+
+//    @Override
+//    public void run() {
+//        if(recordedGame != null){
+//            disableButtons();
+//            try {
+//                for(int i=0;i<recordedGame.getMovesList().size();i++){
+//                    System.out.println("move"+recordedGame.getMovesList().get(i));
+//                    computerMove(recordedGame.getMovesList().get(i));
+//                    Thread.sleep(1000);
+//                }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 }

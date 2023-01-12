@@ -48,7 +48,7 @@ public class GameModel {
     @Override
     public String toString() {
         
-        return xPlayer.getUsername()+"-"+oPlayer.getUsername(); 
+        return xPlayer.getUsername()+","+oPlayer.getUsername()+","+"moves:"+movesList; 
     }
  
 }

@@ -1,6 +1,9 @@
 package tictactoe.screens.profile;
 
 import com.jfoenix.controls.JFXDialog;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -12,6 +15,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -22,9 +26,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import tictactoe.constants.Level;
+import tictactoe.models.GameModel;
 import tictactoe.models.Player;
+import tictactoe.repositories.PlayerRepository;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
+import tictactoe.screens.game.GameBase;
 import tictactoe.utils.Dialogs;
 
 public class ProfileBase extends ScrollPane {
@@ -48,22 +56,21 @@ public class ProfileBase extends ScrollPane {
     protected final Label passordLabel;
     protected final PasswordField passwordField;
     protected final Label savedGamesLabel;
-    protected final HBox gameHBox;
-    protected final Label gameLabel;
-    protected final ImageView gameImage;
-    protected final Line gameLine;
-    protected final HBox hBox0;
-    protected final Label label1;
-    protected final ImageView imageView;
-    protected final Line line;
-    protected final HBox hBox1;
-    protected final Label label2;
-    protected final ImageView imageView0;
+    
+    protected final List<HBox> gameHBox;
+    protected final List<Label> gameLabel;
+    protected final List<ImageView> gameImage;
+    protected final List<Line> gameLine;
+    
     protected final ImageView backImageView, backImageView2;
     protected boolean toggleFlag;
 
     public ProfileBase(Stage stage, Player player) {
-
+        
+        String[] gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
+        System.err.println(gamesNames[0]);
+        
+        
         borderPane = new BorderPane();
         borderPane0 = new BorderPane();
         vBox = new VBox();
@@ -83,17 +90,13 @@ public class ProfileBase extends ScrollPane {
         passordLabel = new Label();
         passwordField = new PasswordField();
         savedGamesLabel = new Label();
-        gameHBox = new HBox();
-        gameLabel = new Label();
-        gameImage = new ImageView();
-        gameLine = new Line();
-        hBox0 = new HBox();
-        label1 = new Label();
-        imageView = new ImageView();
-        line = new Line();
-        hBox1 = new HBox();
-        label2 = new Label();
-        imageView0 = new ImageView();
+        
+        gameHBox = new ArrayList<>();
+        gameLabel = new ArrayList<>();
+        gameImage = new ArrayList<>();
+        gameLine = new ArrayList<>();
+
+        
         backImageView = new ImageView();
         backImageView2 = new ImageView();
         toggleFlag = false;
@@ -271,78 +274,6 @@ public class ProfileBase extends ScrollPane {
         savedGamesLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(savedGamesLabel, new Insets(30.0, 0.0, 0.0, 0.0));
 
-        gameHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-        gameHBox.setPrefHeight(100.0);
-        gameHBox.setPrefWidth(200.0);
-
-        gameLabel.setPrefHeight(56.0);
-        gameLabel.setPrefWidth(880.0);
-        gameLabel.setText("2022-12-20 15:35:20");
-        gameLabel.setTextFill(javafx.scene.paint.Color.valueOf("#6dcfd0"));
-        gameLabel.setFont(new Font("Comic Sans MS Bold", 30.0));
-
-        gameImage.setFitHeight(86.0);
-        gameImage.setFitWidth(196.0);
-        gameImage.setId("gameImage");
-        gameImage.setNodeOrientation(javafx.geometry.NodeOrientation.INHERIT);
-        gameImage.setPickOnBounds(true);
-        gameImage.setPreserveRatio(true);
-        gameImage.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
-        VBox.setMargin(gameHBox, new Insets(10.0, 0.0, 10.0, 60.0));
-
-        gameLine.setEndX(1027.2928466796875);
-        gameLine.setEndY(71.29289245605469);
-        gameLine.setStartX(2154.585693359375);
-        gameLine.setStartY(70.58578491210938);
-
-        hBox0.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-        hBox0.setLayoutX(70.0);
-        hBox0.setLayoutY(326.0);
-        hBox0.setPrefHeight(100.0);
-        hBox0.setPrefWidth(200.0);
-
-        label1.setPrefHeight(56.0);
-        label1.setPrefWidth(880.0);
-        label1.setText("2022-12-20 15:35:20");
-        label1.setTextFill(javafx.scene.paint.Color.valueOf("#6dcfd0"));
-        label1.setFont(new Font("Comic Sans MS Bold", 30.0));
-
-        imageView.setFitHeight(86.0);
-        imageView.setFitWidth(196.0);
-        imageView.setNodeOrientation(javafx.geometry.NodeOrientation.INHERIT);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        imageView.getStyleClass().add("profileClass");
-        imageView.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
-        VBox.setMargin(hBox0, new Insets(10.0, 0.0, 10.0, 60.0));
-
-        line.setEndX(1027.2928466796875);
-        line.setEndY(71.29289245605469);
-        line.setLayoutX(-1017.0);
-        line.setLayoutY(256.0);
-        line.setStartX(2154.585693359375);
-        line.setStartY(70.58578491210938);
-
-        hBox1.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-        hBox1.setLayoutX(10.0);
-        hBox1.setLayoutY(432.0);
-        hBox1.setPrefHeight(100.0);
-        hBox1.setPrefWidth(200.0);
-
-        label2.setPrefHeight(56.0);
-        label2.setPrefWidth(880.0);
-        label2.setText("2022-12-20 15:35:20");
-        label2.setTextFill(javafx.scene.paint.Color.valueOf("#6dcfd0"));
-        label2.setFont(new Font("Comic Sans MS Bold", 30.0));
-
-        imageView0.setFitHeight(86.0);
-        imageView0.setFitWidth(196.0);
-        imageView0.setNodeOrientation(javafx.geometry.NodeOrientation.INHERIT);
-        imageView0.setPickOnBounds(true);
-        imageView0.setPreserveRatio(true);
-        imageView0.getStyleClass().add("profileClass");
-        imageView0.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
-        VBox.setMargin(hBox1, new Insets(10.0, 0.0, 10.0, 60.0));
         BorderPane.setMargin(profileVBox, new Insets(0.0, 0.0, 0.0, 60.0));
         borderPane.setCenter(profileVBox);
         setContent(borderPane);
@@ -361,17 +292,72 @@ public class ProfileBase extends ScrollPane {
         passwordHBox.getChildren().add(passwordField);
         profileVBox.getChildren().add(passwordHBox);
         profileVBox.getChildren().add(savedGamesLabel);
-        gameHBox.getChildren().add(gameLabel);
-        gameHBox.getChildren().add(gameImage);
-        profileVBox.getChildren().add(gameHBox);
-        profileVBox.getChildren().add(gameLine);
-        hBox0.getChildren().add(label1);
-        hBox0.getChildren().add(imageView);
-        profileVBox.getChildren().add(hBox0);
-        profileVBox.getChildren().add(line);
-        hBox1.getChildren().add(label2);
-        hBox1.getChildren().add(imageView0);
-        profileVBox.getChildren().add(hBox1);
+        
+        
+        for (int i = 0; i < gamesNames.length; i++) {
+            HBox hbox = new HBox();
+
+            hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            hbox.setPrefHeight(100.0);
+            hbox.setPrefWidth(200.0);
+            gameHBox.add(hbox);
+            
+            Label glabel = new Label();
+
+            glabel.setPrefHeight(56.0);
+            glabel.setPrefWidth(880.0);
+            glabel.setText(gamesNames[i]);
+            glabel.setTextFill(javafx.scene.paint.Color.valueOf("#6dcfd0"));
+            glabel.setFont(new Font("Comic Sans MS Bold", 24.0));
+            gameLabel.add(glabel);
+
+            ImageView imageView = new ImageView();
+            
+            imageView.setFitHeight(86.0);
+            imageView.setFitWidth(196.0);
+            imageView.setId("gameImage");
+            imageView.setNodeOrientation(javafx.geometry.NodeOrientation.INHERIT);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+            imageView.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
+            
+            gameImage.add(imageView);
+            
+            gameImage.get(i).setOnMouseClicked((MouseEvent e) -> {
+                
+                GameModel recordedGame = PlayerRepository.readGame(player.getUsername(), gamesNames[0]);
+                System.err.println("Game: "+recordedGame);
+                System.err.println("xPlayer: "+recordedGame.getxPlayer());
+                System.err.println("oPlayer: "+recordedGame.getoPlayer());
+                System.err.println("Move 0: "+recordedGame.getMovesList().get(0).getColumn());
+                GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(),recordedGame);
+                stage.getScene().setRoot(pane);
+
+//                ShowGame showGame = new ShowGame(stage, recordedGame);
+//                stage.getScene().setRoot((Parent)pane);
+//                new Thread(pane).start();
+//                new Thread(pane).start();
+                
+            });
+            
+            
+            VBox.setMargin(gameHBox.get(i), new Insets(10.0, 0.0, 10.0, 60.0));
+            
+            Line gLine = new Line();
+            gLine.setEndX(1027.2928466796875);
+            gLine.setEndY(71.29289245605469);
+            gLine.setStartX(2154.585693359375);
+            gLine.setStartY(70.58578491210938);
+            
+            gameLine.add(gLine);
+
+            gameHBox.get(i).getChildren().add(gameLabel.get(i));
+            gameHBox.get(i).getChildren().add(gameImage.get(i));
+            profileVBox.getChildren().add(gameHBox.get(i));
+            profileVBox.getChildren().add(gameLine.get(i));
+        
+        }
+        
         usernameTextField.setText(player.getUsername());
         passwordField.setText(player.getPassword());
 

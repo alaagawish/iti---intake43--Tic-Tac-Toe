@@ -44,7 +44,7 @@ public class Move {
 
     @Override
     public String toString() {
-        return "X" ;//To change body of generated methods, choose Tools | Templates.
+        return symbol+"" ;//To change body of generated methods, choose Tools | Templates.
     }
     
     
