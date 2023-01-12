@@ -165,6 +165,33 @@ public class Network implements Runnable {
 
     }
 
+    public synchronized void logout(String userName) {
+//        try {
+        messageSent = new Message();
+        messageSent.setOperation("logout");
+        messageSent.setStatus("offline");
+
+        Player player = new Player();
+        player.setUsername(userName);
+        messageSent.setPlayers(player);
+        messageSentToServer = gson.toJson(messageSent);
+        printStream.println(messageSentToServer);
+        System.err.println("in logout" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
+
+        System.out.println("==================");
+//        System.err.println("result: " + messageReceived.getPlayers().get(0).getStatus());
+//        if (messageReceived.getPlayers().get(0).getStatus().equalsIgnoreCase("offline")) {
+//            System.out.println("done logout"
+//                    + messageReceived.getPlayers().get(0) + "\n" + messageReceived.getStatus());
+//
+//            return true;
+//        } else {
+//            System.err.println("logout failed from Network class in client side");
+//            return false;
+//        }
+
+    }
+
     public Player responseGame(boolean accept) {
         messageSent = new Message();
         messageSent.setOperation("responseGame");
@@ -232,6 +259,15 @@ public class Network implements Runnable {
                                 thread.sleep(100);
                             }
 
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("logout")) {
+                            if (messageReceived.getStatus() == "done") {
+                                System.err.println(messageReceived.getStatus() + "From network in client side");
+                                System.err.println("Done Logout.........." + messageReceived.getPlayers().get(0));
+                                thread.sleep(100);
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                System.err.println("something wrong, in Logout");
+                                thread.sleep(100);
+                            }
                         } else if (messageReceived.getOperation().equalsIgnoreCase("Edit")) {
                             if (messageReceived.getStatus() == "done") {
 
