@@ -40,7 +40,6 @@ public class ModeBase extends AnchorPane {
 
     public ModeBase(Stage stage) {
 
-
         vBox = new VBox();
         logoImage = new ImageView();
         hBox = new HBox();
@@ -75,7 +74,7 @@ public class ModeBase extends AnchorPane {
         logoImage.setPickOnBounds(true);
         logoImage.setPreserveRatio(true);
         logoImage.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
-        VBox.setMargin(logoImage,  new Insets(10.0, 30.0, 0.0, 0.0));
+        VBox.setMargin(logoImage, new Insets(10.0, 30.0, 0.0, 0.0));
 
         hBox.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         hBox.setPrefHeight(100.0);
@@ -92,7 +91,7 @@ public class ModeBase extends AnchorPane {
         text1.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         text1.setText("Toe");
         text1.setFont(new Font("Comic Sans MS Bold", 20.0));
-        VBox.setMargin(hBox,new Insets(0.0, 10.0, 0.0, 0.0));
+        VBox.setMargin(hBox, new Insets(0.0, 10.0, 0.0, 0.0));
 
         hBox0.setLayoutX(390.0);
         hBox0.setLayoutY(146.0);
@@ -120,13 +119,13 @@ public class ModeBase extends AnchorPane {
         singleModeButton.setPrefWidth(414.0);
         singleModeButton.setStyle("-fx-background-color: #fccf28; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(singleModeButton, new Insets(100.0, 150.0, 0.0, 150.0));
-        
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         singleModeButton.setEffect(dropShadow);
 
         vBox0.setPrefHeight(302.0);
@@ -149,7 +148,7 @@ public class ModeBase extends AnchorPane {
         dualModeButton.setPrefWidth(414.0);
         dualModeButton.setStyle("-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(dualModeButton, new Insets(100.0, 150.0, 0.0, 0.0));
-        
+
         dualModeButton.setEffect(dropShadow);
 
         vBox1.setPrefHeight(200.0);
@@ -196,7 +195,7 @@ public class ModeBase extends AnchorPane {
         ticText.setEffect(dropShadowText);
         tacText.setEffect(dropShadowText);
         toeText.setEffect(dropShadowText);
-        
+
         dualModeButton.setOnAction(e -> {
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);

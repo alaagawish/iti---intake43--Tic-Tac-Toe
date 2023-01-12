@@ -2,6 +2,7 @@ package tictactoe.screens.game;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import java.util.List;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import tictactoe.constants.Level;
 import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
+import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.theme.CustomColors;
 
 public class GameBase extends AnchorPane{
@@ -40,12 +42,15 @@ public class GameBase extends AnchorPane{
     protected final Text firstPlayerSignText;
     protected final Text secondPlayerNameText;
     protected final Text secondPlayerSignText;
-    protected ArrayList<Move> moves;
+    protected List<Move> moves;
     protected char board[][];
     private GameManager gameManager;
     private Stage stageVideo;
     private boolean recordFlag;
     private final GameModel recordedGame;
+
+    protected Player firstPlayer, secondPlayer;
+    List<Move> resultMoves;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo,GameModel recordedGame) {
         this.recordedGame = recordedGame;
@@ -71,7 +76,10 @@ public class GameBase extends AnchorPane{
         firstPlayerSignText = new Text();
         secondPlayerNameText = new Text();
         secondPlayerSignText = new Text();
+        resultMoves = new ArrayList<>();
         recordFlag = false;
+        firstPlayer = playerOne;
+        secondPlayer = playerTwo;
         setId("AnchorPane");
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
@@ -285,7 +293,7 @@ public class GameBase extends AnchorPane{
         firstPlayerNameText.setStrokeWidth(0.0);
         firstPlayerNameText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
         firstPlayerNameText.setText("Alaa");
-        firstPlayerNameText.setFont(new Font("Comic Sans MS Bold", 70.0));
+        firstPlayerNameText.setFont(new Font("Comic Sans MS Bold", 60.0));
 
         firstPlayerSignText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         firstPlayerSignText.setId("firstPlayerSignText");
@@ -295,7 +303,7 @@ public class GameBase extends AnchorPane{
         firstPlayerSignText.setStrokeWidth(0.0);
         firstPlayerSignText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
         firstPlayerSignText.setText("X");
-        firstPlayerSignText.setFont(new Font("Comic Sans MS Bold", 70.0));
+        firstPlayerSignText.setFont(new Font("Comic Sans MS Bold", 60.0));
 
         secondPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         secondPlayerNameText.setId("secondPlayerNameText");
@@ -345,44 +353,86 @@ public class GameBase extends AnchorPane{
         gameManager = new GameManager(playerOne, playerTwo, board, level);
 
         button00.setOnAction(e -> {
-
-            handleButton(button00, 0, 0, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button00, 0, 0, Level.ONLINE);
+            } else {
+                handleButton(button00, 0, 0, level);
+            }
         });
 
         button01.setOnAction(e -> {
-            handleButton(button01, 0, 1, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button01, 0, 1, Level.ONLINE);
+            } else {
+                handleButton(button01, 0, 1, level);
+            }
         });
 
         button02.setOnAction(e -> {
-            handleButton(button02, 0, 2, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button02, 0, 2, Level.ONLINE);
+            } else {
+                handleButton(button02, 0, 2, level);
+            }
         });
 
         button10.setOnAction(e -> {
-            handleButton(button10, 1, 0, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button10, 1, 0, Level.ONLINE);
+            } else {
+                handleButton(button10, 1, 0, level);
+            }
         });
         button11.setOnAction(e -> {
-            handleButton(button11, 1, 1, level);
+
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button11, 1, 1, Level.ONLINE);
+            } else {
+
+                handleButton(button11, 1, 1, level);
+            }
         });
 
         button12.setOnAction(e -> {
-            handleButton(button12, 1, 2, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button12, 1, 2, Level.ONLINE);
+            } else {
+                handleButton(button12, 1, 2, level);
+            }
         });
 
         button20.setOnAction(e -> {
-            handleButton(button20, 2, 0, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button20, 2, 0, Level.ONLINE);
+            } else {
+                handleButton(button20, 2, 0, level);
+            }
         });
 
         button21.setOnAction(e -> {
-            handleButton(button21, 2, 1, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button21, 2, 1, Level.ONLINE);
+            } else {
+                handleButton(button21, 2, 1, level);
+            }
         });
         button22.setOnAction(e -> {
-            handleButton(button22, 2, 2, level);
+            if (level == Level.ONLINE) {
+                handleButtonOnline(button22, 2, 2, Level.ONLINE);
+            } else {
+                handleButton(button22, 2, 2, level);
+            }
         });
 
         recordButton.setOnAction(e -> {
             recordFlag = true;
             gameManager.setRecorded(true);
             gameManager.createFile();
+            recordButton.setDisable(true);
+            recordButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #e87251;");
+            recordButton.setText("Record");
+            recordButton.setTextFill(javafx.scene.paint.Color.valueOf("#ffffff"));
+
         });
         
         if(recordedGame != null){
@@ -401,7 +451,7 @@ public class GameBase extends AnchorPane{
     }
 
     private void handleButton(Button button, int i, int j, Level level) {
-
+       
         button.setTextFill(javafx.scene.paint.Color.valueOf(
                 GameManager.getTurn() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
@@ -432,7 +482,7 @@ public class GameBase extends AnchorPane{
     }
 
     public void flipTurn() {
-
+        recordButton.setDisable(true);
         Parent pane;
         if (GameManager.getTurn() == Constants.X) {
 
@@ -508,6 +558,7 @@ public class GameBase extends AnchorPane{
     }
 
     public void computerMove(Move move) {
+        
         if (move.getRow() == 0 && move.getColumn() == 0) {
             button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
@@ -562,4 +613,31 @@ public class GameBase extends AnchorPane{
 //            }
 //        }
 //    }
+
+    public void handleButtonOnline(Button button, int i, int j, Level level) {
+         moves.add(new Move(i, j, GameManager.getTurn()));
+        System.out.println("Moves" + moves.get(0));
+        if (level == Level.ONLINE) {
+            if (GameManager.getTurn() == Constants.X) {
+                resultMoves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
+                System.out.println("resultmoves" + resultMoves.get(0));
+                System.out.println("move1" + resultMoves.get(resultMoves.size() - 1));
+                computerMove(resultMoves.get(resultMoves.size() - 1));
+                recordGameSteps(resultMoves.get(resultMoves.size() - 1).getRow(), resultMoves.get(resultMoves.size() - 1).getColumn(), board[resultMoves.get(resultMoves.size() - 1).getRow()][resultMoves.get(resultMoves.size() - 1).getColumn()]);
+
+                flipTurn();
+            } else {
+                resultMoves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
+                System.out.println("resultmoves" + resultMoves.get(0));
+                System.out.println("move2" + resultMoves.get(resultMoves.size() - 1));
+
+                computerMove(resultMoves.get(resultMoves.size() - 1));
+                recordGameSteps(resultMoves.get(resultMoves.size() - 1).getRow(), resultMoves.get(resultMoves.size() - 1).getColumn(), board[resultMoves.get(resultMoves.size() - 1).getRow()][resultMoves.get(resultMoves.size() - 1).getColumn()]);
+
+                flipTurn();
+            }
+
+        }
+
+    }
 }

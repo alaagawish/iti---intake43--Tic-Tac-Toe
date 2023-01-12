@@ -25,7 +25,9 @@ public class TicTacToe extends Application {
 
     @Override
     public void stop() throws Exception {
-        DualModeBase.network.closeConnection();
+        if (DualModeBase.networkFlag) {
+            DualModeBase.network.closeConnection();
+        }
 
     }
 
