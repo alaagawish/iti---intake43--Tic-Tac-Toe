@@ -33,7 +33,6 @@ public class GameManager {
 
     public GameManager(Player xPlayer, Player oPlayer, char[][] board, Level level) {
         this.moves = new ArrayList<Move>();
-        this.moves = new ArrayList<Move>();
         computerRound = 1;
         turn = Constants.X;
         GameManager.board = board;
@@ -121,7 +120,6 @@ public class GameManager {
         }
     }
 
-  
     public void addMove(int i, int j, char turn) {
         System.out.println(turn);
         Move move = new Move(i, j, turn);
@@ -346,7 +344,7 @@ public class GameManager {
         move.setRow(-1);
         move.setColumn(-1);
         int gameState = GameManager.checkWinner();
-        
+
         if (computerRound < 5) {
             Random rand = new Random();
 

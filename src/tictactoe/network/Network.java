@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tictactoe.models.Message;
+import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.OnlineListBase;
 
@@ -28,6 +30,7 @@ public class Network implements Runnable {
     Player playerOne, playerTwo, player2;
     int id;
     public static String flag;
+    public List<Move> resultMoves;
 
     public Network() {
 
@@ -42,6 +45,7 @@ public class Network implements Runnable {
             gson = new Gson();
             flag = "nothing";
             System.out.println("socket : " + socket + " \nportNumber on client: " + localPortNum);
+            resultMoves = new ArrayList<>();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -219,6 +223,57 @@ public class Network implements Runnable {
         return playerOne;
     }
 
+    public List<Move> createMoveFirstPlayer(Player firstPlayer, Player secondPlayer, List<Move> moves) {
+        messageSent = new Message();
+        resultMoves = moves;
+        messageSent.setOperation("firstPlayerMove");
+        messageSent.setPlayers(firstPlayer);
+        messageSent.setPlayers(secondPlayer);
+        messageSent.setMoves(moves);
+        messageSentToServer = gson.toJson(messageSent);
+        System.out.println("playedGame::" + messageSentToServer);
+        printStream.println(messageSentToServer);
+//        try {
+//            thread.sleep(1000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
+            resultMoves = messageReceived.getMoves();
+            System.out.println("received moves" + resultMoves);
+        }
+
+        return resultMoves;
+    }
+
+    public List<Move> createMoveSecondPlayer(Player firstPlayer, Player secondPlayer, List<Move> moves) {
+
+        if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
+//            resultMoves = messageReceived.getMoves();
+            System.out.println("received moves" + resultMoves);
+
+        }
+
+//        try {
+//            thread.sleep(1000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+        messageSent = new Message();
+
+        messageSent.setOperation("firstPlayerMove");
+        messageSent.setPlayers(firstPlayer);
+        messageSent.setPlayers(secondPlayer);
+        messageSent.setMoves(moves);
+        messageSentToServer = gson.toJson(messageSent);
+        resultMoves = moves;
+        System.out.println("playedGame::" + messageSentToServer);
+        printStream.println(messageSentToServer);
+
+        return resultMoves;
+    }
+
     @Override
     public void run() {
 
@@ -340,6 +395,18 @@ public class Network implements Runnable {
 
                             OnlineListBase.dialog2.show();
                             System.out.println("game request.....");
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("firstPlayerMove")) {
+//                            playerOne = messageReceived.getPlayers().get(0);
+//                            playerTwo = messageReceived.getPlayers().get(1);
+//
+//                            OnlineListBase.dialog2.show();
+                            System.out.println("first player move");
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
+//                            playerOne = messageReceived.getPlayers().get(0);
+//                            playerTwo = messageReceived.getPlayers().get(1);
+//
+//                            OnlineListBase.dialog2.show();
+                            System.out.println("second player move.");
                         }
                     }
                 }
