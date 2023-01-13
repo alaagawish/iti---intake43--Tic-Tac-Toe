@@ -1,5 +1,6 @@
 package tictactoe.screens.game;
 
+import com.google.gson.Gson;
 import java.sql.Timestamp;
 import java.util.Random;
 import tictactoe.constants.Constants;
@@ -68,7 +69,7 @@ public class GameManager {
             gameDirectory.mkdir();
         }
 
-        String playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername()).concat("arwa");
+        String playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername());
         File playerDirectory = new File(playerDirectoryName);
         if (!playerDirectory.exists()) {
             playerDirectory.mkdir();
@@ -99,24 +100,25 @@ public class GameManager {
             System.out.println(gameModel.getoPlayer());
             System.out.println(gameModel.getxPlayer());
 
-            FileWriter writer = new FileWriter(fileName.getAbsolutePath());
-
-            writer.write(gameModel.getxPlayer().getUsername());
-            writer.write("\r\n");
-            writer.write(gameModel.getoPlayer().getUsername());
-            writer.write("\r\n");
-            System.err.println(moves.get(0).getSymbol() + "symbol inside 0 cell at " + moves.get(0).getRow() + " " + moves.get(0).getColumn());
-            System.out.println(gameModel.toString());
-            for (int i = 0; i < moves.size(); i++) {
-                writer.write(Integer.toString(moves.get(i).getRow()).concat("-").
-                        concat(Integer.toString(moves.get(i).getColumn())).concat("-").
-                        concat(moves.get(i).getSymbol() + ""));
+            try (FileWriter writer = new FileWriter(fileName.getAbsolutePath())) {
+                new Gson().toJson(gameModel, writer);
+                /*
+                writer.write(gameModel.getxPlayer().getUsername());
                 writer.write("\r\n");
+                writer.write(gameModel.getoPlayer().getUsername());
+                writer.write("\r\n");
+                System.err.println(moves.get(0).getSymbol() + "symbol inside 0 cell at " + moves.get(0).getRow() + " " + moves.get(0).getColumn());
+                System.out.println(gameModel.toString());
+                for (int i = 0; i < moves.size(); i++) {
+                writer.write(Integer.toString(moves.get(i).getRow()).concat("-").
+                concat(Integer.toString(moves.get(i).getColumn())).concat("-").
+                concat(moves.get(i).getSymbol() + ""));
+                writer.write("\r\n");
+                }
+                 */
             }
-
-            writer.close();
         } catch (IOException ex) {
-            System.out.println("Error from IOException in saveGame" + ex.getLocalizedMessage());;
+            System.out.println("Error from IOException in saveGame" + ex.getLocalizedMessage());
         }
     }
 
@@ -264,6 +266,7 @@ public class GameManager {
         Move bestMove = new Move();
         bestMove.setRow(-1);
         bestMove.setColumn(-1);
+        bestMove.setSymbol(turn);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -343,6 +346,7 @@ public class GameManager {
         Move move = new Move();
         move.setRow(-1);
         move.setColumn(-1);
+        move.setSymbol(turn);
         int gameState = GameManager.checkWinner();
 
         if (computerRound < 5) {
@@ -369,6 +373,7 @@ public class GameManager {
         Move move = new Move();
         move.setRow(-1);
         move.setColumn(-1);
+        move.setSymbol(turn);
 
         if (computerRound == 3) {
             move = findRandomMove(board);

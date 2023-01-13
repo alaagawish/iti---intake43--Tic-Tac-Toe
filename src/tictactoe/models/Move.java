@@ -1,12 +1,14 @@
 package tictactoe.models;
 
 public class Move {
+
     private int row;
     private int column;
-    private char symbol ;
-    
-    public Move() {}
-    
+    private char symbol;
+
+    public Move() {
+    }
+
     public Move(int row, int column) {
         this.row = row;
         this.column = column;
@@ -44,10 +46,7 @@ public class Move {
 
     @Override
     public String toString() {
-        return "X" ;//To change body of generated methods, choose Tools | Templates.
+        return "{"+symbol + ", " + row + "," + column+"}";
     }
-    
-    
-    
-    
+
 }
