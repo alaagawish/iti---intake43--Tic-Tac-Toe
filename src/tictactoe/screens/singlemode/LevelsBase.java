@@ -365,7 +365,7 @@ public class LevelsBase extends BorderPane {
         backImageView.setOnMousePressed(e -> {
             Parent pane = new ModeBase(stage);
             stage.getScene().setRoot(pane);
-
+            
         });
     }
 }

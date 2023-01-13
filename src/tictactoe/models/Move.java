@@ -46,7 +46,9 @@ public class Move {
 
     @Override
     public String toString() {
-        return "{"+symbol + ", " + row + "," + column+"}";
+
+        return "{" + symbol + ", " + row + "," + column + "}";
+
     }
 
 }

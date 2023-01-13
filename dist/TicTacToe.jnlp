@@ -8,11 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< HEAD
-    <jar href="TicTacToe.jar" size="4689713" download="eager" />
-=======
-    <jar href="TicTacToe.jar" size="4689858" download="eager" />
->>>>>>> b9126b12c001cde718d58187cf5bdea9bc31dd7b
+    <jar href="TicTacToe.jar" size="4690796" download="eager" />
     <jar href="lib\gson-2.2.4.jar" size="190418" download="eager" />
     <jar href="lib\jfoenix-8.0.2.jar" size="2442326" download="eager" />
   </resources>

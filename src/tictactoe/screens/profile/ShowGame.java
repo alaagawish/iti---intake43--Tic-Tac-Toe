@@ -12,21 +12,13 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.screens.game.GameBase;
 
-/**
- *
- * @author moazk
- */
 public class ShowGame implements Runnable{
 
     GameBase gameBase;
     GameModel recordedGame;
     public ShowGame(Stage stage, GameModel game) {
         gameBase = new GameBase(stage, Level.HARD, game.getxPlayer(), game.getoPlayer());
-        
-        
-        
-        recordedGame = game;
-        
+        recordedGame = game;  
     }
     
     @Override
