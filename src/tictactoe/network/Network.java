@@ -63,7 +63,7 @@ public class Network implements Runnable {
         messageSentToServer = gson.toJson(messageSent);
         printStream.println(messageSentToServer);
         try {
-            thread.sleep(5000);
+            thread.sleep(200);
         } catch (InterruptedException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }

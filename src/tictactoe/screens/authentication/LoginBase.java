@@ -3,6 +3,7 @@ package tictactoe.screens.authentication;
 import javafx.geometry.Insets;
 
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
+import tictactoe.utils.Dialogs;
 
 public class LoginBase extends BorderPane {
 
@@ -290,16 +292,18 @@ public class LoginBase extends BorderPane {
         });
 
         loginButton.setOnAction(e -> {
-            Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
-            if (player != null) {
-                System.out.println("loginBase done");
-                Parent pane = new OnlineListBase(stage, player);
-                stage.getScene().setRoot(pane);
-            } else {
-                userNameTextField.setText("");
-                passwordField.setText("");
-
-            }
+            validation(passwordField.getText(), userNameTextField.getText(), stage);
+//            Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
+//            if (player != null) {
+//                System.out.println("loginBase done");
+//                Parent pane = new OnlineListBase(stage, player);
+//                stage.getScene().setRoot(pane);
+//            } else {
+//                validation(passwordField.getText(), userNameTextField.getText());
+//                userNameTextField.setText("");
+//                passwordField.setText("");
+//
+//            }
 
         });
 
@@ -315,4 +319,35 @@ public class LoginBase extends BorderPane {
         });
 
     }
+
+    private void validation(String password, String userName, Stage stage) {
+
+        if (userName.isEmpty()) {
+            Dialogs.showAlertDialog(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "The User Name Field is Empty",
+                    "Insert your User Name First");
+
+        } else if (password.isEmpty()) {
+            Dialogs.showAlertDialog(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "The Password Field is Empty",
+                    "Insert your Passowrd First");
+
+        } else {
+            Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
+            if (player != null) {
+                System.out.println("loginBase done");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                userNameTextField.setText("");
+                passwordField.setText("");
+
+            }
+        }
+    }
+
 }

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -31,6 +32,14 @@ public class Dialogs {
         dialogLayout.setBody(dialogLabel);
 
         return dialog;
+    }
+    
+     public static void showAlertDialog(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     public static JFXDialog createBlurRequestingDialog(String text, StackPane stackpane, Stage stage, Player playerTwo) {
