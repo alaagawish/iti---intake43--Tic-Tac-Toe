@@ -20,9 +20,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import tictactoe.constants.Constants;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
+import tictactoe.theme.CustomStyles;
+import tictactoe.utils.Dialogs;
 
 public class SignUpBase extends BorderPane {
 
@@ -84,7 +87,7 @@ public class SignUpBase extends BorderPane {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
-        setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
+        setStyle(CustomStyles.GRADIENTBACKGROUND);
 
         BorderPane.setAlignment(topFlowPane, javafx.geometry.Pos.CENTER);
         topFlowPane.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
@@ -109,15 +112,15 @@ public class SignUpBase extends BorderPane {
 
         ticLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         ticLogoText.setText("Tic");
-        ticLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        ticLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
 
         tacLogoText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         tacLogoText.setText("Tac");
-        tacLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        tacLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
 
         toeLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         toeLogoText.setText("Toe");
-        toeLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        toeLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
 
         FlowPane.setMargin(toeLogoText, new Insets(0.0));
         VBox.setMargin(TicTacToeFlowPane, new Insets(0.0));
@@ -129,24 +132,24 @@ public class SignUpBase extends BorderPane {
 
         tacLogoText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         tacLogoText.setText("Tac");
-        tacLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        tacLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
 
         toeLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         toeLogoText.setText("Toe");
-        toeLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        toeLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
         FlowPane.setMargin(toeLogoText, new Insets(0.0));
 
         ticLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         ticLogoText.setText("Tic");
-        ticLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        ticLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
 
         tacLogoText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         tacLogoText.setText("Tac");
-        tacLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        tacLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
 
         toeLogoText.setFill(javafx.scene.paint.Color.valueOf("#3bb2b8"));
         toeLogoText.setText("Toe");
-        toeLogoText.setFont(new Font("Comic Sans MS Bold", 20.0));
+        toeLogoText.setFont(new Font(Constants.COMICFONTBOLD, 20.0));
         FlowPane.setMargin(toeLogoText, new Insets(0.0));
 
         backImageView.setFitHeight(106.0);
@@ -174,17 +177,17 @@ public class SignUpBase extends BorderPane {
         ticText.setText("Tic");
         ticText.setX(766.0);
         ticText.setY(50.0);
-        ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        ticText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
 
         tacText.setFill(javafx.scene.paint.Color.valueOf("#fccf28"));
         tacText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
         tacText.setText("Tac");
-        tacText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        tacText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
 
         toeText.setFill(javafx.scene.paint.Color.valueOf("#33bbbb"));
         toeText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
         toeText.setText("Toe");
-        toeText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        toeText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
         FlowPane.setMargin(ticTextFlowPane, new Insets(50.0, 0.0, 0.0, 400.0));
 
         fieldsFlowPane.setHgap(100.0);
@@ -202,7 +205,7 @@ public class SignUpBase extends BorderPane {
         userNameTextField.setPrefWidth(425.0);
         userNameTextField.setPromptText("Enter Username");
         userNameTextField.setStyle("-fx-background-radius: 20; -fx-effect: dropshadow( one-pass-box  , #BFBFC3 , 10 ,0.3 , -5, 5 );");
-        userNameTextField.setFont(new Font("Comic Sans MS Bold", 25.0));
+        userNameTextField.setFont(new Font(Constants.COMICFONTBOLD, 25.0));
         userNameTextField.setPadding(new Insets(0.0, 0.0, 0.0, 80.0));
 
         BorderPane.setAlignment(headerHBox, javafx.geometry.Pos.CENTER);
@@ -224,7 +227,7 @@ public class SignUpBase extends BorderPane {
         passwordField.setPromptText("Enter Password");
         passwordField.setStyle("-fx-background-radius: 20; -fx-effect: dropshadow( one-pass-box  , #BFBFC3 , 10 ,0.3 , -5, 5 );");
         passwordField.setPadding(new Insets(0.0, 0.0, 0.0, 80.0));
-        passwordField.setFont(new Font("Comic Sans MS Bold", 25.0));
+        passwordField.setFont(new Font(Constants.COMICFONTBOLD, 25.0));
 
         imageView.setFitHeight(50.0);
         imageView.setFitWidth(50.0);
@@ -244,19 +247,19 @@ public class SignUpBase extends BorderPane {
         signUpButton.setTextFill(javafx.scene.paint.Color.WHITE);
         FlowPane.setMargin(signUpButton, new Insets(30.0, 0.0, 0.0, 580.0));
         signUpButton.setPadding(new Insets(0.0, 10.0, 10.0, 10.0));
-        signUpButton.setFont(new Font("Comic Sans MS Bold", 35.0));
+        signUpButton.setFont(new Font(Constants.COMICFONTBOLD, 35.0));
 
         hBox.setPrefHeight(70.0);
         hBox.setPrefWidth(200.0);
 
         haveAccountText.setText("Have an account?");
-        haveAccountText.setFont(new Font("Comic Sans MS Bold", 25.0));
+        haveAccountText.setFont(new Font(Constants.COMICFONTBOLD, 25.0));
         HBox.setMargin(haveAccountText, new Insets(5.0, 0.0, 0.0, 130.0));
 
         loginText.setFill(javafx.scene.paint.Color.valueOf("#33bbbb"));
 
         loginText.setText("Login");
-        loginText.setFont(new Font("Comic Sans MS Bold", 30.0));
+        loginText.setFont(new Font(Constants.COMICFONTBOLD, 30.0));
         HBox.setMargin(loginText, new Insets(0.0, 0.0, 5.0, 5.0));
         hBox.setOpaqueInsets(new Insets(0.0, 0.0, 0.0, 25.0));
         FlowPane.setMargin(hBox, new Insets(20.0, 0.0, 0.0, 400.0));
@@ -293,20 +296,17 @@ public class SignUpBase extends BorderPane {
         });
 
         signUpButton.setOnAction(e -> {
-            Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
-            if (player != null && passwordField.getText() != null) {
-                Parent pane = new OnlineListBase(stage, player);
-                stage.getScene().setRoot(pane);
-            } else {
-                userNameTextField.setText("");
-                passwordField.setText("");
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("UserName is exist before or Empty Password.");
-                alert.showAndWait();
-
-            }
+            validation(passwordField.getText(), userNameTextField.getText(), stage);
+//            Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
+//            if (player != null && passwordField.getText() != null) {
+//                Parent pane = new OnlineListBase(stage, player);
+//                stage.getScene().setRoot(pane);
+//            } else {
+//                userNameTextField.setText("");
+//                passwordField.setText("");
+//               
+//
+//            }
         });
         backImageView.setOnMousePressed(e -> {
             DualModeBase.network.closeConnection();
@@ -316,5 +316,35 @@ public class SignUpBase extends BorderPane {
 
         });
 
+    }
+
+    private void validation(String password, String userName, Stage stage) {
+
+        if (userName.isEmpty()) {
+            Dialogs.showAlertDialog(
+                    Alert.AlertType.INFORMATION,
+                    "Information Dialog",
+                    "The User Name Field is Empty",
+                    "Insert your User Name First");
+
+        } else if (password.isEmpty()) {
+            Dialogs.showAlertDialog(
+                    Alert.AlertType.INFORMATION,
+                    "Information Dialog",
+                    "The Password Field is Empty",
+                    "Insert your Passowrd First");
+
+        } else {
+            Player player = DualModeBase.network.register(userName, password);
+            if (player != null) {
+                System.out.println("SignUp done");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                userNameTextField.setText("");
+                passwordField.setText("");
+
+            }
+        }
     }
 }
