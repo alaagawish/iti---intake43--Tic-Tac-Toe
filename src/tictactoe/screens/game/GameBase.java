@@ -482,6 +482,7 @@ public class GameBase extends AnchorPane implements Runnable {
 
     public synchronized void displayRecord(GameModel recordedGamee) {
         this.recordedGamee = recordedGamee;
+
         thread.start();
     }
 
