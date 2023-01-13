@@ -53,14 +53,14 @@ public class GameBase extends AnchorPane implements Runnable {
     private GameManager gameManager;
     private final Stage stageVideo;
     private boolean recordFlag;
-
+    public char playerSymbol;
     private Level gameLevel;
     public GameModel recordedGamee;
     Thread thread;
     protected Player firstPlayer, secondPlayer;
 
-    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
-
+    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, char playerSymbol) {
+        this.playerSymbol = playerSymbol;
         thread = new Thread(this);
         this.stageVideo = stage;
         this.gameLevel = level;
@@ -676,26 +676,29 @@ public class GameBase extends AnchorPane implements Runnable {
     }
 
     public void handleButtonOnline(Button button, int i, int j, Level level) {
-        moves.add(new Move(i, j, GameManager.getTurn()));
-
-        System.out.println("Moves" + moves.get(0));
+        moves.add(new Move(i, j, playerSymbol));
+        System.out.println("Moves sending to server =======playersymbol" + moves.get(0)+" "+playerSymbol);
         //        System.out.println("Moves" + moves.get(0));
-        if (level == Level.ONLINE) {
-            if (GameManager.getTurn() == Constants.X) {
-                moves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
+        if (playerSymbol == Constants.X) {
+            moves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
 //                System.out.println("Turn X: " + moves.get(0));
-            } else {
-                moves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
-                System.out.println(" Turn Y: " + moves.get(moves.size() - 1));
-            }
-
-            computerMove(moves.get(moves.size() - 1));
-
-            int row = moves.get(moves.size() - 1).getRow();
-            int col = moves.get(moves.size() - 1).getColumn();
-            recordGameSteps(row, col, board[row][col]);
-            flipTurn();
+        } else {
+            moves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
+//            System.out.println(" Turn O: " + moves.get(moves.size() - 1));
         }
+        System.out.println("moves recieved from server ======="+moves);
+
+        if (moves.size() > 1) {
+            computerMove(moves.get(moves.size() - 2));
+        }
+        computerMove(moves.get(moves.size() - 1));
+
+        int row = moves.get(moves.size() - 1).getRow();
+        int col = moves.get(moves.size() - 1).getColumn();
+        recordGameSteps(row, col, board[row][col]);
+        System.out.println("turn:" + gameManager.getTurn());
+//        flipTurn();
 
     }
+
 }

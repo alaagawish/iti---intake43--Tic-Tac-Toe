@@ -171,7 +171,6 @@ public class Network implements Runnable {
     }
 
     public synchronized void logout(String userName) {
-//        try {
         messageSent = new Message();
         messageSent.setOperation("logout");
         messageSent.setStatus("offline");
@@ -181,9 +180,7 @@ public class Network implements Runnable {
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
         printStream.println(messageSentToServer);
-        System.err.println("in logout" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
-
-        System.out.println("==================");
+        System.out.println("in logout" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
 
     }
 
@@ -223,6 +220,7 @@ public class Network implements Runnable {
         messageSent.setPlayers(firstPlayer);
         messageSent.setPlayers(secondPlayer);
         messageSent.setMoves(moves);
+//        mess
         messageSentToServer = gson.toJson(messageSent);
         System.out.println("playedGame::" + messageSentToServer);
         printStream.println(messageSentToServer);
