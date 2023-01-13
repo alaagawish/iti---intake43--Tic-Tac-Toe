@@ -15,37 +15,37 @@ import tictactoe.utils.UtilsFunctions;
  * @author moazk
  */
 public class PlayerRepository {
-    
-    public static String[] getRecordedGames(String playerName){
+
+    public static String[] getRecordedGames(String playerName) {
         String[] gamesNames = null;
-        
-        if(UtilsFunctions.checkPlayerDirectoryIsExist(playerName)){
-            
+
+        if (UtilsFunctions.checkPlayerDirectoryIsExist(playerName)) {
+
             File file = new File(UtilsFunctions.getPlayerDirectory(playerName));
             gamesNames = file.list();
-            
+
         }
-        
+
         return gamesNames;
     }
-    
-    public static GameModel readGame(String playerName,String gameName){
-        
-        System.err.println(gameName);   
-        File fileName = new File(UtilsFunctions.getPlayerDirectory(playerName)+"\\"+gameName);
+
+    public static GameModel readGame(String playerName, String gameName) {
+
+        System.err.println(gameName);
+        File fileName = new File(UtilsFunctions.getPlayerDirectory(playerName) + "\\" + gameName);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         GameModel recordedGame = null;
         try {
-            recordedGame = gson.fromJson(new FileReader(fileName.getAbsolutePath()),GameModel.class);
-            
-            System.err.println("Game: "+recordedGame);
-            System.err.println("Move 0: "+recordedGame.getMovesList().get(0).getColumn());
-            
+            recordedGame = gson.fromJson(new FileReader(fileName.getAbsolutePath()), GameModel.class);
+
+            System.err.println("Game: " + recordedGame);
+            System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PlayerRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return recordedGame;
     }
-    
+
 }

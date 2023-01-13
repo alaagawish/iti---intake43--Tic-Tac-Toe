@@ -69,7 +69,7 @@ public class GameManager {
             gameDirectory.mkdir();
         }
 
-        String playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername()).concat("arwa");
+        String playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername());
         File playerDirectory = new File(playerDirectoryName);
         if (!playerDirectory.exists()) {
             playerDirectory.mkdir();
