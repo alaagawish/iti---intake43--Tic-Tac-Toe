@@ -23,8 +23,10 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.theme.CustomStyles;
 import tictactoe.screens.modes.ModeBase;
+import tictactoe.screens.singlemode.LevelsBase;
 
 public class GameBase extends AnchorPane implements Runnable {
 
@@ -43,7 +45,7 @@ public class GameBase extends AnchorPane implements Runnable {
     protected final Text toeText;
     protected final Text ticText;
     protected final Button recordButton;
-    protected final Button existButton;
+    protected final Button exitButton;
     protected final Text firstPlayerNameText;
     protected final Text firstPlayerSignText;
     protected final Text secondPlayerNameText;
@@ -80,7 +82,7 @@ public class GameBase extends AnchorPane implements Runnable {
         toeText = new Text();
         ticText = new Text();
         recordButton = new Button();
-        existButton = new Button();
+        exitButton = new Button();
         firstPlayerNameText = new Text();
         firstPlayerSignText = new Text();
         secondPlayerNameText = new Text();
@@ -295,14 +297,14 @@ public class GameBase extends AnchorPane implements Runnable {
         recordButton.setFont(new Font(Constants.COMICFONTBOLD, 35.0));
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
-        existButton.setId("existButton");
-        existButton.setLayoutX(65.0);
-        existButton.setLayoutY(674.0);
-        existButton.setMnemonicParsing(false);
-        existButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
-        existButton.setText("Exist");
-        existButton.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        existButton.setFont(new Font("Comic Sans MS Bold", 35.0));
+        exitButton.setId("exitButton");
+        exitButton.setLayoutX(65.0);
+        exitButton.setLayoutY(674.0);
+        exitButton.setMnemonicParsing(false);
+        exitButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        exitButton.setText("Exit");
+        exitButton.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        exitButton.setFont(new Font("Comic Sans MS Bold", 35.0));
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         firstPlayerNameText.setId("firstPlayerNameText");
@@ -363,7 +365,7 @@ public class GameBase extends AnchorPane implements Runnable {
         getChildren().add(firstPlayerSignText);
         getChildren().add(secondPlayerNameText);
         getChildren().add(secondPlayerSignText);
-        getChildren().add(existButton);
+        getChildren().add(exitButton);
 
         firstPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
         secondPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
@@ -454,16 +456,22 @@ public class GameBase extends AnchorPane implements Runnable {
 
         });
 
-        existButton.setOnAction(e -> {
+        exitButton.setOnAction(e -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning Dialog");
-            alert.setContentText("Are you sure to exsit game ?");
+            alert.setTitle("Warning");
+            alert.setContentText("Are you sure to exit?");
             ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
             ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
-                if (type == okButton) {
-                    Parent pane = new ModeBase(stage);
+                if (type == okButton && level == Level.ONLINE) {
+                    Parent pane = new OnlineListBase(stage , playerOne);
+                    stage.getScene().setRoot(pane);
+                }else if (type == okButton && (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD)) {
+                    Parent pane = new LevelsBase(stage);
+                    stage.getScene().setRoot(pane);
+                }else if (type == okButton && level == Level.LOCAL) {
+                    Parent pane = new DualModeBase(stage);
                     stage.getScene().setRoot(pane);
                 }
             });
