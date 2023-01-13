@@ -3,7 +3,6 @@ package tictactoe.screens.profile;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -64,12 +63,19 @@ public class ProfileBase extends ScrollPane {
 
     protected final ImageView backImageView, backImageView2;
     protected boolean toggleFlag;
+    public Stage stage;
+    Player playerr;
+    String[] gamesNames;
+    Thread thread;
+//    public GameBase panee;
 
     public ProfileBase(Stage stage, Player player) {
-
-        String[] gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
+        this.stage = stage;
+        playerr = player;
+        gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
 //        System.err.println(gamesNames[0]);
 
+//        thread = new Thread(this);
         borderPane = new BorderPane();
         borderPane0 = new BorderPane();
         vBox = new VBox();
@@ -103,7 +109,6 @@ public class ProfileBase extends ScrollPane {
         setPrefWidth(1280.0);
         setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
         getStyleClass().add("profileScrollPane");
-        getStylesheets().add("/tictactoe/screens/profile/profile.css");
 
         borderPane.setId("mainBorderPane");
         borderPane.setMaxHeight(USE_PREF_SIZE);
@@ -114,7 +119,6 @@ public class ProfileBase extends ScrollPane {
         borderPane.setPrefWidth(1280.0);
         borderPane.setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
         borderPane.getStyleClass().add("mainBorderPane");
-        borderPane.getStylesheets().add("/tictactoe/screens/profile/profile.css");
 
         BorderPane.setAlignment(borderPane0, javafx.geometry.Pos.CENTER);
         borderPane0.setPrefHeight(302.0);
@@ -150,7 +154,7 @@ public class ProfileBase extends ScrollPane {
         scoreLabel.setId("scoreLabel");
         scoreLabel.setLayoutX(10.0);
         scoreLabel.setLayoutY(10.0);
-        scoreLabel.getStylesheets().add("/tictactoe/screens/profile/profile.css");
+
         scoreLabel.setText(player.getScore() + "");
         scoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#fccf28"));
         scoreLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
@@ -161,7 +165,6 @@ public class ProfileBase extends ScrollPane {
         profileVBox.setPrefHeight(598.0);
         profileVBox.setPrefWidth(1280.0);
         profileVBox.setStyle("-fx-background-color: rgba(255,255,255,0);");
-        profileVBox.getStylesheets().add("/tictactoe/screens/profile/profile.css");
 
         infoHBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
@@ -175,7 +178,6 @@ public class ProfileBase extends ScrollPane {
         editInfoButton.setPrefHeight(29.0);
         editInfoButton.setPrefWidth(138.0);
         editInfoButton.setStyle("-fx-background-color: rgba(109, 207, 208,1); -fx-background-radius: 10;");
-        editInfoButton.getStylesheets().add("/tictactoe/screens/profile/profile.css");
         editInfoButton.setText("Edit");
         editInfoButton.setTextFill(javafx.scene.paint.Color.WHITE);
         editInfoButton.setFont(new Font("Comic Sans MS Bold", 24.0));
@@ -238,7 +240,6 @@ public class ProfileBase extends ScrollPane {
         usernameTextField.setPrefHeight(65.0);
         usernameTextField.setPrefWidth(365.0);
         usernameTextField.setStyle("-fx-border-radius: 51;");
-        usernameTextField.getStylesheets().add("/tictactoe/screens/profile/profile.css");
         usernameTextField.setText("Moaz Khaled");
         HBox.setMargin(usernameTextField, new Insets(0.0, 0.0, 0.0, 20.0));
         usernameTextField.setFont(new Font("Comic Sans MS", 24.0));
@@ -260,7 +261,6 @@ public class ProfileBase extends ScrollPane {
         passwordField.setMinHeight(50.0);
         passwordField.setPrefHeight(65.0);
         passwordField.setPrefWidth(391.0);
-        passwordField.getStylesheets().add("/tictactoe/screens/profile/profile.css");
         HBox.setMargin(passwordField, new Insets(0.0, 0.0, 0.0, 28.0));
         VBox.setMargin(passwordHBox, new Insets(10.0, 0.0, 0.0, 60.0));
 
@@ -289,7 +289,7 @@ public class ProfileBase extends ScrollPane {
         passwordHBox.getChildren().add(passordLabel);
         passwordHBox.getChildren().add(passwordField);
         profileVBox.getChildren().add(passwordHBox);
-
+//        profileVBox.getChildren().add(savedGamesLabel);
         if (gamesNames != null && gamesNames.length > 0) {
             profileVBox.getChildren().add(savedGamesLabel);
             for (int i = 0; i < gamesNames.length; i++) {
@@ -323,18 +323,15 @@ public class ProfileBase extends ScrollPane {
 
                 gameImage.get(i).setOnMouseClicked((MouseEvent e) -> {
 
-                    GameModel recordedGame = PlayerRepository.readGame(player.getUsername(), gamesNames[0]);
+                    GameModel recordedGame = PlayerRepository.readGame(playerr.getUsername(), gamesNames[0]);
                     System.err.println("Game: " + recordedGame);
                     System.err.println("xPlayer: " + recordedGame.getxPlayer());
                     System.err.println("oPlayer: " + recordedGame.getoPlayer());
                     System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), recordedGame);
+                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer());
                     stage.getScene().setRoot(pane);
+                    pane.displayRecord(recordedGame);
 
-//                ShowGame showGame = new ShowGame(stage, recordedGame);
-//                stage.getScene().setRoot((Parent)pane);
-//                new Thread(pane).start();
-//                new Thread(pane).start();
                 });
 
                 VBox.setMargin(gameHBox.get(i), new Insets(10.0, 0.0, 10.0, 60.0));
@@ -400,4 +397,5 @@ public class ProfileBase extends ScrollPane {
         });
 
     }
+
 }

@@ -225,7 +225,9 @@ public class Network implements Runnable {
 
     public List<Move> createMoveFirstPlayer(Player firstPlayer, Player secondPlayer, List<Move> moves) {
         messageSent = new Message();
-        resultMoves = moves;
+//        resultMoves = moves;
+        System.out.println("send first player move to server" + moves);
+        
         messageSent.setOperation("firstPlayerMove");
         messageSent.setPlayers(firstPlayer);
         messageSent.setPlayers(secondPlayer);
@@ -233,33 +235,25 @@ public class Network implements Runnable {
         messageSentToServer = gson.toJson(messageSent);
         System.out.println("playedGame::" + messageSentToServer);
         printStream.println(messageSentToServer);
-//        try {
-//            thread.sleep(1000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
         if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
             resultMoves = messageReceived.getMoves();
-            System.out.println("received moves" + resultMoves);
+            System.out.println("received moves from server" + resultMoves);
         }
 
         return resultMoves;
     }
 
     public List<Move> createMoveSecondPlayer(Player firstPlayer, Player secondPlayer, List<Move> moves) {
-
+        System.out.println("inside createMoveSecondPlayer");
         if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
 //            resultMoves = messageReceived.getMoves();
-            System.out.println("received moves" + resultMoves);
+
+            System.out.println("received moves" + messageReceived.getMoves());
 
         }
 
-//        try {
-//            thread.sleep(1000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
+        
         messageSent = new Message();
 
         messageSent.setOperation("firstPlayerMove");

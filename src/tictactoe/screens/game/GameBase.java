@@ -3,6 +3,7 @@ package tictactoe.screens.game;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -23,9 +24,10 @@ import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.modes.ModeBase;
+
 import tictactoe.theme.CustomColors;
 
-public class GameBase extends AnchorPane {
+public class GameBase extends AnchorPane implements Runnable {
 
     protected final Circle firstPlayerCircle;
     protected final Circle secondPlayerCircle;
@@ -52,14 +54,13 @@ public class GameBase extends AnchorPane {
     private GameManager gameManager;
     private Stage stageVideo;
     private boolean recordFlag;
-    private final GameModel recordedGame;
-
+    public GameModel recordedGamee;
+    Thread thread;
     protected Player firstPlayer, secondPlayer;
-    List<Move> resultMoves;
 
-    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, GameModel recordedGame) {
-        this.recordedGame = recordedGame;
+    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo) {
 
+        thread = new Thread(this);
         this.stageVideo = stage;
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
@@ -82,7 +83,7 @@ public class GameBase extends AnchorPane {
         firstPlayerSignText = new Text();
         secondPlayerNameText = new Text();
         secondPlayerSignText = new Text();
-        resultMoves = new ArrayList<>();
+//        resultMoves = new ArrayList<>();
         recordFlag = false;
         firstPlayer = playerOne;
         secondPlayer = playerTwo;
@@ -439,7 +440,6 @@ public class GameBase extends AnchorPane {
                 handleButton(button22, 2, 2, level);
             }
         });
-
         recordButton.setOnAction(e -> {
             recordFlag = true;
             gameManager.setRecorded(true);
@@ -467,18 +467,34 @@ public class GameBase extends AnchorPane {
 
         });
 
-        if (recordedGame != null) {
-            disableButtons();
-            for (int i = 0; i < recordedGame.getMovesList().size(); i++) {
-                System.out.println("move" + recordedGame.getMovesList().get(i));
-                computerMove(recordedGame.getMovesList().get(i));
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//                }
+    }
+
+    public synchronized void displayRecord(GameModel recordedGamee) {
+        this.recordedGamee = recordedGamee;
+        thread.start();
+    }
+
+    @Override
+    public void run() {
+        System.out.println("move" + recordedGamee.getMovesList());
+        System.out.println("i=" + "" + recordedGamee.getMovesList());
+
+        for (int i = 0; i < recordedGamee.getMovesList().size(); i++) {
+            Move move = recordedGamee.getMovesList().get(i);
+            try {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        computerMove(move);
+                    }
+                });
+
+                thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
         }
+        thread.stop();
 
     }
 
@@ -594,80 +610,78 @@ public class GameBase extends AnchorPane {
         if (move.getRow() == 0 && move.getColumn() == 0) {
             button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
+            button00.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 0 && move.getColumn() == 1) {
             button01.setText(move.getSymbol() + "");
             button01.setDisable(true);
+            button01.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 0 && move.getColumn() == 2) {
             button02.setText(move.getSymbol() + "");
             button02.setDisable(true);
+            button02.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 1 && move.getColumn() == 0) {
             button10.setText(move.getSymbol() + "");
             button10.setDisable(true);
+            button10.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 1 && move.getColumn() == 1) {
             button11.setText(move.getSymbol() + "");
             button11.setDisable(true);
+            button11.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 1 && move.getColumn() == 2) {
             button12.setText(move.getSymbol() + "");
             button12.setDisable(true);
+            button12.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 2 && move.getColumn() == 0) {
             button20.setText(move.getSymbol() + "");
             button20.setDisable(true);
+            button20.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 2 && move.getColumn() == 1) {
             button21.setText(move.getSymbol() + "");
             button21.setDisable(true);
+            button21.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 2 && move.getColumn() == 2) {
             button22.setText(move.getSymbol() + "");
             button22.setDisable(true);
+            button22.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         }
     }
 
-//    @Override
-//    public void run() {
-//        if(recordedGame != null){
-//            disableButtons();
-//            try {
-//                for(int i=0;i<recordedGame.getMovesList().size();i++){
-//                    System.out.println("move"+recordedGame.getMovesList().get(i));
-//                    computerMove(recordedGame.getMovesList().get(i));
-//                    Thread.sleep(1000);
-//                }
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
     public void handleButtonOnline(Button button, int i, int j, Level level) {
         moves.add(new Move(i, j, GameManager.getTurn()));
-        System.out.println("Moves" + moves.get(0));
+//        System.out.println("Moves" + moves.get(0));
         if (level == Level.ONLINE) {
             if (GameManager.getTurn() == Constants.X) {
-                resultMoves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
-                System.out.println("resultmoves" + resultMoves.get(0));
-                System.out.println("move1" + resultMoves.get(resultMoves.size() - 1));
-                computerMove(resultMoves.get(resultMoves.size() - 1));
-                recordGameSteps(resultMoves.get(resultMoves.size() - 1).getRow(), resultMoves.get(resultMoves.size() - 1).getColumn(), board[resultMoves.get(resultMoves.size() - 1).getRow()][resultMoves.get(resultMoves.size() - 1).getColumn()]);
-
-                flipTurn();
+                moves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
+//                System.out.println("Turn X: " + moves.get(0));
             } else {
-                resultMoves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
-                System.out.println("resultmoves" + resultMoves.get(0));
-                System.out.println("move2" + resultMoves.get(resultMoves.size() - 1));
-
-                computerMove(resultMoves.get(resultMoves.size() - 1));
-                recordGameSteps(resultMoves.get(resultMoves.size() - 1).getRow(), resultMoves.get(resultMoves.size() - 1).getColumn(), board[resultMoves.get(resultMoves.size() - 1).getRow()][resultMoves.get(resultMoves.size() - 1).getColumn()]);
-
-                flipTurn();
+                moves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
+                System.out.println(" Turn Y: " + moves.get(moves.size() - 1));
             }
 
+            computerMove(moves.get(moves.size() - 1));
+
+            int row = moves.get(moves.size() - 1).getRow();
+            int col = moves.get(moves.size() - 1).getColumn();
+            recordGameSteps(row, col, board[row][col]);
+            flipTurn();
         }
 
     }

@@ -55,9 +55,10 @@ public class Dialogs {
 
         acceptButton.setOnAction(e -> {
             System.out.println("the second player accepted the game");
-            Player p = DualModeBase.network.responseGame(true);
+            Player playerOne = DualModeBase.network.responseGame(true);
             OnlineListBase.dialog2.close();
-            Parent pane = new GameBase(stage, Level.ONLINE, p, playerTwo,null);
+
+            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo);
             stage.getScene().setRoot(pane);
         });
         actionParent.setSpacing(20);
