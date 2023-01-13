@@ -6,7 +6,10 @@ import java.util.List;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -19,9 +22,10 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.modes.ModeBase;
 import tictactoe.theme.CustomColors;
 
-public class GameBase extends AnchorPane{
+public class GameBase extends AnchorPane {
 
     protected final Circle firstPlayerCircle;
     protected final Circle secondPlayerCircle;
@@ -38,6 +42,7 @@ public class GameBase extends AnchorPane{
     protected final Text toeText;
     protected final Text ticText;
     protected final Button recordButton;
+    protected final Button existButton;
     protected final Text firstPlayerNameText;
     protected final Text firstPlayerSignText;
     protected final Text secondPlayerNameText;
@@ -52,9 +57,9 @@ public class GameBase extends AnchorPane{
     protected Player firstPlayer, secondPlayer;
     List<Move> resultMoves;
 
-    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo,GameModel recordedGame) {
+    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, GameModel recordedGame) {
         this.recordedGame = recordedGame;
-                
+
         this.stageVideo = stage;
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
@@ -72,6 +77,7 @@ public class GameBase extends AnchorPane{
         toeText = new Text();
         ticText = new Text();
         recordButton = new Button();
+        existButton = new Button();
         firstPlayerNameText = new Text();
         firstPlayerSignText = new Text();
         secondPlayerNameText = new Text();
@@ -285,6 +291,15 @@ public class GameBase extends AnchorPane{
         recordButton.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         recordButton.setFont(new Font("Comic Sans MS Bold", 35.0));
 
+        existButton.setId("existButton");
+        existButton.setLayoutX(65.0);
+        existButton.setLayoutY(674.0);
+        existButton.setMnemonicParsing(false);
+        existButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        existButton.setText("Exist");
+        existButton.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        existButton.setFont(new Font("Comic Sans MS Bold", 35.0));
+
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         firstPlayerNameText.setId("firstPlayerNameText");
         firstPlayerNameText.setLayoutX(60.0);
@@ -344,6 +359,7 @@ public class GameBase extends AnchorPane{
         getChildren().add(firstPlayerSignText);
         getChildren().add(secondPlayerNameText);
         getChildren().add(secondPlayerSignText);
+        getChildren().add(existButton);
 
         firstPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
         secondPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
@@ -434,11 +450,27 @@ public class GameBase extends AnchorPane{
             recordButton.setTextFill(javafx.scene.paint.Color.valueOf("#ffffff"));
 
         });
-        
-        if(recordedGame != null){
+
+        existButton.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setContentText("Are you sure to exsit game ?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == okButton) {
+                    Parent pane = new ModeBase(stage);
+                    stage.getScene().setRoot(pane);
+                }
+            });
+
+        });
+
+        if (recordedGame != null) {
             disableButtons();
-            for(int i=0;i<recordedGame.getMovesList().size();i++){
-                System.out.println("move"+recordedGame.getMovesList().get(i));
+            for (int i = 0; i < recordedGame.getMovesList().size(); i++) {
+                System.out.println("move" + recordedGame.getMovesList().get(i));
                 computerMove(recordedGame.getMovesList().get(i));
 //                try {
 //                    Thread.sleep(1000);
@@ -447,11 +479,11 @@ public class GameBase extends AnchorPane{
 //                }
             }
         }
-        
+
     }
 
     private void handleButton(Button button, int i, int j, Level level) {
-       
+
         button.setTextFill(javafx.scene.paint.Color.valueOf(
                 GameManager.getTurn() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
@@ -459,7 +491,7 @@ public class GameBase extends AnchorPane{
         button.setDisable(true);
         board[i][j] = GameManager.getTurn();
         recordGameSteps(i, j, board[i][j]);
-        
+
         flipTurn();
         if (gameManager.checkWinner() == 1) {
             if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
@@ -472,7 +504,7 @@ public class GameBase extends AnchorPane{
                 }
             }
         }
-        
+
     }
 
     private void recordGameSteps(int i, int j, char symbol) {
@@ -558,7 +590,7 @@ public class GameBase extends AnchorPane{
     }
 
     public void computerMove(Move move) {
-        
+
         if (move.getRow() == 0 && move.getColumn() == 0) {
             button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
@@ -613,9 +645,8 @@ public class GameBase extends AnchorPane{
 //            }
 //        }
 //    }
-
     public void handleButtonOnline(Button button, int i, int j, Level level) {
-         moves.add(new Move(i, j, GameManager.getTurn()));
+        moves.add(new Move(i, j, GameManager.getTurn()));
         System.out.println("Moves" + moves.get(0));
         if (level == Level.ONLINE) {
             if (GameManager.getTurn() == Constants.X) {

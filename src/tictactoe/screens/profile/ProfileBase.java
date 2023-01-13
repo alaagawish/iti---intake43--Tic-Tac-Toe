@@ -68,7 +68,7 @@ public class ProfileBase extends ScrollPane {
     public ProfileBase(Stage stage, Player player) {
         
         String[] gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
-        System.err.println(gamesNames[0]);
+//        System.err.println(gamesNames[0]);
         
         
         borderPane = new BorderPane();
