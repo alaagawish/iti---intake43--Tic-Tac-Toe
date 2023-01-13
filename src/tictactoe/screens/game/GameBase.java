@@ -19,9 +19,9 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
-import tictactoe.theme.CustomColors;
+import tictactoe.theme.CustomStyles;
 
-public class GameBase extends AnchorPane{
+public class GameBase extends AnchorPane {
 
     protected final Circle firstPlayerCircle;
     protected final Circle secondPlayerCircle;
@@ -45,16 +45,16 @@ public class GameBase extends AnchorPane{
     protected List<Move> moves;
     protected char board[][];
     private GameManager gameManager;
-    private Stage stageVideo;
+    private final Stage stageVideo;
     private boolean recordFlag;
     private final GameModel recordedGame;
-
+    private Level gameLevel;
     protected Player firstPlayer, secondPlayer;
     List<Move> resultMoves;
 
-    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo,GameModel recordedGame) {
+    public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, GameModel recordedGame) {
         this.recordedGame = recordedGame;
-                
+        this.gameLevel = level;
         this.stageVideo = stage;
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
@@ -78,12 +78,12 @@ public class GameBase extends AnchorPane{
         secondPlayerSignText = new Text();
         resultMoves = new ArrayList<>();
         recordFlag = false;
-        firstPlayer = playerOne;
-        secondPlayer = playerTwo;
+        this.firstPlayer = playerOne;
+        this.secondPlayer = playerTwo;
         setId("AnchorPane");
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
-        setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
+        setStyle(CustomStyles.GRADIENTBACKGROUND);
 
         firstPlayerCircle.setFill(javafx.scene.paint.Color.WHITE);
         firstPlayerCircle.setLayoutX(134.0);
@@ -112,8 +112,8 @@ public class GameBase extends AnchorPane{
         button00.setPrefHeight(171.0);
         button00.setPrefWidth(225.0);
         button00.setText(" ");
-        button00.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button00.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button00.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button00.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button00.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
         button00.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
 
@@ -129,8 +129,8 @@ public class GameBase extends AnchorPane{
         button01.setPrefWidth(225.0);
         button01.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
         button01.setText(" ");
-        button01.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button01.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button01.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button01.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button01.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
 
         button02.setId("button02");
@@ -143,10 +143,10 @@ public class GameBase extends AnchorPane{
         button02.setMnemonicParsing(false);
         button02.setPrefHeight(171.0);
         button02.setPrefWidth(225.0);
-        button02.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button02.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button02.setText(" ");
-        button02.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button02.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button02.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button02.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button02.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
         button10.setId("button10");
@@ -159,10 +159,10 @@ public class GameBase extends AnchorPane{
         button10.setMnemonicParsing(false);
         button10.setPrefHeight(171.0);
         button10.setPrefWidth(225.0);
-        button10.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button10.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button10.setText(" ");
-        button10.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button10.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button10.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button10.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button10.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
         button11.setId("button11");
@@ -175,10 +175,10 @@ public class GameBase extends AnchorPane{
         button11.setMnemonicParsing(false);
         button11.setPrefHeight(171.0);
         button11.setPrefWidth(225.0);
-        button11.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button11.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button11.setText(" ");
-        button11.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button11.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button11.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button11.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button11.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
 
         button12.setId("button12");
@@ -191,10 +191,10 @@ public class GameBase extends AnchorPane{
         button12.setMnemonicParsing(false);
         button12.setPrefHeight(171.0);
         button12.setPrefWidth(225.0);
-        button12.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button12.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button12.setText(" ");
-        button12.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button12.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button12.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button12.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button12.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
         button20.setId("button20");
@@ -207,10 +207,10 @@ public class GameBase extends AnchorPane{
         button20.setMnemonicParsing(false);
         button20.setPrefHeight(171.0);
         button20.setPrefWidth(225.0);
-        button20.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button20.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button20.setText(" ");
-        button20.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button20.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button20.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button20.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button20.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
         button21.setId("button21");
@@ -223,10 +223,10 @@ public class GameBase extends AnchorPane{
         button21.setMnemonicParsing(false);
         button21.setPrefHeight(171.0);
         button21.setPrefWidth(225.0);
-        button21.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button21.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button21.setText(" ");
-        button21.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button21.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button21.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button21.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button21.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
         button22.setId("button22");
@@ -239,91 +239,91 @@ public class GameBase extends AnchorPane{
         button22.setMnemonicParsing(false);
         button22.setPrefHeight(171.0);
         button22.setPrefWidth(225.0);
-        button22.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        button22.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         button22.setText(" ");
-        button22.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        button22.setFont(new Font("Comic Sans MS Bold", 130.0));
+        button22.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        button22.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button22.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
 
         addButtonsToBoard();
-        tacText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
+        tacText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
         tacText.setId("tacText");
         tacText.setLayoutX(516.0);
         tacText.setLayoutY(131.0);
         tacText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         tacText.setStrokeWidth(0.0);
-        tacText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
+        tacText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         tacText.setText("Tac");
-        tacText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        tacText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
 
-        toeText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        toeText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         toeText.setId("toeText");
         toeText.setLayoutX(685.0);
         toeText.setLayoutY(131.0);
         toeText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         toeText.setStrokeWidth(0.0);
-        toeText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
+        toeText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         toeText.setText("Toe");
-        toeText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        toeText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
 
-        ticText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        ticText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         ticText.setId("ticText");
         ticText.setLayoutX(373.0);
         ticText.setLayoutY(131.0);
         ticText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         ticText.setStrokeWidth(0.0);
-        ticText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
+        ticText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         ticText.setText("Tic");
-        ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
+        ticText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
 
         recordButton.setId("recordButton");
         recordButton.setLayoutX(1060.0);
         recordButton.setLayoutY(674.0);
         recordButton.setMnemonicParsing(false);
-        recordButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
+        recordButton.setStyle(CustomStyles.DROPDOWNSHADOW_BUTTON);
         recordButton.setText("Record");
-        recordButton.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
-        recordButton.setFont(new Font("Comic Sans MS Bold", 35.0));
+        recordButton.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
+        recordButton.setFont(new Font(Constants.COMICFONTBOLD, 35.0));
 
-        firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
+        firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
         firstPlayerNameText.setId("firstPlayerNameText");
         firstPlayerNameText.setLayoutX(60.0);
         firstPlayerNameText.setLayoutY(270.0);
         firstPlayerNameText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         firstPlayerNameText.setStrokeWidth(0.0);
-        firstPlayerNameText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
+        firstPlayerNameText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         firstPlayerNameText.setText("Alaa");
-        firstPlayerNameText.setFont(new Font("Comic Sans MS Bold", 60.0));
+        firstPlayerNameText.setFont(new Font(Constants.COMICFONTBOLD, 60.0));
 
-        firstPlayerSignText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
+        firstPlayerSignText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
         firstPlayerSignText.setId("firstPlayerSignText");
         firstPlayerSignText.setLayoutX(110.0);
         firstPlayerSignText.setLayoutY(345.0);
         firstPlayerSignText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         firstPlayerSignText.setStrokeWidth(0.0);
-        firstPlayerSignText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
-        firstPlayerSignText.setText("X");
-        firstPlayerSignText.setFont(new Font("Comic Sans MS Bold", 60.0));
+        firstPlayerSignText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
+        firstPlayerSignText.setText(Constants.X+"");
+        firstPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 60.0));
 
-        secondPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        secondPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         secondPlayerNameText.setId("secondPlayerNameText");
         secondPlayerNameText.setLayoutX(1076.0);
         secondPlayerNameText.setLayoutY(264.0);
         secondPlayerNameText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         secondPlayerNameText.setStrokeWidth(0.0);
-        secondPlayerNameText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
+        secondPlayerNameText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         secondPlayerNameText.setText("Alaa");
-        secondPlayerNameText.setFont(new Font("Comic Sans MS Bold", 70.0));
+        secondPlayerNameText.setFont(new Font(Constants.COMICFONTBOLD, 70.0));
 
-        secondPlayerSignText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        secondPlayerSignText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         secondPlayerSignText.setId("secondPlayerSignText");
         secondPlayerSignText.setLayoutX(1130.0);
         secondPlayerSignText.setLayoutY(337.0);
         secondPlayerSignText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         secondPlayerSignText.setStrokeWidth(0.0);
-        secondPlayerSignText.setStyle("-fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);");
-        secondPlayerSignText.setText("O");
-        secondPlayerSignText.setFont(new Font("Comic Sans MS Bold", 70.0));
+        secondPlayerSignText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
+        secondPlayerSignText.setText(Constants.O+"");
+        secondPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 70.0));
 
         getChildren().add(firstPlayerCircle);
         getChildren().add(secondPlayerCircle);
@@ -429,37 +429,32 @@ public class GameBase extends AnchorPane{
             gameManager.setRecorded(true);
             gameManager.createFile();
             recordButton.setDisable(true);
-            recordButton.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #e87251;");
+            recordButton.setStyle(CustomStyles.RECORDBUTTONSTYLE);
             recordButton.setText("Record");
-            recordButton.setTextFill(javafx.scene.paint.Color.valueOf("#ffffff"));
+            recordButton.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.WHITE));
 
         });
-        
-        if(recordedGame != null){
+
+        if (recordedGame != null) {
             disableButtons();
-            for(int i=0;i<recordedGame.getMovesList().size();i++){
-                System.out.println("move"+recordedGame.getMovesList().get(i));
+            for (int i = 0; i < recordedGame.getMovesList().size(); i++) {
+                System.out.println("move" + recordedGame.getMovesList().get(i));
                 computerMove(recordedGame.getMovesList().get(i));
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//                }
+
             }
         }
-        
+
     }
 
     private void handleButton(Button button, int i, int j, Level level) {
-       
-        button.setTextFill(javafx.scene.paint.Color.valueOf(
-                GameManager.getTurn() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
+
+        button.setTextFill(javafx.scene.paint.Color.valueOf(GameManager.getTurn() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
 
         button.setText(GameManager.getTurn() + "");
         button.setDisable(true);
         board[i][j] = GameManager.getTurn();
         recordGameSteps(i, j, board[i][j]);
-        
+
         flipTurn();
         if (gameManager.checkWinner() == 1) {
             if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
@@ -472,7 +467,7 @@ public class GameBase extends AnchorPane{
                 }
             }
         }
-        
+
     }
 
     private void recordGameSteps(int i, int j, char symbol) {
@@ -498,41 +493,47 @@ public class GameBase extends AnchorPane{
                 disableButtons();
                 winnerFXMLBase.video = "/assets/images/losser.mp4";
                 winnerFXMLBase.message = "Hard Luck Next Time";
-                pane = new winnerFXMLBase(stageVideo);
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
-//                gameManager.ReadFile();
                 break;
             case -2:
                 disableButtons();
                 winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
                 winnerFXMLBase.message = "Winner Winner Chiken Dinner";
-                pane = new winnerFXMLBase(stageVideo);
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
-//                gameManager.ReadFile();
                 break;
             case 0:
                 //x=o
                 winnerFXMLBase.video = "/assets/images/draw.mp4";
                 winnerFXMLBase.message = "No Winner, Try Play Again";
-                pane = new winnerFXMLBase(stageVideo);
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
-//                gameManager.ReadFile();
                 break;
             default:
                 break;
         }
+    }
+
+    private void setNames(Text firstPlayerName, Text secondPlayerName) {
+        firstPlayer.setUsername(firstPlayerName.getText());
+        secondPlayer.setUsername(secondPlayerName.getText());
+
     }
 
     private void addButtonsToBoard() {
@@ -558,7 +559,7 @@ public class GameBase extends AnchorPane{
     }
 
     public void computerMove(Move move) {
-        
+
         if (move.getRow() == 0 && move.getColumn() == 0) {
             button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
@@ -598,24 +599,8 @@ public class GameBase extends AnchorPane{
         }
     }
 
-//    @Override
-//    public void run() {
-//        if(recordedGame != null){
-//            disableButtons();
-//            try {
-//                for(int i=0;i<recordedGame.getMovesList().size();i++){
-//                    System.out.println("move"+recordedGame.getMovesList().get(i));
-//                    computerMove(recordedGame.getMovesList().get(i));
-//                    Thread.sleep(1000);
-//                }
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
-
     public void handleButtonOnline(Button button, int i, int j, Level level) {
-         moves.add(new Move(i, j, GameManager.getTurn()));
+        moves.add(new Move(i, j, GameManager.getTurn()));
         System.out.println("Moves" + moves.get(0));
         if (level == Level.ONLINE) {
             if (GameManager.getTurn() == Constants.X) {

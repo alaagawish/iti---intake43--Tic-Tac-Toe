@@ -183,16 +183,7 @@ public class Network implements Runnable {
         System.err.println("in logout" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
 
         System.out.println("==================");
-//        System.err.println("result: " + messageReceived.getPlayers().get(0).getStatus());
-//        if (messageReceived.getPlayers().get(0).getStatus().equalsIgnoreCase("offline")) {
-//            System.out.println("done logout"
-//                    + messageReceived.getPlayers().get(0) + "\n" + messageReceived.getStatus());
-//
-//            return true;
-//        } else {
-//            System.err.println("logout failed from Network class in client side");
-//            return false;
-//        }
+
 
     }
 

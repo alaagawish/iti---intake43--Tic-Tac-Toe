@@ -24,11 +24,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.game.GameBase;
 import tictactoe.screens.profile.ProfileBase;
 import tictactoe.utils.Dialogs;
+import tictactoe.theme.CustomStyles;
 
 public class OnlineListBase extends ScrollPane {
 
@@ -72,7 +74,7 @@ public class OnlineListBase extends ScrollPane {
 
         setId("listScrollPane");
         setPrefWidth(1280.0);
-        setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
+        setStyle(CustomStyles.GRADIENTBACKGROUND);
 
         listBorderPane.setId("listBorderPane");
         listBorderPane.setMaxHeight(USE_PREF_SIZE);
@@ -81,13 +83,13 @@ public class OnlineListBase extends ScrollPane {
         listBorderPane.setMinWidth(USE_PREF_SIZE);
         listBorderPane.setPrefHeight(800.0);
         listBorderPane.setPrefWidth(1280.0);
-        listBorderPane.setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
+        listBorderPane.setStyle(CustomStyles.GRADIENTBACKGROUND);
 
         BorderPane.setAlignment(borderPane, javafx.geometry.Pos.CENTER);
         borderPane.setPrefHeight(234.0);
         borderPane.setPrefWidth(1280.0);
 
-        profileCircle.setFill(javafx.scene.paint.Color.valueOf("#ffffff00"));
+        profileCircle.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.PROFILECIRCLE));
         profileCircle.setId("profileCircle");
         profileCircle.setRadius(60.0);
         BorderPane.setMargin(profileCircle, new Insets(30.0, 60.0, 0.0, 0.0));
@@ -100,14 +102,14 @@ public class OnlineListBase extends ScrollPane {
         listVBox.setId("listVBox");
         listVBox.setPrefHeight(598.0);
         listVBox.setPrefWidth(1280.0);
-        listVBox.setStyle("-fx-background-color: rgba(255,255,255,0);");
+        listVBox.setStyle(CustomStyles.LISTVBOXSTYLE);
 
         savedGamesLabel.setLayoutX(10.0);
         savedGamesLabel.setLayoutY(10.0);
         savedGamesLabel.setPrefHeight(56.0);
         savedGamesLabel.setPrefWidth(833.0);
         savedGamesLabel.setText("Invitation List");
-        savedGamesLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
+        savedGamesLabel.setFont(new Font(Constants.COMICFONTBOLD, 40.0));
         VBox.setMargin(savedGamesLabel, new Insets(0.0, 0.0, 0.0, 0.0));
 
         StackPane stackpane = new StackPane();
@@ -138,8 +140,8 @@ public class OnlineListBase extends ScrollPane {
             label.setPrefHeight(56.0);
             label.setPrefWidth(880.0);
             label.setText(players.get(i).getUsername());
-            label.setTextFill(javafx.scene.paint.Color.valueOf("#6dcfd0"));
-            label.setFont(new Font("Comic Sans MS Bold", 30.0));
+            label.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BABYBLUE));
+            label.setFont(new Font(Constants.COMICFONTBOLD, 30.0));
             playerName.add(label);
 
             Button btn = new Button();
@@ -148,11 +150,11 @@ public class OnlineListBase extends ScrollPane {
             btn.setMnemonicParsing(false);
             btn.setPrefHeight(29.0);
             btn.setPrefWidth(138.0);
-            btn.setStyle("-fx-background-color: rgba(156, 216, 100,1); -fx-background-radius: 10;");
+            btn.setStyle(CustomStyles.INVITEBUTTONSTYLE);
             btn.setText("Invite");
 
             btn.setTextFill(javafx.scene.paint.Color.WHITE);
-            btn.setFont(new Font("Comic Sans MS Bold", 24.0));
+            btn.setFont(new Font(Constants.COMICFONTBOLD, 24.0));
             Player playerO = players.get(i);
             btn.setOnAction(e -> {
                 dialog.show();
@@ -162,7 +164,7 @@ public class OnlineListBase extends ScrollPane {
                     System.out.println("llll");
                     if (DualModeBase.network.flag.equalsIgnoreCase("accept")) {
                         System.out.println("game accepted");
-                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO,null);
+                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO, null);
                         stage.getScene().setRoot(roott);
                         break;
                     } else if (DualModeBase.network.flag.equalsIgnoreCase("reject")) {
