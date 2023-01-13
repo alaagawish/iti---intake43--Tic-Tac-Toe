@@ -23,7 +23,6 @@ import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.utils.Dialogs;
 
-
 public class LoginBase extends BorderPane {
 
     protected final VBox vBox;
@@ -349,10 +348,13 @@ public class LoginBase extends BorderPane {
             Parent pane = new OnlineListBase(stage, player);
             stage.getScene().setRoot(pane);
         } else {
+            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
+                    "Error",
+                    "Login Error",
+                    "UserName or Password are incorrect check you UserName and Password");
             userNameTextField.setText("");
             passwordField.setText("");
 
-         
         }
     }
 
