@@ -21,7 +21,7 @@ public class ShowGame implements Runnable{
     GameBase gameBase;
     GameModel recordedGame;
     public ShowGame(Stage stage, GameModel game) {
-        gameBase = new GameBase(stage, Level.HARD, game.getxPlayer(), game.getoPlayer(), game);
+        gameBase = new GameBase(stage, Level.HARD, game.getxPlayer(), game.getoPlayer());
         
         
         
