@@ -33,14 +33,14 @@ public class GameManager {
     }
 
     public GameManager(Player xPlayer, Player oPlayer, char[][] board, Level level) {
-        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<>();
         computerRound = 1;
         turn = Constants.X;
         GameManager.board = board;
         recordFlag = false;
-        this.xPlayer = xPlayer;
-        this.oPlayer = oPlayer;
-        this.level = level;
+        GameManager.xPlayer = xPlayer;
+        GameManager.oPlayer = oPlayer;
+        GameManager.level = level;
         gameModel = new GameModel();
     }
 
@@ -272,7 +272,7 @@ public class GameManager {
             for (int j = 0; j < 3; j++) {
 
                 if (board[i][j] == ' ') {
-                    board[i][j] = 'O';
+                    board[i][j] = Constants.O;
                     int moveVal = minimax(100, false, board);
                     board[i][j] = ' ';
                     if (moveVal > bestVal) {
@@ -298,7 +298,7 @@ public class GameManager {
                 for (int j = 0; j < 3; j++) {
                     // Is the cell available?
                     if (board[i][j] == ' ') {
-                        board[i][j] = 'O';
+                        board[i][j] = Constants.O;
                         int score = minimax(depth - 1, false, board);
                         bestScore = Integer.max(score, bestScore);
                         board[i][j] = ' ';
@@ -313,7 +313,7 @@ public class GameManager {
                 for (int j = 0; j < 3; j++) {
                     // Is the cell available?
                     if (board[i][j] == ' ') {
-                        board[i][j] = 'X';
+                        board[i][j] = Constants.X;
                         int score = minimax(depth - 1, true, board);
                         bestScore = Integer.min(score, bestScore);
                         board[i][j] = ' ';
