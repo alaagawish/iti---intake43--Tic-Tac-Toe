@@ -23,6 +23,7 @@ import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.utils.Dialogs;
 
+
 public class LoginBase extends BorderPane {
 
     protected final VBox vBox;
@@ -350,6 +351,8 @@ public class LoginBase extends BorderPane {
         } else {
             userNameTextField.setText("");
             passwordField.setText("");
+
+         
         }
     }
 
