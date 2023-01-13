@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
+import tictactoe.utils.Dialogs;
 
 public class GameManager {
 
@@ -68,23 +70,45 @@ public class GameManager {
         if (!gameDirectory.exists()) {
             gameDirectory.mkdir();
         }
+        File playerDirectory;
+        String playerDirectoryName = "";
 
-        String playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername());
-        File playerDirectory = new File(playerDirectoryName);
-        if (!playerDirectory.exists()) {
-            playerDirectory.mkdir();
+        if (level == Level.ONLINE) {
+            playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername());
+            playerDirectory = new File(playerDirectoryName);
+            if (!playerDirectory.exists()) {
+                playerDirectory.mkdir();
+            }
+        } else if (level == Level.LOCAL || level == Level.Easy || level == Level.HARD || level == Level.MEDIUM) {
+            playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(Constants.RECORDEDGAMEPATH_LOCAL);
+            playerDirectory = new File(playerDirectoryName);
+            if (!playerDirectory.exists()) {
+                playerDirectory.mkdir();
+            }
         }
+
         String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
-        String afterReplace = timeStamp.replace(":", "-");
-        fileName = new File(playerDirectoryName + "\\" + afterReplace + ".txt");
+        String timeStampAfterReplace = timeStamp.replace(":", "-");
+        fileName = new File(playerDirectoryName
+                + "\\" + xPlayer.getUsername()
+                + "-" + oPlayer.getUsername()
+                + "-" + timeStampAfterReplace + ".txt");
         try {
             if (fileName.createNewFile()) {
                 System.out.println("File created: " + fileName.getName());
             } else {
+                Dialogs.showAlertDialog(Alert.AlertType.INFORMATION,
+                        "File Info",
+                        "File already Exist",
+                        fileName.getAbsolutePath());
                 System.out.println("File already exists.");
             }
 
         } catch (IOException ex) {
+            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
+                    "Error",
+                    "Error in Create File",
+                    ex.getMessage());
             System.out.println("IOException from File :" + ex);
             ex.printStackTrace();
         }
@@ -118,6 +142,10 @@ public class GameManager {
                  */
             }
         } catch (IOException ex) {
+            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
+                    "Error",
+                    "Error happin in Save Gson File",
+                    ex.getMessage());
             System.out.println("Error from IOException in saveGame" + ex.getLocalizedMessage());
         }
     }
@@ -347,7 +375,6 @@ public class GameManager {
         move.setRow(-1);
         move.setColumn(-1);
         move.setSymbol(turn);
-        int gameState = GameManager.checkWinner();
 
         if (computerRound < 5) {
             Random rand = new Random();
