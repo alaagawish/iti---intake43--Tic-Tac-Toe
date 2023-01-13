@@ -71,7 +71,6 @@ public class Network implements Runnable {
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
             messageReceived.setStatus("nothing");
             Player p = messageReceived.getPlayers().get(0);
-            messageReceived = null;
             return p;
         } else {
             messageReceived = null;
@@ -88,6 +87,7 @@ public class Network implements Runnable {
 
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
+        System.out.println("newpa:" + newPassword);
         printStream.println(messageSentToServer);
         try {
             thread.sleep(200);
@@ -95,13 +95,12 @@ public class Network implements Runnable {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        System.out.println("resultt:" + messageReceived.getPlayers().get(0));
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
-            messageReceived.setStatus("nothing");
-            messageReceived = null;
+
+            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
             return messageReceived.getPlayers().get(0);
         } else {
-            messageReceived = null;
-
             return null;
 
         }
@@ -184,7 +183,6 @@ public class Network implements Runnable {
 
         System.out.println("==================");
 
-
     }
 
     public Player responseGame(boolean accept) {
@@ -218,7 +216,7 @@ public class Network implements Runnable {
         messageSent = new Message();
 //        resultMoves = moves;
         System.out.println("send first player move to server" + moves);
-        
+
         messageSent.setOperation("firstPlayerMove");
         messageSent.setPlayers(firstPlayer);
         messageSent.setPlayers(secondPlayer);
@@ -244,7 +242,6 @@ public class Network implements Runnable {
 
         }
 
-        
         messageSent = new Message();
 
         messageSent.setOperation("firstPlayerMove");
