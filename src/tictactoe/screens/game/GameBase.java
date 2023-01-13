@@ -460,6 +460,7 @@ public class GameBase extends AnchorPane implements Runnable {
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton) {
+                    System.out.println(level);
                     Parent pane = new ModeBase(stage);
                     stage.getScene().setRoot(pane);
                 }
@@ -471,6 +472,7 @@ public class GameBase extends AnchorPane implements Runnable {
 
     public synchronized void displayRecord(GameModel recordedGamee) {
         this.recordedGamee = recordedGamee;
+
         thread.start();
     }
 

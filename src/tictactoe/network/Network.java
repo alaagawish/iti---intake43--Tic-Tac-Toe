@@ -97,7 +97,7 @@ public class Network implements Runnable {
 
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
             messageReceived.setStatus("nothing");
-            messageReceived = null;
+//            messageReceived = null;
             return messageReceived.getPlayers().get(0);
         } else {
             messageReceived = null;
