@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Alert;
 import tictactoe.utils.Dialogs;
+import tictactoe.utils.UtilsFunctions;
 
 public class GameManager {
 
@@ -70,9 +71,10 @@ public class GameManager {
         if (!gameDirectory.exists()) {
             gameDirectory.mkdir();
         }
+        
         File playerDirectory;
         String playerDirectoryName = "";
-
+        
         if (level == Level.ONLINE) {
             playerDirectoryName = Constants.RECORDEDGAMEPATH.concat(xPlayer.getUsername());
             playerDirectory = new File(playerDirectoryName);
