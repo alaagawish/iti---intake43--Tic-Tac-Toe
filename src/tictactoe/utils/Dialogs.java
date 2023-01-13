@@ -39,6 +39,14 @@ public class Dialogs {
 
         return dialog;
     }
+    
+     public static void showAlertDialog(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     public static void showAlertDialog(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
