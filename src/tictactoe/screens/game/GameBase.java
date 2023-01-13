@@ -577,38 +577,56 @@ public class GameBase extends AnchorPane implements Runnable {
         if (move.getRow() == 0 && move.getColumn() == 0) {
             button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
+            button00.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 0 && move.getColumn() == 1) {
             button01.setText(move.getSymbol() + "");
             button01.setDisable(true);
+            button01.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 0 && move.getColumn() == 2) {
             button02.setText(move.getSymbol() + "");
             button02.setDisable(true);
+            button02.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 1 && move.getColumn() == 0) {
             button10.setText(move.getSymbol() + "");
             button10.setDisable(true);
+            button10.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 1 && move.getColumn() == 1) {
             button11.setText(move.getSymbol() + "");
             button11.setDisable(true);
+            button11.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 1 && move.getColumn() == 2) {
             button12.setText(move.getSymbol() + "");
             button12.setDisable(true);
+            button12.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 2 && move.getColumn() == 0) {
             button20.setText(move.getSymbol() + "");
             button20.setDisable(true);
+            button20.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 2 && move.getColumn() == 1) {
             button21.setText(move.getSymbol() + "");
             button21.setDisable(true);
+            button21.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         } else if (move.getRow() == 2 && move.getColumn() == 2) {
             button22.setText(move.getSymbol() + "");
             button22.setDisable(true);
+            button22.setTextFill(javafx.scene.paint.Color.valueOf(
+                    move.getSymbol() == Constants.X ? CustomColors.YELLOW : CustomColors.BLUE));
 
         }
     }
