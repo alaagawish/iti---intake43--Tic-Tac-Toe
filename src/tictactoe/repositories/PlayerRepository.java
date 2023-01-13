@@ -10,10 +10,6 @@ import java.util.logging.Logger;
 import tictactoe.models.GameModel;
 import tictactoe.utils.UtilsFunctions;
 
-/**
- *
- * @author moazk
- */
 public class PlayerRepository {
 
     public static String[] getRecordedGames(String playerName) {

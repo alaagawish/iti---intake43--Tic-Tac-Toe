@@ -3,7 +3,6 @@ package tictactoe.screens.profile;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -68,6 +67,7 @@ public class ProfileBase extends ScrollPane {
     Player playerr;
     String[] gamesNames;
     Thread thread;
+//    public GameBase panee;
 
     public ProfileBase(Stage stage, Player player) {
         this.stage = stage;
@@ -290,7 +290,6 @@ public class ProfileBase extends ScrollPane {
         passwordHBox.getChildren().add(passwordField);
         profileVBox.getChildren().add(passwordHBox);
 //        profileVBox.getChildren().add(savedGamesLabel);
-
         if (gamesNames != null && gamesNames.length > 0) {
             profileVBox.getChildren().add(savedGamesLabel);
             for (int i = 0; i < gamesNames.length; i++) {
@@ -324,17 +323,14 @@ public class ProfileBase extends ScrollPane {
 
                 gameImage.get(i).setOnMouseClicked((MouseEvent e) -> {
 
-                    //                ShowGame showGame = new ShowGame(stage, recordedGame);
-                    //                stage.getScene().setRoot((Parent)pane);
-                    //                new Thread(pane).start();
-//                    thread.start();
                     GameModel recordedGame = PlayerRepository.readGame(playerr.getUsername(), gamesNames[0]);
                     System.err.println("Game: " + recordedGame);
                     System.err.println("xPlayer: " + recordedGame.getxPlayer());
                     System.err.println("oPlayer: " + recordedGame.getoPlayer());
                     System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), recordedGame);
+                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer());
                     stage.getScene().setRoot(pane);
+                    pane.displayRecord(recordedGame);
 
                 });
 
@@ -402,14 +398,4 @@ public class ProfileBase extends ScrollPane {
 
     }
 
-//    @Override
-//    public void run() {
-//        
-//        try {
-//            thread.sleep(3000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(ProfileBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//
-//    }
 }
