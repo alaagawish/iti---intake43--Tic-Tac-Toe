@@ -342,7 +342,7 @@ public class LoginBase extends BorderPane {
     }
 
     private void navigateUser(String userName, String password, Stage stage) {
-        Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
+        Player player = DualModeBase.network.login(userName, password);
         if (player != null) {
             System.out.println("loginBase done");
             Parent pane = new OnlineListBase(stage, player);
