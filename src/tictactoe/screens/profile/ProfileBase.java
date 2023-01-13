@@ -66,16 +66,14 @@ public class ProfileBase extends ScrollPane {
     public Stage stage;
     Player playerr;
     String[] gamesNames;
-    Thread thread;
-//    public GameBase panee;
 
     public ProfileBase(Stage stage, Player player) {
+
         this.stage = stage;
         playerr = player;
         gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
-//        System.err.println(gamesNames[0]);
 
-//        thread = new Thread(this);
+
         borderPane = new BorderPane();
         borderPane0 = new BorderPane();
         vBox = new VBox();
@@ -100,6 +98,7 @@ public class ProfileBase extends ScrollPane {
         gameLabel = new ArrayList<>();
         gameImage = new ArrayList<>();
         gameLine = new ArrayList<>();
+
 
         backImageView = new ImageView();
         backImageView2 = new ImageView();
@@ -289,7 +288,7 @@ public class ProfileBase extends ScrollPane {
         passwordHBox.getChildren().add(passordLabel);
         passwordHBox.getChildren().add(passwordField);
         profileVBox.getChildren().add(passwordHBox);
-//        profileVBox.getChildren().add(savedGamesLabel);
+
         if (gamesNames != null && gamesNames.length > 0) {
             profileVBox.getChildren().add(savedGamesLabel);
             for (int i = 0; i < gamesNames.length; i++) {
