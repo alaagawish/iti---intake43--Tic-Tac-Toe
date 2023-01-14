@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import tictactoe.models.Message;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.OnlineListBase;
+import tictactoe.utils.Dialogs;
 
 public class Network implements Runnable {
 
@@ -32,12 +34,12 @@ public class Network implements Runnable {
     public static String flag;
     public List<Move> resultMoves;
 
-    public Network() {
+    public Network(){
 
         try {
             socket = new Socket(InetAddress.getLoopbackAddress(), 5005);
 //            socket = new Socket("10.145.19.97", 5005);
-
+            
             System.out.println("local addr:" + InetAddress.getLocalHost());
             dataInputStream = new DataInputStream(socket.getInputStream());
             printStream = new PrintStream(socket.getOutputStream());
@@ -46,8 +48,10 @@ public class Network implements Runnable {
             flag = "nothing";
             System.out.println("socket : " + socket + " \nportNumber on client: " + localPortNum);
             resultMoves = new ArrayList<>();
+            
         } catch (IOException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
+            Dialogs.showAlertDialog(Alert.AlertType.WARNING, "Warning", "Network isn't connencted", "Server has a problem wait until fix error");
         }
 
         thread = new Thread(this);
@@ -261,7 +265,7 @@ public class Network implements Runnable {
 
         while (true) {
             try {
-                if (socket.isConnected()) {
+                if (socket!= null && socket.isConnected()) {
                     System.out.println("im online");
                     String messageReceivedFromServer = "";
                     System.out.println("messageReceivedFromServer: " + messageReceivedFromServer);
@@ -425,6 +429,10 @@ public class Network implements Runnable {
         } else {
             return null;
         }
+    }
+    
+    public boolean isConnected(){
+       return socket != null && socket.isConnected();
     }
 
 }
