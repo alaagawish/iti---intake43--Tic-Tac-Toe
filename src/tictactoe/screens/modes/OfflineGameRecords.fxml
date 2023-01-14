@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane fx:id="ScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <BorderPane prefHeight="795.0" prefWidth="1275.0">
+         <center>
+            <VBox fx:id="VboxId" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox fx:id="HboxId1" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="recordLabel1" prefHeight="100.0" prefWidth="1028.0" text="Record" textFill="#ffde59">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="35.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="45.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ImageView fitHeight="86.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="..\..\..\assets\images\play.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <Line fx:id="firstLine" endX="1113.2928466796875" endY="-2.8284270763397217" startX="-100.0">
+                     <VBox.margin>
+                        <Insets left="30.0" />
+                     </VBox.margin>
+                  </Line>
+               </children>
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets top="25.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <top>
+            <HBox fx:id="titleHbox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="backImageView" fitHeight="120.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="/assets/images/back.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="offlineRecoededText" fill="#3dc0c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Offline Game Records" textAlignment="CENTER">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="50.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="230.0" top="25.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets top="25.0" />
+               </padding>
+            </HBox>
+         </top>
+      </BorderPane>
+   </content>
+</ScrollPane>
