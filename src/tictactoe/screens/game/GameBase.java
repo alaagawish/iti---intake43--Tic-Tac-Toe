@@ -48,7 +48,7 @@ public class GameBase extends AnchorPane implements Runnable {
     protected final Text firstPlayerSignText;
     protected final Text secondPlayerNameText;
     protected final Text secondPlayerSignText;
-    protected List<Move> moves;
+    public static List<Move> moves;
     protected char board[][];
     private GameManager gameManager;
     private final Stage stageVideo;
@@ -56,8 +56,9 @@ public class GameBase extends AnchorPane implements Runnable {
     public char playerSymbol;
     private Level gameLevel;
     public GameModel recordedGamee;
-    Thread thread;
+    Thread thread, th;
     protected Player firstPlayer, secondPlayer;
+    Move m;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, char playerSymbol) {
         this.playerSymbol = playerSymbol;
@@ -371,7 +372,9 @@ public class GameBase extends AnchorPane implements Runnable {
         firstPlayerNameText.setText(playerOne.getUsername());
         secondPlayerNameText.setText(playerTwo.getUsername());
         gameManager = new GameManager(playerOne, playerTwo, board, level);
-
+        if (Level.ONLINE == level && playerSymbol == Constants.O) {
+            disableButtons();
+        }
         button00.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button00, 0, 0, Level.ONLINE);
@@ -470,7 +473,47 @@ public class GameBase extends AnchorPane implements Runnable {
             });
 
         });
+        th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
 
+                            if (moves.size() > 0) {
+
+                                computerMove(moves.get(moves.size() - 1));
+                            }
+                            if (moves.size() > 1) {
+                                computerMove(moves.get(moves.size() - 2));
+                            }
+                            findWinner();
+                            if (moves.size() % 2 == 0 && playerSymbol == Constants.X) {
+                                switchButtons();
+                            } else if (moves.size() % 2 == 0 && playerSymbol == Constants.O) {
+                                disableButtons();
+                            } else if (moves.size() % 2 == 1 && playerSymbol == Constants.X) {
+                                disableButtons();
+                            } else if (moves.size() % 2 == 1 && playerSymbol == Constants.O) {
+                                switchButtons();
+                            }
+                            if (moves.size() > 1) {
+                                m = moves.get(moves.size() - 2);
+                                board[m.getRow()][m.getColumn()] = m.getSymbol();
+                                m = moves.get(moves.size() - 1);
+                                board[m.getRow()][m.getColumn()] = m.getSymbol();
+                            }
+//                            board[i][j] = playerSymbol;
+                        }
+                    });
+                }
+
+            }
+        });
+        if (level == Level.ONLINE) {
+            th.start();
+        }
     }
 
     public synchronized void displayRecord(GameModel recordedGamee) {
@@ -589,6 +632,57 @@ public class GameBase extends AnchorPane implements Runnable {
         }
     }
 
+    public void findWinner() {
+        Parent pane;
+        int winner = GameManager.checkWinner();
+        System.out.println("finding winner" + winner);
+        switch (winner) {
+            case 2:
+                disableButtons();
+                winnerFXMLBase.video = "/assets/images/losser.mp4";
+                winnerFXMLBase.message = "Hard Luck Next Time";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            case -2:
+                disableButtons();
+                winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
+                winnerFXMLBase.message = "Winner Winner Chiken Dinner";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            case 0:
+                //x=o
+                winnerFXMLBase.video = "/assets/images/draw.mp4";
+                winnerFXMLBase.message = "No Winner, Try Play Again";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private void setNames(Text firstPlayerName, Text secondPlayerName) {
         firstPlayer.setUsername(firstPlayerName.getText());
         secondPlayer.setUsername(secondPlayerName.getText());
@@ -605,7 +699,7 @@ public class GameBase extends AnchorPane implements Runnable {
     }
 
     public void disableButtons() {
-
+        System.out.println("disablebuttons" + playerSymbol);
         button00.setDisable(true);
         button01.setDisable(true);
         button02.setDisable(true);
@@ -677,28 +771,55 @@ public class GameBase extends AnchorPane implements Runnable {
 
     public void handleButtonOnline(Button button, int i, int j, Level level) {
         moves.add(new Move(i, j, playerSymbol));
-        System.out.println("Moves sending to server =======playersymbol" + moves.get(0)+" "+playerSymbol);
-        //        System.out.println("Moves" + moves.get(0));
-        if (playerSymbol == Constants.X) {
-            moves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
-//                System.out.println("Turn X: " + moves.get(0));
-        } else {
-            moves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
-//            System.out.println(" Turn O: " + moves.get(moves.size() - 1));
-        }
-        System.out.println("moves recieved from server ======="+moves);
+//        System.out.println("movesssssssss========" + moves);
+//        if (moves.size() > 1) {
+//            m = moves.get(moves.size() - 2);
+//            board[m.getRow()][m.getColumn()] = m.getSymbol();
+//            System.out.println("m" + m);
+//        }
 
-        if (moves.size() > 1) {
-            computerMove(moves.get(moves.size() - 2));
-        }
+//        board[m.getRow()][m.getColumn()] = m.getSymbol();
+        board[i][j] = playerSymbol;
+
+//        System.out.println("Moves sending to server =======playersymbol" + moves.get(0) + " " + playerSymbol);
+        DualModeBase.network.sendMove(firstPlayer, secondPlayer, moves);
+
         computerMove(moves.get(moves.size() - 1));
 
         int row = moves.get(moves.size() - 1).getRow();
         int col = moves.get(moves.size() - 1).getColumn();
         recordGameSteps(row, col, board[row][col]);
-        System.out.println("turn:" + gameManager.getTurn());
-//        flipTurn();
+//        System.out.println("turn:" + gameManager.getTurn());
 
     }
 
+    public void switchButtons() {
+        System.out.println("switchbuttons" + playerSymbol);
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == ' ') {
+                    if (i == 0 && j == 0) {
+                        button00.setDisable(false);
+                    } else if (i == 0 && j == 1) {
+                        button01.setDisable(false);
+                    } else if (i == 0 && j == 2) {
+                        button02.setDisable(false);
+                    } else if (i == 1 && j == 0) {
+                        button10.setDisable(false);
+                    } else if (i == 1 && j == 1) {
+                        button11.setDisable(false);
+                    } else if (i == 1 && j == 2) {
+                        button12.setDisable(false);
+                    } else if (i == 2 && j == 0) {
+                        button20.setDisable(false);
+                    } else if (i == 2 && j == 1) {
+                        button21.setDisable(false);
+                    } else if (i == 2 && j == 2) {
+                        button22.setDisable(false);
+                    }
+                }
+            }
+        }
+    }
 }
