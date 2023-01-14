@@ -2,7 +2,9 @@ package tictactoe.screens.modes;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -26,10 +28,6 @@ public class OfflineGameRecordsBase2 extends ScrollPane {
 
     protected final BorderPane borderPane;
     protected final VBox VboxId;
-//    protected final HBox HboxId1;
-//    protected final Label recordLabel1;
-//    protected final ImageView imageView;
-//    protected final Line firstLine;
     protected final HBox titleHbox;
     protected final ImageView backImageView;
     protected final Text offlineRecoededText;
@@ -43,10 +41,7 @@ public class OfflineGameRecordsBase2 extends ScrollPane {
         gameNames = PlayerRepository.getRecordedGames(Constants.RECORDEDGAMEPATH_LOCAL);
         borderPane = new BorderPane();
         VboxId = new VBox();
-//        HboxId1 = new HBox();
-//        recordLabel1 = new Label();
-//        imageView = new ImageView();
-//        firstLine = new Line();
+
         titleHbox = new HBox();
         backImageView = new ImageView();
         offlineRecoededText = new Text();
@@ -70,25 +65,6 @@ public class OfflineGameRecordsBase2 extends ScrollPane {
         VboxId.setPrefHeight(200.0);
         VboxId.setPrefWidth(100.0);
 
-//        HboxId1.setPrefHeight(100.0);
-//        HboxId1.setPrefWidth(200.0);
-//
-//        recordLabel1.setPrefHeight(100.0);
-//        recordLabel1.setPrefWidth(1028.0);
-//        recordLabel1.setText("Record");
-//        recordLabel1.setTextFill(javafx.scene.paint.Color.valueOf("#ffde59"));
-//        recordLabel1.setFont(new Font("Comic Sans MS Bold", 35.0));
-//        HBox.setMargin(recordLabel1, new Insets(0.0, 0.0, 0.0, 45.0));
-//
-//        imageView.setFitHeight(86.0);
-//        imageView.setFitWidth(200.0);
-//        imageView.setPickOnBounds(true);
-//        imageView.setPreserveRatio(true);
-//        imageView.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
-//        firstLine.setEndX(1113.2928466796875);
-//        firstLine.setEndY(-2.8284270763397217);
-//        firstLine.setStartX(-100.0);
-//        VBox.setMargin(firstLine, new Insets(0.0, 0.0, 0.0, 30.0));
         VboxId.setPadding(new Insets(50.0, 0.0, 0.0, 0.0));
         VboxId.setOpaqueInsets(new Insets(0.0));
         BorderPane.setMargin(VboxId, new Insets(25.0, 0.0, 0.0, 0.0));
@@ -183,6 +159,14 @@ public class OfflineGameRecordsBase2 extends ScrollPane {
                 VboxId.getChildren().add(gameLine.get(i));
 
             }
+
+            backImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Parent pane = new ModeBase(stage);
+                    stage.getScene().setRoot(pane);
+                }
+            });
         }
 
     }
