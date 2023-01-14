@@ -1,5 +1,7 @@
 package tictactoe.screens.authentication;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.geometry.Insets;
 
 import javafx.scene.Parent;
@@ -296,18 +298,33 @@ public class SignUpBase extends BorderPane {
         });
 
         signUpButton.setOnAction(e -> {
+            String warngingText;
+            String regex = "^([a-zA-Z]+[0-9]+[a-zA-Z0-9]*|[0-9]+[a-zA-Z][a-zA-Z0-9]*)$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(passwordField.getText());
+            String title = "Warning";
 
-            validation(passwordField.getText(), userNameTextField.getText(), stage);
-//            Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
-//            if (player != null && passwordField.getText() != null) {
-//                Parent pane = new OnlineListBase(stage, player);
-//                stage.getScene().setRoot(pane);
-//            } else {
-//                userNameTextField.setText("");
-//                passwordField.setText("");
-//               
-//
-//            }
+            if (userNameTextField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                warngingText = "User Name or Password is Empty";
+                Dialogs.showAlertDialog(AlertType.WARNING, title, null, warngingText);
+            } else if (passwordField.getText().length() < 8 || !matcher.matches()) {
+                userNameTextField.setText("");
+                passwordField.setText("");
+                warngingText = "Password must be greater than 8 letters and at least has one character";
+                Dialogs.showAlertDialog(AlertType.WARNING, title, null, warngingText);
+            } else {
+                Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
+                if (player == null) {
+                    userNameTextField.setText("");
+                    passwordField.setText("");
+                    warngingText = "User Name is exist before , Please enter another userName";
+                    Dialogs.showAlertDialog(AlertType.WARNING, title, null, warngingText);
+                } else {
+                    Parent pane = new OnlineListBase(stage, player);
+                    stage.getScene().setRoot(pane);
+                }
+
+            }
         });
         backImageView.setOnMousePressed(e -> {
             DualModeBase.network.closeConnection();
@@ -318,34 +335,5 @@ public class SignUpBase extends BorderPane {
         });
 
     }
-
-    private void validation(String password, String userName, Stage stage) {
-
-        if (userName.isEmpty()) {
-            Dialogs.showAlertDialog(
-                    Alert.AlertType.INFORMATION,
-                    "Information Dialog",
-                    "The User Name Field is Empty",
-                    "Insert your User Name First");
-
-        } else if (password.isEmpty()) {
-            Dialogs.showAlertDialog(
-                    Alert.AlertType.INFORMATION,
-                    "Information Dialog",
-                    "The Password Field is Empty",
-                    "Insert your Passowrd First");
-
-        } else {
-            Player player = DualModeBase.network.register(userName, password);
-            if (player != null) {
-                System.out.println("SignUp done");
-                Parent pane = new OnlineListBase(stage, player);
-                stage.getScene().setRoot(pane);
-            } else {
-                userNameTextField.setText("");
-                passwordField.setText("");
-
-            }
-        }
-    }
+    
 }
