@@ -229,6 +229,18 @@ public class Network implements Runnable {
 
     }
 
+    public synchronized void updateScore(String userName , int score) {
+        messageSent = new Message();
+        messageSent.setOperation("updateScore");
+        Player player = new Player();
+        player.setUsername(userName);
+        player.setScore(score);
+        messageSent.setPlayers(player);
+        messageSentToServer = gson.toJson(messageSent);
+        printStream.println(messageSentToServer);
+        System.out.println("Score of name = " + messageSent.getPlayers().get(0).getUsername()+ " , "+ messageSent.getPlayers().get(0).getScore());
+    }
+
     @Override
     public void run() {
 
@@ -351,6 +363,15 @@ public class Network implements Runnable {
                             System.out.println("game request.....");
                         } else if (messageReceived.getOperation().equalsIgnoreCase("sendMove")) {
                             GameBase.moves.add(messageReceived.getMoves().get(messageReceived.getMoves().size() - 1));
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("updateScore")) {
+                            if (messageReceived.getStatus() == "done") {
+                                System.out.println("Update Score done......." + messageReceived.getPlayers().get(0));
+
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                System.out.println("something wrong...............");
+
+                            }
+
                         }
                     }
                 }

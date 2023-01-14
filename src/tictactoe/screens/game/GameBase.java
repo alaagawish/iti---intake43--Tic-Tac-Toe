@@ -326,7 +326,7 @@ public class GameBase extends AnchorPane implements Runnable {
         firstPlayerSignText.setStrokeWidth(0.0);
         firstPlayerSignText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         firstPlayerSignText.setText(Constants.X + "");
-        firstPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 60.0));
+        firstPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 70.0));
 
         secondPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         secondPlayerNameText.setId("secondPlayerNameText");
@@ -340,7 +340,7 @@ public class GameBase extends AnchorPane implements Runnable {
 
         secondPlayerSignText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         secondPlayerSignText.setId("secondPlayerSignText");
-        secondPlayerSignText.setLayoutX(1130.0);
+        secondPlayerSignText.setLayoutX(1076.0);
         secondPlayerSignText.setLayoutY(337.0);
         secondPlayerSignText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         secondPlayerSignText.setStrokeWidth(0.0);
@@ -374,6 +374,14 @@ public class GameBase extends AnchorPane implements Runnable {
 
         firstPlayerNameText.setText(playerOne.getUsername());
         secondPlayerNameText.setText(playerTwo.getUsername());
+        if (level == Level.ONLINE) {
+            firstPlayerSignText.setLayoutX(60.0);
+            firstPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 30.0));
+            secondPlayerSignText.setLayoutX(1090.0);
+            secondPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 30.0));
+            firstPlayerSignText.setText("Score: " + playerOne.getScore() + "");
+            secondPlayerSignText.setText("Score: " + playerTwo.getScore() + "");
+        }
         gameManager = new GameManager(playerOne, playerTwo, board, level);
         if (Level.ONLINE == level && playerSymbol == Constants.O) {
             disableButtons();
@@ -469,23 +477,22 @@ public class GameBase extends AnchorPane implements Runnable {
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton && level == Level.ONLINE) {
-                    Parent pane = new OnlineListBase(stage , playerOne);
+                    Parent pane = new OnlineListBase(stage, playerOne);
                     stage.getScene().setRoot(pane);
-                }else if (type == okButton && (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD)) {
+                } else if (type == okButton && (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD)) {
                     Parent pane = new LevelsBase(stage);
                     stage.getScene().setRoot(pane);
-                }else if (type == okButton && level == Level.LOCAL) {
+                } else if (type == okButton && level == Level.LOCAL) {
                     Parent pane = new DualModeBase(stage);
                     stage.getScene().setRoot(pane);
-                }else if (type == okButton && level == Level.ONLINERECORD) {
+                } else if (type == okButton && level == Level.ONLINERECORD) {
                     Parent pane = new ProfileBase(stage, playerOne);
                     stage.getScene().setRoot(pane);
-                }else if (type == okButton && level == Level.LOCALRECORD) {
-//                    Parent pane = new DualModeBase(stage);
-//                    stage.getScene().setRoot(pane);
+                } else if (type == okButton && level == Level.LOCALRECORD) {
+                    Parent pane = new ModeBase(stage);
+                    stage.getScene().setRoot(pane);
                 }
             });
-
 
         });
         th = new Thread(new Runnable() {
@@ -670,6 +677,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 th.stop();
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
+                DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
@@ -683,6 +691,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
+                //DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
@@ -719,6 +728,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
+                DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
@@ -732,6 +742,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
+                //DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
@@ -881,9 +892,6 @@ public class GameBase extends AnchorPane implements Runnable {
 
     public void switchButtons() {
         System.out.println("switchbuttons" + playerSymbol);
-        if (!recordFlag) {
-            recordButton.setDisable(true);
-        }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
