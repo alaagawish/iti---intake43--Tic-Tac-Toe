@@ -23,8 +23,6 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
-import tictactoe.theme.CustomStyles;
-import tictactoe.screens.modes.ModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.theme.CustomStyles;
 import tictactoe.screens.modes.ModeBase;
@@ -303,7 +301,6 @@ public class GameBase extends AnchorPane implements Runnable {
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
 
-
         exitButton.setId("exitButton");
         exitButton.setLayoutX(65.0);
         exitButton.setLayoutY(674.0);
@@ -504,7 +501,6 @@ public class GameBase extends AnchorPane implements Runnable {
             @Override
             public void run() {
                 while (true) {
-                    System.out.println("jjjjjjjjjjjjjjjjjjjjjj");
                     if (updateFlag && moves.size() > 0 && moves.get(moves.size() - 1).getSymbol() != playerSymbol) {
                         updateBoard();
                         updateFlag = false;
@@ -568,14 +564,10 @@ public class GameBase extends AnchorPane implements Runnable {
     public void handleButtonOnline(Button button, int i, int j, Level level) {
         updateFlag = true;
         if (playerSymbol == Constants.X) {
-            System.out.println("kjhlkmjnhbvcvbnm,l.;");
             findWinner();
         } else if (playerSymbol == Constants.O) {
-            System.out.println("-----------------------------");
-
             findWinnerO();
         }
-        System.out.println("===============;;;;;;;");
         moves.add(new Move(i, j, playerSymbol));
         board[i][j] = playerSymbol;
 
@@ -591,17 +583,13 @@ public class GameBase extends AnchorPane implements Runnable {
     public synchronized void findWinner() {
         Parent pane;
         int winner = GameManager.checkWinner();
-        System.out.println("wi=================::::::::" + winner);
 
         if (winner == 2) {
-            System.out.println("winner =2 in find winner");
             disableButtons();
             winnerFXMLBase.video = "/assets/images/losser.mp4";
             winnerFXMLBase.message = "Hard Luck Next Time";
             setNames(firstPlayerNameText, secondPlayerNameText);
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-
-            System.out.println("winner =2 in find winner");
             stageVideo.getScene().setRoot(pane);
             th.stop();
             gameManager.printArray();
@@ -611,26 +599,21 @@ public class GameBase extends AnchorPane implements Runnable {
             }
         } else if (winner == -2) {
             disableButtons();
-            System.out.println("winner =-2 in find winner");
             winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
             winnerFXMLBase.message = "Winner Winner Chicken Dinner";
             setNames(firstPlayerNameText, secondPlayerNameText);
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-            System.out.println("winner =- 2 in find winner");
             stageVideo.getScene().setRoot(pane);
             th.stop();
             gameManager.printArray();
-            //DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
             if (recordFlag) {
                 gameManager.saveGame();
             }
         } else if (winner == 0) {
-            System.out.println("winner =0 in find winner");
             //x=o
             winnerFXMLBase.video = "/assets/images/draw.mp4";
             winnerFXMLBase.message = "No Winner, Try Play Again";
             setNames(firstPlayerNameText, secondPlayerNameText);
-            System.out.println("winner =0 in find winner");
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
             stageVideo.getScene().setRoot(pane);
             th.stop();
@@ -645,17 +628,13 @@ public class GameBase extends AnchorPane implements Runnable {
     public synchronized void findWinnerO() {
         Parent pane;
         int winner = GameManager.checkWinner();
-        System.out.println("winnnnnnnnnnnnnnnnnnnnnnnnnnnnnner::::::::" + winner);
 
         switch (winner) {
             case -2:
                 disableButtons();
-                System.out.println("winner =-22 in find winnerO");
                 winnerFXMLBase.video = "/assets/images/losser.mp4";
                 winnerFXMLBase.message = "Hard Luck Next Time";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-
-                System.out.println("winner =-22 in find winnerO");
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 th.stop();
@@ -667,27 +646,22 @@ public class GameBase extends AnchorPane implements Runnable {
                 break;
             case 2:
                 disableButtons();
-                System.out.println("winner =2 in find winnerO");
                 winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
                 winnerFXMLBase.message = "Winner Winner Chiken Dinner";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                System.out.println("winner =2 in find winnerO");
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 th.stop();
                 gameManager.printArray();
-                //DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
                 if (recordFlag) {
                     gameManager.saveGame();
                 }
                 break;
             case 0:
                 //x=o
-                System.out.println("winner =0 in find winnerO");
                 winnerFXMLBase.video = "/assets/images/draw.mp4";
                 winnerFXMLBase.message = "No Winner, Try Play Again";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                System.out.println("winner =0 in find winnerO");
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
                 th.stop();
@@ -702,7 +676,6 @@ public class GameBase extends AnchorPane implements Runnable {
     }
 
     public void switchButtons() {
-        System.out.println("switchbuttons" + playerSymbol);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {

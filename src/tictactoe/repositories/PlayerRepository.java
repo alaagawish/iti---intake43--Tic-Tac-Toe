@@ -27,15 +27,11 @@ public class PlayerRepository {
 
     public static GameModel readGame(String playerName, String gameName) {
 
-        System.err.println(gameName);
         File fileName = new File(UtilsFunctions.getPlayerDirectory(playerName) + "\\" + gameName);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         GameModel recordedGame = null;
         try {
             recordedGame = gson.fromJson(new FileReader(fileName.getAbsolutePath()), GameModel.class);
-
-            System.err.println("Game: " + recordedGame);
-            System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PlayerRepository.class.getName()).log(Level.SEVERE, null, ex);
