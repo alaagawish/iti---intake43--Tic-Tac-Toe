@@ -326,6 +326,7 @@ public class SignUpBase extends BorderPane {
 
             }
         });
+
         backImageView.setOnMousePressed(e -> {
             DualModeBase.network.closeConnection();
 
@@ -335,5 +336,34 @@ public class SignUpBase extends BorderPane {
         });
 
     }
-    
+
+    private void validation(String password, String userName, Stage stage) {
+
+        if (userName.isEmpty()) {
+            Dialogs.showAlertDialog(
+                    Alert.AlertType.INFORMATION,
+                    "Information Dialog",
+                    "The User Name Field is Empty",
+                    "Insert your User Name First");
+
+        } else if (password.isEmpty()) {
+            Dialogs.showAlertDialog(
+                    Alert.AlertType.INFORMATION,
+                    "Information Dialog",
+                    "The Password Field is Empty",
+                    "Insert your Passowrd First");
+
+        } else {
+            Player player = DualModeBase.network.register(userName, password);
+            if (player != null) {
+                System.out.println("SignUp done");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                userNameTextField.setText("");
+                passwordField.setText("");
+
+            }
+        }
+    }
 }

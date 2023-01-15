@@ -301,7 +301,7 @@ public class GameBase extends AnchorPane implements Runnable {
         recordButton.setFont(new Font(Constants.COMICFONTBOLD, 35.0));
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
-        exitButton.setId("existButton");
+        exitButton.setId("exitButton");
         exitButton.setLayoutX(65.0);
         exitButton.setLayoutY(674.0);
         exitButton.setMnemonicParsing(false);
