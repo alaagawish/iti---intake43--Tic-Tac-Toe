@@ -143,7 +143,8 @@ public class GameManager {
         //  1: Countinue
         for (int i = 0; i < 3; i++) {
             if (haveTheSameValue(board[i][0], board[i][1], board[i][2])) {
-                if (board[i][0] == Constants.O) {
+                System.out.println("winner is 000");
+                if (board[i][0] == Constants.O ) {
                     setWinner(oPlayer);
                     return 2;
                 } else {

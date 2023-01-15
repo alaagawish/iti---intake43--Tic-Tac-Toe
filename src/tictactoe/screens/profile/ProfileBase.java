@@ -73,7 +73,6 @@ public class ProfileBase extends ScrollPane {
         playerr = player;
         gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
 
-
         borderPane = new BorderPane();
         borderPane0 = new BorderPane();
         vBox = new VBox();
@@ -98,7 +97,6 @@ public class ProfileBase extends ScrollPane {
         gameLabel = new ArrayList<>();
         gameImage = new ArrayList<>();
         gameLine = new ArrayList<>();
-
 
         backImageView = new ImageView();
         backImageView2 = new ImageView();
@@ -327,7 +325,7 @@ public class ProfileBase extends ScrollPane {
                     System.err.println("xPlayer: " + recordedGame.getxPlayer());
                     System.err.println("oPlayer: " + recordedGame.getoPlayer());
                     System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer());
+                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
 
