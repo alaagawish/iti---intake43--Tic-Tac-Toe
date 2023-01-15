@@ -501,11 +501,11 @@ public class GameBase extends AnchorPane implements Runnable {
             @Override
             public void run() {
                 while (true) {
+                    System.out.println("jjjjjjjjjjjjjjjjjjjjjj");
                     if (updateFlag && moves.size() > 0 && moves.get(moves.size() - 1).getSymbol() != playerSymbol) {
                         updateBoard();
                         updateFlag = false;
                     }
-
                     if (moves.size() % 2 == 0 && playerSymbol == Constants.X) {
                         switchButtons();
                     } else if (moves.size() % 2 == 0 && playerSymbol == Constants.O) {
@@ -597,9 +597,10 @@ public class GameBase extends AnchorPane implements Runnable {
             winnerFXMLBase.message = "Hard Luck Next Time";
             setNames(firstPlayerNameText, secondPlayerNameText);
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-            th.stop();
+
             System.out.println("winner =2 in find winner");
             stageVideo.getScene().setRoot(pane);
+            th.stop();
             gameManager.printArray();
             DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
             if (recordFlag) {
@@ -611,12 +612,10 @@ public class GameBase extends AnchorPane implements Runnable {
             winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
             winnerFXMLBase.message = "Winner Winner Chicken Dinner";
             setNames(firstPlayerNameText, secondPlayerNameText);
-
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
             System.out.println("winner =- 2 in find winner");
-           
             stageVideo.getScene().setRoot(pane);
-             th.stop();
+            th.stop();
             gameManager.printArray();
             //DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
             if (recordFlag) {
@@ -628,10 +627,10 @@ public class GameBase extends AnchorPane implements Runnable {
             winnerFXMLBase.video = "/assets/images/draw.mp4";
             winnerFXMLBase.message = "No Winner, Try Play Again";
             setNames(firstPlayerNameText, secondPlayerNameText);
-            th.stop();
             System.out.println("winner =0 in find winner");
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
             stageVideo.getScene().setRoot(pane);
+            th.stop();
             gameManager.printArray();
             if (recordFlag) {
                 gameManager.saveGame();
@@ -652,10 +651,11 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.video = "/assets/images/losser.mp4";
                 winnerFXMLBase.message = "Hard Luck Next Time";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
+
                 System.out.println("winner =-22 in find winnerO");
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
+                th.stop();
                 gameManager.printArray();
                 DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
                 if (recordFlag) {
@@ -668,10 +668,10 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
                 winnerFXMLBase.message = "Winner Winner Chiken Dinner";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
                 System.out.println("winner =2 in find winnerO");
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
+                th.stop();
                 gameManager.printArray();
                 //DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
                 if (recordFlag) {
@@ -684,10 +684,10 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.video = "/assets/images/draw.mp4";
                 winnerFXMLBase.message = "No Winner, Try Play Again";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
                 System.out.println("winner =0 in find winnerO");
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
+                th.stop();
                 gameManager.printArray();
                 if (recordFlag) {
                     gameManager.saveGame();
