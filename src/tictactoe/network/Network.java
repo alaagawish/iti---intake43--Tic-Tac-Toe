@@ -9,10 +9,12 @@ import java.net.Socket;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import tictactoe.models.Message;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.OnlineListBase;
+import tictactoe.utils.Dialogs;
 import tictactoe.screens.game.GameBase;
 
 public class Network implements Runnable {
@@ -45,7 +47,7 @@ public class Network implements Runnable {
             flag = "nothing";
             System.out.println("socket : " + socket + " \nportNumber on client: " + localPortNum);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Dialogs.showAlertDialog(Alert.AlertType.WARNING, "Warning", "Network isn't connencted", "Server has a problem wait until fix error");
         }
 
         thread = new Thread(this);
@@ -94,6 +96,7 @@ public class Network implements Runnable {
         }
 
         System.out.println("resultt:" + messageReceived.getPlayers().get(0));
+
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
 
             messageReceived.setStatus("nothing");
@@ -177,7 +180,6 @@ public class Network implements Runnable {
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
         printStream.println(messageSentToServer);
-
         System.out.println("account logout successfully" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
     }
 
@@ -210,7 +212,7 @@ public class Network implements Runnable {
 
     public void sendMove(Player firstPlayer, Player secondPlayer, List<Move> moves) {
         messageSent = new Message();
-        System.out.println("SEND first player move to server" + moves);
+        System.out.println("send first player move to server" + moves);
 
         messageSent.setOperation("sendMove");
         messageSent.setPlayers(firstPlayer);
@@ -240,7 +242,7 @@ public class Network implements Runnable {
 
         while (true) {
             try {
-                if (socket.isConnected()) {
+                if (socket != null && socket.isConnected()) {
                     System.out.println("im online");
                     String messageReceivedFromServer = "";
                     System.out.println("messageReceivedFromServer: " + messageReceivedFromServer);
@@ -395,6 +397,10 @@ public class Network implements Runnable {
         } else {
             return null;
         }
+    }
+
+    public boolean isConnected() {
+        return socket != null && socket.isConnected();
     }
 
 }
