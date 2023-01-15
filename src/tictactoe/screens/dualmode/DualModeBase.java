@@ -19,19 +19,17 @@ import tictactoe.screens.modes.ModeBase;
 
 public class DualModeBase extends AnchorPane {
 
-    protected final HBox hBox;
-    protected final ImageView backImageView;
     protected final VBox vBox;
     protected final ImageView logoImage;
-    protected final HBox hBox0;
+    protected final HBox hBox;
     protected final Text text;
     protected final Text text0;
     protected final Text text1;
-    protected final HBox hBox1;
+    protected final HBox hBox0, hBox2;
     protected final Text ticText;
     protected final Text tacText;
     protected final Text toeText;
-    protected final HBox hBox2;
+    protected final HBox hBox1;
     protected final Button localButton;
     protected final VBox vBox0;
     protected final ImageView imageView;
@@ -40,7 +38,9 @@ public class DualModeBase extends AnchorPane {
     protected final VBox vBox1;
     protected final ImageView imageView0;
     protected final Text text3;
+    protected final ImageView backImageView;
     public static Network network;
+    public static boolean networkFlag;
 
     public DualModeBase(Stage stage) {
 
@@ -59,13 +59,13 @@ public class DualModeBase extends AnchorPane {
         hBox2 = new HBox();
         localButton = new Button();
         vBox0 = new VBox();
-
         imageView = new ImageView();
         text2 = new Text();
         onlineButton = new Button();
         vBox1 = new VBox();
         imageView0 = new ImageView();
         text3 = new Text();
+        networkFlag = false;
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -119,13 +119,6 @@ public class DualModeBase extends AnchorPane {
         hBox1.setPrefHeight(137.0);
         hBox1.setPrefWidth(500.0);
 
-        backImageView.setFitHeight(106.0);
-        backImageView.setFitWidth(120.0);
-        backImageView.setPickOnBounds(true);
-        backImageView.setPreserveRatio(true);
-        backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
-        HBox.setMargin(backImageView, new Insets(15.0, 1000.0, 0.0, 30.0));
-
         ticText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         ticText.setText("Tic");
         ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
@@ -149,24 +142,6 @@ public class DualModeBase extends AnchorPane {
         localButton.setStyle("-fx-background-color: #fccf28; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(localButton, new Insets(100.0, 150.0, 0.0, 150.0));
 
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(5.0);
-        dropShadow.setOffsetX(-10.0);
-        dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0, 0, 0, .16));
-
-        localButton.setEffect(dropShadow);
-        DropShadow dropShadowText = new DropShadow();
-        dropShadowText.setRadius(5.0);
-        dropShadowText.setOffsetX(-10.0);
-        dropShadowText.setOffsetY(10.0);
-
-        dropShadowText.setColor(Color.color(0, 0, 0, .16));
-
-        ticText.setEffect(dropShadowText);
-        tacText.setEffect(dropShadowText);
-        toeText.setEffect(dropShadowText);
-
         vBox0.setPrefHeight(302.0);
         vBox0.setPrefWidth(414.0);
 
@@ -188,8 +163,6 @@ public class DualModeBase extends AnchorPane {
         onlineButton.setPrefWidth(414.0);
         onlineButton.setStyle("-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;;");
         HBox.setMargin(onlineButton, new Insets(100.0, 150.0, 0.0, 0.0));
-
-        onlineButton.setEffect(dropShadow);
 
         vBox1.setPrefHeight(200.0);
         vBox1.setPrefWidth(414.0);
@@ -227,11 +200,15 @@ public class DualModeBase extends AnchorPane {
         hBox2.getChildren().add(onlineButton);
         getChildren().add(hBox2);
 
-        onlineButton.setOnAction(e -> {
-            network = new Network();
-            Parent pane = new LoginBase(stage);
-            stage.getScene().setRoot(pane);
-        });
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(-10.0);
+        dropShadow.setOffsetY(10.0);
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
+        ticText.setEffect(dropShadow);
+        tacText.setEffect(dropShadow);
+        toeText.setEffect(dropShadow);
 
         localButton.setOnAction(e -> {
             Parent pane = new LocalBase(stage);
@@ -242,6 +219,13 @@ public class DualModeBase extends AnchorPane {
             Parent pane = new ModeBase(stage);
             stage.getScene().setRoot(pane);
 
+        });
+
+        onlineButton.setOnAction(e -> {
+            networkFlag = true;
+            network = new Network();
+            Parent pane = new LoginBase(stage);
+            stage.getScene().setRoot(pane);
         });
     }
 }

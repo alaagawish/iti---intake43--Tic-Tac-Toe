@@ -1,42 +1,12 @@
 package tictactoe.models;
 
-enum Status {
-    OFFLINE,
-    ONLINE,
-    BUSY
-}
-
 public class Player {
 
     private String username;
     private String password;
-    private String ipAddress;
-    private Status status;
-    private int score;
-    private Connection connection;
-    int id;
-    int portNum;
-
-    public Player() {
-    }
-
-    public Player(String username, String password, String ipAddress, Status status, int score, Connection connection) {
-        this.username = username;
-        this.password = password;
-        this.ipAddress = ipAddress;
-        this.status = status;
-        this.score = score;
-        this.connection = connection;
-    }
-
-    public Player(String username, String password, int score, Status status, int id) {
-
-        this.username = username;
-        this.password = password;
-        this.score = score;
-        this.id = id;
-        this.status = status;
-    }
+    String ipAddress;
+    String status;
+    int score;
 
     public String getUsername() {
         return username;
@@ -62,6 +32,18 @@ public class Player {
         this.ipAddress = ipAddress;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
@@ -73,6 +55,8 @@ public class Player {
     public void setId(int id) {
         this.id = id;
     }
+    int id;
+    int portNum;
 
     public Player(String username, String password) {
 
@@ -80,38 +64,23 @@ public class Player {
         this.password = password;
     }
 
-    public Status getStatus() {
-        return status;
+    public Player() {
+
     }
-    
-    public void setStatus(Status status) {
+
+    public Player(String username, String password, int score, String status, int id) {
+
+        this.username = username;
+        this.password = password;
+        this.score = score;
+        this.id = id;
         this.status = status;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    public int getPortNum() {
-        return portNum;
-    }
-
-    public void setPortNum(int portNum) {
-        this.portNum = portNum;
-    }
-    
     @Override
     public String toString() {
-//               return "Player{" + "id=" + id + ", playerName=" + playerName + ", ipAddress=" + ipAddress + ", status=" + status + ", password=" + password + ", score=" + score + '}';
-        return "Player{" + ", username=" + username + ", password=" + password + '}';
-
+        return "Player{" + "id=" + id + ", playerName=" + username
+                + ", ipAddress=" + ipAddress + ", status=" + status
+                + ", password=" + password + ", score=" + score + "}";
     }
 }

@@ -348,17 +348,17 @@ public class LevelsBase extends BorderPane {
         playerOne.setUsername("Player");
         computer.setUsername("Root");
         easyButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage, Level.Easy, playerOne, computer);
+            Parent pane = new GameBase(stage, Level.Easy, playerOne, computer, ' ');
             stage.getScene().setRoot(pane);
         });
 
         mediumButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage, Level.MEDIUM, playerOne, computer);
+            Parent pane = new GameBase(stage, Level.MEDIUM, playerOne, computer, ' ');
             stage.getScene().setRoot(pane);
         });
 
         hardButton.setOnAction(e -> {
-            Parent pane = new GameBase(stage, Level.HARD, playerOne, computer);
+            Parent pane = new GameBase(stage, Level.HARD, playerOne, computer, ' ');
             stage.getScene().setRoot(pane);
         });
 

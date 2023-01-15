@@ -1,5 +1,7 @@
 package tictactoe.screens.modes;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -37,10 +39,10 @@ public class ModeBase extends AnchorPane {
     protected final VBox vBox1;
     protected final ImageView imageView0;
     protected final Text text3;
+    protected final Button offLineRecordButton;
 
     public ModeBase(Stage stage) {
-
-
+        offLineRecordButton = new Button();
         vBox = new VBox();
         logoImage = new ImageView();
         hBox = new HBox();
@@ -75,44 +77,56 @@ public class ModeBase extends AnchorPane {
         logoImage.setPickOnBounds(true);
         logoImage.setPreserveRatio(true);
         logoImage.setImage(new Image(getClass().getResource("/assets/images/logo.png").toExternalForm()));
-        VBox.setMargin(logoImage,  new Insets(10.0, 30.0, 0.0, 0.0));
+        VBox.setMargin(logoImage, new Insets(10.0, 35.0, 0.0, 0.0));
 
         hBox.setAlignment(javafx.geometry.Pos.TOP_RIGHT);
         hBox.setPrefHeight(100.0);
         hBox.setPrefWidth(200.0);
 
         text.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text.setStrokeWidth(0.0);
         text.setText("Tic");
         text.setFont(new Font("Comic Sans MS Bold", 20.0));
 
         text0.setFill(javafx.scene.paint.Color.valueOf("#fccf28"));
+        text0.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text0.setStrokeWidth(0.0);
         text0.setText("Tac");
         text0.setFont(new Font("Comic Sans MS Bold", 20.0));
 
         text1.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        text1.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text1.setStrokeWidth(0.0);
         text1.setText("Toe");
         text1.setFont(new Font("Comic Sans MS Bold", 20.0));
-        VBox.setMargin(hBox,new Insets(0.0, 10.0, 0.0, 0.0));
+        VBox.setMargin(hBox, new Insets(0.0, 10.0, 0.0, 0.0));
 
         hBox0.setLayoutX(390.0);
-        hBox0.setLayoutY(146.0);
+        hBox0.setLayoutY(123.0);
         hBox0.setPrefHeight(137.0);
         hBox0.setPrefWidth(500.0);
 
         ticText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        ticText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        ticText.setStrokeWidth(0.0);
         ticText.setText("Tic");
         ticText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
         tacText.setFill(javafx.scene.paint.Color.valueOf("#facc28"));
+        tacText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        tacText.setStrokeWidth(0.0);
         tacText.setText("Tac");
         tacText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
         toeText.setFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
+        toeText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        toeText.setStrokeWidth(0.0);
         toeText.setText("Toe");
         toeText.setFont(new Font("Comic Sans MS Bold", 96.0));
 
-        hBox1.setLayoutY(300.0);
-        hBox1.setPrefHeight(500.0);
+        hBox1.setLayoutY(355.0);
+        hBox1.setPrefHeight(444.0);
         hBox1.setPrefWidth(1280.0);
 
         singleModeButton.setMnemonicParsing(false);
@@ -120,13 +134,13 @@ public class ModeBase extends AnchorPane {
         singleModeButton.setPrefWidth(414.0);
         singleModeButton.setStyle("-fx-background-color: #fccf28; -fx-opacity: 0.7; -fx-background-radius: 42px;");
         HBox.setMargin(singleModeButton, new Insets(100.0, 150.0, 0.0, 150.0));
-        
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(-10.0);
         dropShadow.setOffsetY(10.0);
-        dropShadow.setColor(Color.color(0,0,0,.16));  
-        
+        dropShadow.setColor(Color.color(0, 0, 0, .16));
+
         singleModeButton.setEffect(dropShadow);
 
         vBox0.setPrefHeight(302.0);
@@ -139,6 +153,8 @@ public class ModeBase extends AnchorPane {
         imageView.setImage(new Image(getClass().getResource("/assets/images/single.png").toExternalForm()));
 
         text2.setFill(javafx.scene.paint.Color.WHITE);
+        text2.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text2.setStrokeWidth(0.0);
         text2.setText("Single Mode");
         text2.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(text2, new Insets(21.0, 0.0, 0.0, 80.0));
@@ -147,15 +163,14 @@ public class ModeBase extends AnchorPane {
         dualModeButton.setMnemonicParsing(false);
         dualModeButton.setPrefHeight(302.0);
         dualModeButton.setPrefWidth(414.0);
-        dualModeButton.setStyle("-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;");
-        HBox.setMargin(dualModeButton, new Insets(100.0, 150.0, 0.0, 0.0));
-        
+        dualModeButton.setStyle("-fx-background-color: #3dc0c2; -fx-opacity: 0.7; -fx-background-radius: 42px;;");
         dualModeButton.setEffect(dropShadow);
+        HBox.setMargin(dualModeButton, new Insets(100.0, 150.0, 0.0, 0.0));
 
         vBox1.setPrefHeight(200.0);
         vBox1.setPrefWidth(414.0);
 
-        imageView0.setFitHeight(133.0);
+        imageView0.setFitHeight(150.0);
         imageView0.setFitWidth(414.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
@@ -163,10 +178,23 @@ public class ModeBase extends AnchorPane {
         VBox.setMargin(imageView0, new Insets(60.0, 0.0, 0.0, 0.0));
 
         text3.setFill(javafx.scene.paint.Color.WHITE);
+        text3.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text3.setStrokeWidth(0.0);
         text3.setText("Dual Mode");
         text3.setFont(new Font("Comic Sans MS Bold", 40.0));
         VBox.setMargin(text3, new Insets(22.0, 0.0, 0.0, 103.0));
         dualModeButton.setGraphic(vBox1);
+
+        offLineRecordButton.setLayoutX(378.0);
+        offLineRecordButton.setLayoutY(300.0);
+        offLineRecordButton.setMnemonicParsing(false);
+        offLineRecordButton.setPrefHeight(85.0);
+        offLineRecordButton.setPrefWidth(524.0);
+        offLineRecordButton.setTextFill(javafx.scene.paint.Color.WHITE);
+        offLineRecordButton.setStyle("-fx-background-radius: 25; -fx-background-color: #e87251; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5);;");
+        offLineRecordButton.setText("Offline Game Records");
+        offLineRecordButton.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        offLineRecordButton.setFont(new Font("Comic Sans MS Bold", 35.0));
 
         vBox.getChildren().add(logoImage);
         hBox.getChildren().add(text);
@@ -185,6 +213,7 @@ public class ModeBase extends AnchorPane {
         vBox1.getChildren().add(text3);
         hBox1.getChildren().add(dualModeButton);
         getChildren().add(hBox1);
+        getChildren().add(offLineRecordButton);
 
         DropShadow dropShadowText = new DropShadow();
         dropShadowText.setRadius(5.0);
@@ -196,7 +225,7 @@ public class ModeBase extends AnchorPane {
         ticText.setEffect(dropShadowText);
         tacText.setEffect(dropShadowText);
         toeText.setEffect(dropShadowText);
-        
+
         dualModeButton.setOnAction(e -> {
             Parent pane = new DualModeBase(stage);
             stage.getScene().setRoot(pane);
@@ -205,6 +234,14 @@ public class ModeBase extends AnchorPane {
         singleModeButton.setOnAction(e -> {
             Parent pane = new LevelsBase(stage);
             stage.getScene().setRoot(pane);
+        });
+
+        offLineRecordButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent pane = new OfflineGameRecordsBase2(stage);
+                stage.getScene().setRoot(pane);
+            }
         });
 
     }
