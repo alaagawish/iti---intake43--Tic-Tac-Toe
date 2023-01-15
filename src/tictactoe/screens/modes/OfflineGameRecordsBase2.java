@@ -5,7 +5,6 @@ import java.util.List;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -136,7 +135,7 @@ public class OfflineGameRecordsBase2 extends ScrollPane {
                     System.err.println("xPlayer: " + recordedGame.getxPlayer());
                     System.err.println("oPlayer: " + recordedGame.getoPlayer());
                     System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer());
+                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(),' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
 

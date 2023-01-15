@@ -325,17 +325,7 @@ public class SignUpBase extends BorderPane {
                     stage.getScene().setRoot(pane);
                 }
 
-            validation(passwordField.getText(), userNameTextField.getText(), stage);
-//            Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
-//            if (player != null && passwordField.getText() != null) {
-//                Parent pane = new OnlineListBase(stage, player);
-//                stage.getScene().setRoot(pane);
-//            } else {
-//                userNameTextField.setText("");
-//                passwordField.setText("");
-//               
-//
-//            }
+            }
         });
 
         backImageView.setOnMousePressed(e -> {
