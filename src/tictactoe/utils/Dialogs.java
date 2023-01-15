@@ -5,12 +5,20 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
@@ -31,6 +39,49 @@ public class Dialogs {
         dialogLayout.setBody(dialogLabel);
 
         return dialog;
+    }
+
+    public static void showAlertDialog(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+   
+
+    public static void invitationDialog(String title) {
+        Dialog dialog = new Dialog();
+        dialog.setTitle(title);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.YES);
+        dialog.getDialogPane().setContent(createInvitationScene());
+    }
+
+    private static Node createInvitationScene() {
+        AnchorPane anchorPane = new AnchorPane();
+        Text PlayerText = new Text();
+        anchorPane.setMaxHeight(USE_PREF_SIZE);
+        anchorPane.setMaxWidth(USE_PREF_SIZE);
+        anchorPane.setMinHeight(USE_PREF_SIZE);
+        anchorPane.setMinWidth(USE_PREF_SIZE);
+        anchorPane.setPrefHeight(200.0);
+        anchorPane.setPrefWidth(666.0);
+        anchorPane.setStyle("-fx-background-color: #3dc0c2; -fx-background-radius: 25;");
+
+        PlayerText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
+        PlayerText.setLayoutX(68.0);
+        PlayerText.setLayoutY(114.0);
+        PlayerText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        PlayerText.setStrokeWidth(0.0);
+        PlayerText.setText("Player wants to play with you ");
+        PlayerText.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        PlayerText.setWrappingWidth(561.83837890625);
+        PlayerText.setFont(new Font("Comic Sans MS Bold", 35.0));
+
+        anchorPane.getChildren().add(PlayerText);
+        return anchorPane;
     }
 
     public static JFXDialog createBlurRequestingDialog(String text, StackPane stackpane, Stage stage, Player playerTwo) {
@@ -57,8 +108,7 @@ public class Dialogs {
             System.out.println("the second player accepted the game");
             Player playerOne = DualModeBase.network.responseGame(true);
             OnlineListBase.dialog2.close();
-
-            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo);
+            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo,Constants.O);
             stage.getScene().setRoot(pane);
         });
         actionParent.setSpacing(20);
