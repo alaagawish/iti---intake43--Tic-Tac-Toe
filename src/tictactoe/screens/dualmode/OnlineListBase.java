@@ -3,10 +3,13 @@ package tictactoe.screens.dualmode;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
@@ -32,7 +35,7 @@ import tictactoe.screens.profile.ProfileBase;
 import tictactoe.utils.Dialogs;
 import tictactoe.theme.CustomStyles;
 
-public class OnlineListBase extends ScrollPane {
+public class OnlineListBase extends ScrollPane implements Runnable {
 
     protected final BorderPane listBorderPane;
     protected final BorderPane borderPane;
@@ -47,12 +50,21 @@ public class OnlineListBase extends ScrollPane {
     protected final ImageView backImageView;
     protected final DropShadow dropShadow1;
     public List<Player> players;
-    public static JFXDialog dialog2;
+    public static JFXDialog dialog, dialog2;
     private String userName;
+    private Thread thread;
+    private Player savedPlayer;
+    private Stage savedStage;
+    public int playerNumbers;
 
     public OnlineListBase(Stage stage, Player player) {
+        thread = new Thread(this);
+
+        savedStage = stage;
+        savedPlayer = player;
 
         players = DualModeBase.network.getOnlineList();
+        playerNumbers = players.size();
 
         if (players != null) {
             System.out.println("Players:" + players);
@@ -116,7 +128,7 @@ public class OnlineListBase extends ScrollPane {
         stackpane.getChildren().add(listBorderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
 
-        JFXDialog dialog = Dialogs.createBlurSimpleDialog("Waiting Player To Accept the invitation ...", stackpane, "-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
+        dialog = Dialogs.createBlurSimpleDialog("Waiting Player To Accept the invitation ...", stackpane, "-fx-background-color: rgba(59,178,184,0.8 ); -fx-background-radius: 10 10 10 10 ;");
 
         dialog2 = Dialogs.createBlurRequestingDialog("Someone asks to play a game", stackpane, stage, player);
         dialog.setOnDialogClosed((event) -> {
@@ -124,6 +136,8 @@ public class OnlineListBase extends ScrollPane {
         });
 
         listVBox.getChildren().add(savedGamesLabel);
+
+        setPlayers(players);
 
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getId() == player.getId()) {
@@ -164,7 +178,7 @@ public class OnlineListBase extends ScrollPane {
                     System.out.println("llll");
                     if (DualModeBase.network.flag.equalsIgnoreCase("accept")) {
                         System.out.println("game accepted");
-                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO,Constants.X);
+                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO, Constants.X);
                         stage.getScene().setRoot(roott);
                         break;
                     } else if (DualModeBase.network.flag.equalsIgnoreCase("reject")) {
@@ -215,29 +229,150 @@ public class OnlineListBase extends ScrollPane {
         setContent(stackpane);
 
         backImageView.setOnMousePressed(e -> {
-            userName = player.getUsername();
-            DualModeBase.network.logout(userName);
-            System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
-            DualModeBase.network.closeConnection();
-            Parent pane = new DualModeBase(stage);
-            stage.getScene().setRoot(pane);
-        });
 
-        profileCircle.setOnMouseClicked(e -> {
-            Parent root = new ProfileBase(stage, player);
-            stage.getScene().setRoot(root);
-        });
+            ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
+            if (result == ButtonType.OK) {
+
                 userName = player.getUsername();
+                thread.stop();
                 DualModeBase.network.logout(userName);
                 System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
                 DualModeBase.network.closeConnection();
+                Parent pane = new DualModeBase(stage);
+                stage.getScene().setRoot(pane);
+
+            }
+
+        });
+
+        profileCircle.setOnMouseClicked(e -> {
+            thread.stop();
+            Parent root = new ProfileBase(stage, player);
+            stage.getScene().setRoot(root);
+
+        });
+
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
+
+            if (result != null) {
+                if (result == ButtonType.OK) {
+                    thread.stop();
+                    userName = player.getUsername();
+                    DualModeBase.network.logout(userName);
+                    System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
+                    DualModeBase.network.closeConnection();
+
+                } else if (result == ButtonType.CANCEL) {
+                    event.consume();
+                }
+            }
+
+        });
+
+        thread.start();
+
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            players = DualModeBase.network.getOnlineList();
+            System.out.println("Players Numbers in Run" + players.size() + "-" + playerNumbers);
+            if (playerNumbers != players.size()) {
+                playerNumbers = players.size();
+                setPlayers(players);
+            }
+            try {
+                thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(OnlineListBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    void setPlayers(List<Player> onlinePlayers) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                listVBox.getChildren().clear();
+                listVBox.getChildren().add(savedGamesLabel);
+                for (int i = 0; i < players.size(); i++) {
+                    if (players.get(i).getId() == savedPlayer.getId()) {
+                        continue;
+                    }
+                    HBox hbox = new HBox();
+                    hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+                    hbox.setPrefHeight(100.0);
+                    hbox.setPrefWidth(200.0);
+                    gameHBox.add(hbox);
+
+                    Label label = new Label();
+
+                    label.setPrefHeight(56.0);
+                    label.setPrefWidth(880.0);
+                    label.setText(players.get(i).getUsername());
+                    label.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BABYBLUE));
+                    label.setFont(new Font(Constants.COMICFONTBOLD, 30.0));
+                    playerName.add(label);
+
+                    Button btn = new Button();
+                    btn.setId("inviteButton" + i);
+
+                    btn.setMnemonicParsing(false);
+                    btn.setPrefHeight(29.0);
+                    btn.setPrefWidth(138.0);
+                    btn.setStyle(CustomStyles.INVITEBUTTONSTYLE);
+                    btn.setText("Invite");
+
+                    btn.setTextFill(javafx.scene.paint.Color.WHITE);
+                    btn.setFont(new Font(Constants.COMICFONTBOLD, 24.0));
+                    Player playerO = players.get(i);
+                    btn.setOnAction(e -> {
+                        dialog.show();
+
+                        DualModeBase.network.requestGame(savedPlayer, playerO);
+                        while (true) {
+                            try {
+                                thread.sleep(1000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(OnlineListBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                            }
+                            if (DualModeBase.network.flag.equalsIgnoreCase("accept")) {
+                                thread.stop();
+                                Parent root = new GameBase(savedStage, Level.ONLINE, savedPlayer, playerO, Constants.X);
+                                savedStage.getScene().setRoot(root);
+                                break;
+                            } else if (DualModeBase.network.flag.equalsIgnoreCase("reject")) {
+                                dialog.close();
+                                break;
+                            }
+                        }
+
+                    });
+
+                    btn.setEffect(dropShadow);
+
+                    VBox.setMargin(hbox, new Insets(10.0, 0.0, 10.0, 60.0));
+                    Line line = new Line();
+
+                    line.setEndX(1027.2928466796875);
+                    line.setEndY(71.29289245605469);
+                    line.setStartX(2154.585693359375);
+                    line.setStartY(70.58578491210938);
+                    gameLine.add(line);
+
+                    hbox.getChildren().add(label);
+                    hbox.getChildren().add(btn);
+                    listVBox.getChildren().add(hbox);
+                    listVBox.getChildren().add(line);
+                }
+
             }
         });
 
     }
-
 }

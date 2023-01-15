@@ -49,6 +49,15 @@ public class Dialogs {
         alert.showAndWait();
     }
 
+    public static ButtonType showAlertDialogWithTwoButton(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+        return alert.getResult();
+    }
+
     public static void invitationDialog(String title) {
         Dialog dialog = new Dialog();
         dialog.setTitle(title);
