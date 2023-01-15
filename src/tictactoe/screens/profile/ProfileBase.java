@@ -3,6 +3,7 @@ package tictactoe.screens.profile;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -25,6 +26,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import tictactoe.constants.Level;
 import tictactoe.models.GameModel;
 import tictactoe.models.Player;
@@ -66,6 +68,7 @@ public class ProfileBase extends ScrollPane {
     public Stage stage;
     Player playerr;
     String[] gamesNames;
+    String userName;
 
     public ProfileBase(Stage stage, Player player) {
 
@@ -391,6 +394,16 @@ public class ProfileBase extends ScrollPane {
                 }
             }
 
+        });
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                userName = player.getUsername();
+                DualModeBase.network.logout(userName);
+                System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
+                DualModeBase.network.closeConnection();
+            }
         });
 
     }

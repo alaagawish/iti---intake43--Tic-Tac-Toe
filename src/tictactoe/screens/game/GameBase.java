@@ -23,6 +23,8 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.theme.CustomStyles;
+import tictactoe.screens.modes.ModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.theme.CustomStyles;
 import tictactoe.screens.modes.ModeBase;
@@ -69,7 +71,6 @@ public class GameBase extends AnchorPane implements Runnable {
         thread = new Thread(this);
         this.stageVideo = stage;
         this.gameLevel = level;
-
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
@@ -301,6 +302,7 @@ public class GameBase extends AnchorPane implements Runnable {
         recordButton.setFont(new Font(Constants.COMICFONTBOLD, 35.0));
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
+
 
         exitButton.setId("exitButton");
         exitButton.setLayoutX(65.0);
@@ -931,27 +933,4 @@ public class GameBase extends AnchorPane implements Runnable {
         }
     }
 
-//    public void handleButtonOnline(Button button, int i, int j, Level level) {
-//        moves.add(new Move(i, j, GameManager.getTurn()));
-//
-//        System.out.println("Moves" + moves.get(0));
-//        //        System.out.println("Moves" + moves.get(0));
-//        if (level == Level.ONLINE) {
-//            if (GameManager.getTurn() == Constants.X) {
-//                moves = DualModeBase.network.createMoveFirstPlayer(firstPlayer, secondPlayer, moves);
-////                System.out.println("Turn X: " + moves.get(0));
-//            } else {
-//                moves = DualModeBase.network.createMoveSecondPlayer(firstPlayer, secondPlayer, moves);
-//                System.out.println(" Turn Y: " + moves.get(moves.size() - 1));
-//            }
-//
-//            computerMove(moves.get(moves.size() - 1));
-//
-//            int row = moves.get(moves.size() - 1).getRow();
-//            int col = moves.get(moves.size() - 1).getColumn();
-//            recordGameSteps(row, col, board[row][col]);
-//            flipTurn();
-//        }
-//
-//    }
 }

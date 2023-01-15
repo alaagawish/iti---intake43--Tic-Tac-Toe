@@ -92,8 +92,10 @@ public class Network implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         System.out.println("resultt:" + messageReceived.getPlayers().get(0));
         if (messageReceived.getPlayers().get(0).getUsername() != null) {
+
             messageReceived.setStatus("nothing");
             System.out.println("done" + messageReceived.getPlayers().get(0));
             return messageReceived.getPlayers().get(0);
