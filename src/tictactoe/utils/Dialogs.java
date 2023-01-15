@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
@@ -47,8 +48,6 @@ public class Dialogs {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-   
 
     public static void invitationDialog(String title) {
         Dialog dialog = new Dialog();
@@ -107,7 +106,8 @@ public class Dialogs {
             System.out.println("the second player accepted the game");
             Player playerOne = DualModeBase.network.responseGame(true);
             OnlineListBase.dialog2.close();
-            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo);
+
+            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo, Constants.O);
             stage.getScene().setRoot(pane);
         });
         actionParent.setSpacing(20);

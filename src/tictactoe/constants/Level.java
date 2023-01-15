@@ -10,5 +10,5 @@ package tictactoe.constants;
  * @author moazk
  */
 public enum Level {
-    Easy, MEDIUM, HARD, LOCAL, ONLINE
+    Easy, MEDIUM, HARD, LOCAL, ONLINE ,ONLINERECORD , LOCALRECORD
 }

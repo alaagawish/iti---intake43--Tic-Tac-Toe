@@ -164,7 +164,7 @@ public class OnlineListBase extends ScrollPane {
                     System.out.println("llll");
                     if (DualModeBase.network.flag.equalsIgnoreCase("accept")) {
                         System.out.println("game accepted");
-                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO);
+                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO,Constants.X);
                         stage.getScene().setRoot(roott);
                         break;
                     } else if (DualModeBase.network.flag.equalsIgnoreCase("reject")) {

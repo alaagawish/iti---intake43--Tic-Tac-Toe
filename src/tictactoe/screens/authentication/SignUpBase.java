@@ -1,5 +1,7 @@
 package tictactoe.screens.authentication;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.geometry.Insets;
 
 import javafx.scene.Parent;
@@ -297,6 +299,32 @@ public class SignUpBase extends BorderPane {
 
         signUpButton.setOnAction(e -> {
 
+            String warngingText;
+            String regex = "^([a-zA-Z]+[0-9]+[a-zA-Z0-9]*|[0-9]+[a-zA-Z][a-zA-Z0-9]*)$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(passwordField.getText());
+            String title = "Warning";
+
+            if (userNameTextField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                warngingText = "User Name or Password is Empty";
+                Dialogs.showAlertDialog(AlertType.WARNING, title, null, warngingText);
+            } else if (passwordField.getText().length() < 8 || !matcher.matches()) {
+                userNameTextField.setText("");
+                passwordField.setText("");
+                warngingText = "Password must be greater than 8 letters and at least has one character";
+                Dialogs.showAlertDialog(AlertType.WARNING, title, null, warngingText);
+            } else {
+                Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
+                if (player == null) {
+                    userNameTextField.setText("");
+                    passwordField.setText("");
+                    warngingText = "User Name is exist before , Please enter another userName";
+                    Dialogs.showAlertDialog(AlertType.WARNING, title, null, warngingText);
+                } else {
+                    Parent pane = new OnlineListBase(stage, player);
+                    stage.getScene().setRoot(pane);
+                }
+
             validation(passwordField.getText(), userNameTextField.getText(), stage);
 //            Player player = DualModeBase.network.register(userNameTextField.getText(), passwordField.getText());
 //            if (player != null && passwordField.getText() != null) {
@@ -309,6 +337,7 @@ public class SignUpBase extends BorderPane {
 //
 //            }
         });
+
         backImageView.setOnMousePressed(e -> {
             DualModeBase.network.closeConnection();
 
