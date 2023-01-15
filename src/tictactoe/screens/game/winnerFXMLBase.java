@@ -14,7 +14,10 @@ import javafx.stage.Stage;
 import tictactoe.constants.Constants;
 import tictactoe.constants.Level;
 import tictactoe.models.Player;
+import tictactoe.screens.dualmode.DualModeBase;
+import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.screens.modes.ModeBase;
+import tictactoe.screens.singlemode.LevelsBase;
 import tictactoe.theme.CustomStyles;
 
 public class winnerFXMLBase extends AnchorPane {
@@ -26,13 +29,15 @@ public class winnerFXMLBase extends AnchorPane {
     protected final Button backButton;
     protected final Button PlayAgainButton;
     protected final Level level;
+    public char playerTurn;
 
-    public winnerFXMLBase(Stage stage, Level level, Player firstPlayer, Player secondPlayer) {
+    public winnerFXMLBase(Stage stage, Level level, Player firstPlayer, Player secondPlayer, char playerSymbol) {
         headerTextView = new Text();
         winMediaView = new MediaView();
         backButton = new Button();
         PlayAgainButton = new Button();
         this.level = level;
+        this.playerTurn = playerSymbol;
         setId("AnchorPane");
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
@@ -80,8 +85,21 @@ public class winnerFXMLBase extends AnchorPane {
         PlayAgainButton.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.OFFWHITE));
         PlayAgainButton.setFont(new Font(Constants.COMICFONT, 50.0));
         backButton.setOnMousePressed(e -> {
-            Parent pane = new ModeBase(stage);
-            stage.getScene().setRoot(pane);
+            if (level == Level.LOCAL) {
+                Parent pane = new DualModeBase(stage);
+                stage.getScene().setRoot(pane);
+            } else if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
+                Parent pane = new LevelsBase(stage);
+                stage.getScene().setRoot(pane);
+            } else if (level == Level.ONLINE) {
+                if (playerTurn == Constants.X) {
+                    Parent pane = new OnlineListBase(stage, firstPlayer);
+                    stage.getScene().setRoot(pane);
+                } else {
+                    Parent pane = new OnlineListBase(stage, secondPlayer);
+                    stage.getScene().setRoot(pane);
+                }
+            }
             mediaPlayer.stop();
 
         });

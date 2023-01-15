@@ -65,12 +65,18 @@ public class GameBase extends AnchorPane implements Runnable {
     protected Player firstPlayer, secondPlayer;
     Move m;
     public boolean updateFlag = true;
+    public char playerTurn;
+    public boolean exitX;
+    public boolean exitO;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, char playerSymbol) {
         this.playerSymbol = playerSymbol;
         thread = new Thread(this);
         this.stageVideo = stage;
         this.gameLevel = level;
+        this.playerTurn = playerSymbol;
+        exitX = false;
+        exitO = false;
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
@@ -303,7 +309,6 @@ public class GameBase extends AnchorPane implements Runnable {
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
 
-
         exitButton.setId("exitButton");
         exitButton.setLayoutX(65.0);
         exitButton.setLayoutY(674.0);
@@ -482,8 +487,18 @@ public class GameBase extends AnchorPane implements Runnable {
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton && level == Level.ONLINE) {
-                    Parent pane = new OnlineListBase(stage, playerOne);
-                    stage.getScene().setRoot(pane);
+                    if (playerTurn == Constants.X) {
+
+                        exitX = true;
+                        System.out.println("exit x ==== " + exitX);
+                        Parent pane = new OnlineListBase(stage, playerOne);
+                        stage.getScene().setRoot(pane);
+                    } else {
+                        exitO = true;
+                        System.out.println("exit o ==== " + exitO);
+                        Parent pane = new OnlineListBase(stage, playerTwo);
+                        stage.getScene().setRoot(pane);
+                    }
                 } else if (type == okButton && (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD)) {
                     Parent pane = new LevelsBase(stage);
                     stage.getScene().setRoot(pane);
@@ -537,6 +552,11 @@ public class GameBase extends AnchorPane implements Runnable {
         if (level == Level.ONLINE) {
             th.start();
         }
+        
+        if(level == Level.LOCALRECORD || level == Level.ONLINERECORD){
+            recordButton.setVisible(false);
+        }
+        
     }
 
     private void updateBoard() {
@@ -599,7 +619,7 @@ public class GameBase extends AnchorPane implements Runnable {
             winnerFXMLBase.video = "/assets/images/losser.mp4";
             winnerFXMLBase.message = "Hard Luck Next Time";
             setNames(firstPlayerNameText, secondPlayerNameText);
-            pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+            pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer , Constants.X);
 
             System.out.println("winner =2 in find winner");
             stageVideo.getScene().setRoot(pane);
@@ -615,7 +635,7 @@ public class GameBase extends AnchorPane implements Runnable {
             winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
             winnerFXMLBase.message = "Winner Winner Chicken Dinner";
             setNames(firstPlayerNameText, secondPlayerNameText);
-            pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+            pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, Constants.X);
             System.out.println("winner =- 2 in find winner");
             stageVideo.getScene().setRoot(pane);
             th.stop();
@@ -631,7 +651,7 @@ public class GameBase extends AnchorPane implements Runnable {
             winnerFXMLBase.message = "No Winner, Try Play Again";
             setNames(firstPlayerNameText, secondPlayerNameText);
             System.out.println("winner =0 in find winner");
-            pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+            pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, Constants.X);
             stageVideo.getScene().setRoot(pane);
             th.stop();
             gameManager.printArray();
@@ -656,7 +676,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 setNames(firstPlayerNameText, secondPlayerNameText);
 
                 System.out.println("winner =-22 in find winnerO");
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, Constants.O);
                 stageVideo.getScene().setRoot(pane);
                 th.stop();
                 gameManager.printArray();
@@ -672,7 +692,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.message = "Winner Winner Chiken Dinner";
                 setNames(firstPlayerNameText, secondPlayerNameText);
                 System.out.println("winner =2 in find winnerO");
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, Constants.O);
                 stageVideo.getScene().setRoot(pane);
                 th.stop();
                 gameManager.printArray();
@@ -688,7 +708,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.message = "No Winner, Try Play Again";
                 setNames(firstPlayerNameText, secondPlayerNameText);
                 System.out.println("winner =0 in find winnerO");
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, Constants.O);
                 stageVideo.getScene().setRoot(pane);
                 th.stop();
                 gameManager.printArray();
@@ -809,7 +829,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.video = "/assets/images/losser.mp4";
                 winnerFXMLBase.message = "Hard Luck Next Time";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, ' ');
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
@@ -821,7 +841,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
                 winnerFXMLBase.message = "Winner Winner Chiken Dinner";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, ' ');
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
@@ -833,7 +853,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 winnerFXMLBase.video = "/assets/images/draw.mp4";
                 winnerFXMLBase.message = "No Winner, Try Play Again";
                 setNames(firstPlayerNameText, secondPlayerNameText);
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer, ' ');
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
