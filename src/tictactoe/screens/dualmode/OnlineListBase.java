@@ -3,16 +3,13 @@ package tictactoe.screens.dualmode;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
@@ -141,7 +138,76 @@ public class OnlineListBase extends ScrollPane implements Runnable {
         listVBox.getChildren().add(savedGamesLabel);
 
         setPlayers(players);
-        
+
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getId() == player.getId()) {
+                continue;
+            }
+            HBox hbox = new HBox();
+            hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            hbox.setPrefHeight(100.0);
+            hbox.setPrefWidth(200.0);
+            gameHBox.add(hbox);
+
+            Label label = new Label();
+
+            label.setPrefHeight(56.0);
+            label.setPrefWidth(880.0);
+            label.setText(players.get(i).getUsername());
+            label.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BABYBLUE));
+            label.setFont(new Font(Constants.COMICFONTBOLD, 30.0));
+            playerName.add(label);
+
+            Button btn = new Button();
+            btn.setId("inviteButton" + i);
+
+            btn.setMnemonicParsing(false);
+            btn.setPrefHeight(29.0);
+            btn.setPrefWidth(138.0);
+            btn.setStyle(CustomStyles.INVITEBUTTONSTYLE);
+            btn.setText("Invite");
+
+            btn.setTextFill(javafx.scene.paint.Color.WHITE);
+            btn.setFont(new Font(Constants.COMICFONTBOLD, 24.0));
+            Player playerO = players.get(i);
+            btn.setOnAction(e -> {
+                dialog.show();
+
+                DualModeBase.network.requestGame(player, playerO);
+                while (true) {
+                    System.out.println("llll");
+                    if (DualModeBase.network.flag.equalsIgnoreCase("accept")) {
+                        System.out.println("game accepted");
+                        Parent roott = new GameBase(stage, Level.ONLINE, player, playerO, Constants.X);
+                        stage.getScene().setRoot(roott);
+                        break;
+                    } else if (DualModeBase.network.flag.equalsIgnoreCase("reject")) {
+                        dialog.close();
+                        break;
+                    } else if (DualModeBase.network.flag.equalsIgnoreCase("cancel")) {
+                        break;
+                    }
+                }
+
+            });
+
+            btn.setEffect(dropShadow);
+
+            VBox.setMargin(hbox, new Insets(10.0, 0.0, 10.0, 60.0));
+            Line line = new Line();
+
+            line.setEndX(1027.2928466796875);
+            line.setEndY(71.29289245605469);
+            line.setStartX(2154.585693359375);
+            line.setStartY(70.58578491210938);
+            gameLine.add(line);
+
+            hbox.getChildren().add(label);
+            hbox.getChildren().add(btn);
+            listVBox.getChildren().add(hbox);
+            listVBox.getChildren().add(line);
+        }
+
         backImageView.setFitHeight(90.0);
         backImageView.setFitWidth(110.0);
         backImageView.setPickOnBounds(true);
@@ -163,11 +229,11 @@ public class OnlineListBase extends ScrollPane implements Runnable {
         setContent(stackpane);
 
         backImageView.setOnMousePressed(e -> {
-            
+
             ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
-            
-            if(result == ButtonType.OK){
-            
+
+            if (result == ButtonType.OK) {
+
                 userName = player.getUsername();
                 DualModeBase.network.logout(userName);
                 System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
@@ -175,9 +241,9 @@ public class OnlineListBase extends ScrollPane implements Runnable {
                 Parent pane = new DualModeBase(stage);
                 stage.getScene().setRoot(pane);
                 thread.stop();
-            
+
             }
-            
+
         });
 
         profileCircle.setOnMouseClicked(e -> {
@@ -188,20 +254,20 @@ public class OnlineListBase extends ScrollPane implements Runnable {
 
         stage.setOnCloseRequest((WindowEvent event) -> {
             ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
-            
-            if(result != null){
-                if(result == ButtonType.OK){
+
+            if (result != null) {
+                if (result == ButtonType.OK) {
                     userName = player.getUsername();
                     DualModeBase.network.logout(userName);
                     System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
+                      thread.stop();
                     DualModeBase.network.closeConnection();
-                    thread.stop();
-                }else if(result == ButtonType.CANCEL){
+                 
+                } else if (result == ButtonType.CANCEL) {
                     event.consume();
                 }
             }
-            
-            
+
         });
 
         thread.start();
@@ -269,16 +335,20 @@ public class OnlineListBase extends ScrollPane implements Runnable {
 
                         DualModeBase.network.requestGame(savedPlayer, playerO);
                         while (true) {
-                            System.out.println("llll");
                             if (DualModeBase.network.flag.equalsIgnoreCase("accept")) {
-                                System.out.println("game accepted");
-                                Parent root = new GameBase(savedStage, Level.ONLINE, savedPlayer, playerO);
+                                
+                                 thread.stop();
+                                Parent root = new GameBase(savedStage, Level.ONLINE, savedPlayer, playerO, Constants.X);
                                 savedStage.getScene().setRoot(root);
+                                 
                                 break;
                             } else if (DualModeBase.network.flag.equalsIgnoreCase("reject")) {
                                 dialog.close();
-                                break;
-                            } else if (DualModeBase.network.flag.equalsIgnoreCase("cancel")) {
+                                try {
+                                    thread.sleep(1000);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(OnlineListBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                                }
                                 break;
                             }
                         }

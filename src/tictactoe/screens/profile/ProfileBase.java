@@ -3,8 +3,6 @@ package tictactoe.screens.profile;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -80,8 +78,6 @@ public class ProfileBase extends ScrollPane {
         this.stage = stage;
         playerr = player;
         gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
-
-
         borderPane = new BorderPane();
         headerBorderPane = new BorderPane();
         profilePicVBox = new VBox();
@@ -106,7 +102,6 @@ public class ProfileBase extends ScrollPane {
         gameLabel = new ArrayList<>();
         gameImage = new ArrayList<>();
         gameLine = new ArrayList<>();
-
 
         backImageView = new ImageView();
         logoutImageView = new ImageView();
@@ -266,13 +261,12 @@ public class ProfileBase extends ScrollPane {
 
         BorderPane.setMargin(profileVBox, new Insets(0.0, 0.0, 0.0, 60.0));
         borderPane.setCenter(profileVBox);
-        
 
         profilePicVBox.getChildren().add(profileCircle);
         scoreHBox.getChildren().add(label);
         scoreHBox.getChildren().add(scoreLabel);
         profilePicVBox.getChildren().add(scoreHBox);
-        
+
         infoHBox.getChildren().add(infoLabel);
         infoHBox.getChildren().add(editInfoButton);
         profileVBox.getChildren().add(infoHBox);
@@ -291,7 +285,6 @@ public class ProfileBase extends ScrollPane {
                 hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 hbox.setPrefHeight(100.0);
                 hbox.setPrefWidth(200.0);
-                
 
                 Label glabel = new Label();
 
@@ -313,16 +306,17 @@ public class ProfileBase extends ScrollPane {
                 imageView.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
 
                 String gameName = gamesNames[i];
-                
+
                 GameModel recordedGame = PlayerRepository.readGame(playerr.getUsername(), gameName);
                 Move move = recordedGame.getMovesList().get(i);
-                
+
                 imageView.setOnMouseClicked((MouseEvent e) -> {
-                    System.err.println("Game: " + recordedGame);
-                    System.err.println("xPlayer: " + recordedGame.getxPlayer());
-                    System.err.println("oPlayer: " + recordedGame.getoPlayer());
-                    System.err.println("Move 0: " + recordedGame.getMovesList().get(i).getColumn());
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer());
+                    System.out.println("Game: " + recordedGame);
+                    System.out.println("xPlayer: " + recordedGame.getxPlayer());
+                    System.out.println("oPlayer: " + recordedGame.getoPlayer());
+
+                    System.out.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
+                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
 
@@ -340,7 +334,7 @@ public class ProfileBase extends ScrollPane {
                 hbox.getChildren().add(imageView);
                 profileVBox.getChildren().add(hbox);
                 profileVBox.getChildren().add(gLine);
-                
+
                 gameImage.add(imageView);
                 gameHBox.add(hbox);
                 gameLine.add(gLine);
@@ -355,37 +349,36 @@ public class ProfileBase extends ScrollPane {
             stage.getScene().setRoot(pane);
 
         });
-        
-        
+
         logoutImageView.setOnMousePressed(event -> {
-            
+
             ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
-            
-            if(result != null){
-                if(result == ButtonType.OK){
+
+            if (result != null) {
+                if (result == ButtonType.OK) {
                     userName = player.getUsername();
                     DualModeBase.network.logout(userName);
                     System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
                     DualModeBase.network.closeConnection();
                     Parent pane = new DualModeBase(stage);
-            stage.getScene().setRoot(pane);
-                }else if(result == ButtonType.CANCEL){
+                    stage.getScene().setRoot(pane);
+                } else if (result == ButtonType.CANCEL) {
                     event.consume();
                 }
             }
 
         });
-        
+
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(borderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
         JFXDialog dialog = Dialogs.createBlurSimpleDialog("Password length must be more than 8", stackpane, "-fx-background-color: rgba(255,255,255,1); -fx-background-radius: 10 10 10 10 ;");
         setContent(stackpane);
-        
+
         dialog.setOnDialogClosed((event) -> {
             borderPane.setEffect(null);
         });
-        
+
         editInfoButton.setOnAction(e -> {
 
             if (!toggleFlag) {
@@ -410,24 +403,23 @@ public class ProfileBase extends ScrollPane {
             }
 
         });
-        
-        
+
         stage.setOnCloseRequest((WindowEvent event) -> {
             ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
-            
-            if(result != null){
-                if(result == ButtonType.OK){
+
+            if (result != null) {
+                if (result == ButtonType.OK) {
                     userName = player.getUsername();
                     DualModeBase.network.logout(userName);
                     System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
                     DualModeBase.network.closeConnection();
-                }else if(result == ButtonType.CANCEL){
+                } else if (result == ButtonType.CANCEL) {
                     event.consume();
                 }
             }
-            
+
         });
-        
+
     }
-    
+
 }

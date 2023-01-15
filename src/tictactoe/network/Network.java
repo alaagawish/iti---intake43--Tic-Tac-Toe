@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +15,7 @@ import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.utils.Dialogs;
+import tictactoe.screens.game.GameBase;
 
 public class Network implements Runnable {
 
@@ -32,14 +32,13 @@ public class Network implements Runnable {
     Player playerOne, playerTwo, player2;
     int id;
     public static String flag;
-    public List<Move> resultMoves;
 
-    public Network(){
+    public Network() {
 
         try {
             socket = new Socket(InetAddress.getLoopbackAddress(), 5005);
 //            socket = new Socket("10.145.19.97", 5005);
-            
+
             System.out.println("local addr:" + InetAddress.getLocalHost());
             dataInputStream = new DataInputStream(socket.getInputStream());
             printStream = new PrintStream(socket.getOutputStream());
@@ -47,10 +46,7 @@ public class Network implements Runnable {
             gson = new Gson();
             flag = "nothing";
             System.out.println("socket : " + socket + " \nportNumber on client: " + localPortNum);
-            resultMoves = new ArrayList<>();
-            
         } catch (IOException ex) {
-//            ex.printStackTrace();
             Dialogs.showAlertDialog(Alert.AlertType.WARNING, "Warning", "Network isn't connencted", "Server has a problem wait until fix error");
         }
 
@@ -100,9 +96,10 @@ public class Network implements Runnable {
         }
 
         System.out.println("resultt:" + messageReceived.getPlayers().get(0));
-        if (messageReceived.getPlayers().get(0).getUsername() != null) {
 
-            System.out.println("doneeeeeeeeeeeeeeeeeeeeeee" + messageReceived.getPlayers().get(0));
+        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+            messageReceived.setStatus("nothing");
+            System.out.println("done" + messageReceived.getPlayers().get(0));
             return messageReceived.getPlayers().get(0);
         } else {
             return null;
@@ -173,7 +170,6 @@ public class Network implements Runnable {
     }
 
     public synchronized void logout(String userName) {
-//        try {
         messageSent = new Message();
         messageSent.setOperation("logout");
         messageSent.setStatus("offline");
@@ -183,10 +179,7 @@ public class Network implements Runnable {
         messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
         printStream.println(messageSentToServer);
-        System.err.println("in logout" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
-
-        System.out.println("==================");
-
+        System.out.println("account logout successfully" + messageSent.getStatus() + " name = " + messageSent.getPlayers().get(0).getUsername());
     }
 
     public Player responseGame(boolean accept) {
@@ -216,48 +209,31 @@ public class Network implements Runnable {
         return playerOne;
     }
 
-    public List<Move> createMoveFirstPlayer(Player firstPlayer, Player secondPlayer, List<Move> moves) {
+    public void sendMove(Player firstPlayer, Player secondPlayer, List<Move> moves) {
         messageSent = new Message();
-//        resultMoves = moves;
         System.out.println("send first player move to server" + moves);
 
-        messageSent.setOperation("firstPlayerMove");
+        messageSent.setOperation("sendMove");
         messageSent.setPlayers(firstPlayer);
         messageSent.setPlayers(secondPlayer);
         messageSent.setMoves(moves);
+
         messageSentToServer = gson.toJson(messageSent);
-        System.out.println("playedGame::" + messageSentToServer);
+        System.out.println("PLAYEDGAME::" + messageSentToServer);
         printStream.println(messageSentToServer);
 
-        if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
-            resultMoves = messageReceived.getMoves();
-            System.out.println("received moves from server" + resultMoves);
-        }
-
-        return resultMoves;
     }
 
-    public List<Move> createMoveSecondPlayer(Player firstPlayer, Player secondPlayer, List<Move> moves) {
-        System.out.println("inside createMoveSecondPlayer");
-        if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
-//            resultMoves = messageReceived.getMoves();
-
-            System.out.println("received moves" + messageReceived.getMoves());
-
-        }
-
+    public synchronized void updateScore(String userName, int score) {
         messageSent = new Message();
-
-        messageSent.setOperation("firstPlayerMove");
-        messageSent.setPlayers(firstPlayer);
-        messageSent.setPlayers(secondPlayer);
-        messageSent.setMoves(moves);
+        messageSent.setOperation("updateScore");
+        Player player = new Player();
+        player.setUsername(userName);
+        player.setScore(score);
+        messageSent.setPlayers(player);
         messageSentToServer = gson.toJson(messageSent);
-        resultMoves = moves;
-        System.out.println("playedGame::" + messageSentToServer);
         printStream.println(messageSentToServer);
-
-        return resultMoves;
+        System.out.println("Score of name = " + messageSent.getPlayers().get(0).getUsername() + " , " + messageSent.getPlayers().get(0).getScore());
     }
 
     @Override
@@ -265,7 +241,7 @@ public class Network implements Runnable {
 
         while (true) {
             try {
-                if (socket!= null && socket.isConnected()) {
+                if (socket != null && socket.isConnected()) {
                     System.out.println("im online");
                     String messageReceivedFromServer = "";
                     System.out.println("messageReceivedFromServer: " + messageReceivedFromServer);
@@ -290,32 +266,32 @@ public class Network implements Runnable {
                         } else if (messageReceived.getOperation().equalsIgnoreCase("Login")) {
                             if (messageReceived.getStatus() == "done") {
 
-                                System.out.println("Done login......." + messageReceived.getPlayers().get(0));
+//                                System.out.println("Done login......." + messageReceived.getPlayers().get(0));
                                 id = messageReceived.getPlayers().get(0).getId();
 
                                 thread.sleep(100);
                             } else if (messageReceived.getStatus() == "wrong") {
 
-                                System.out.println("something wrong, check password or username..");
+//                                System.out.println("something wrong, check password or username..");
                                 thread.sleep(100);
                             }
 
                         } else if (messageReceived.getOperation().equalsIgnoreCase("logout")) {
                             if (messageReceived.getStatus() == "done") {
-                                System.err.println(messageReceived.getStatus() + "From network in client side");
-                                System.err.println("Done Logout.........." + messageReceived.getPlayers().get(0));
+//                                System.err.println(messageReceived.getStatus() + "From network in client side");
+//                                System.err.println("Done Logout.........." + messageReceived.getPlayers().get(0));
                                 thread.sleep(100);
                             } else if (messageReceived.getStatus() == "wrong") {
-                                System.err.println("something wrong, in Logout");
+//                                System.err.println("something wrong, in Logout");
                                 thread.sleep(100);
                             }
                         } else if (messageReceived.getOperation().equalsIgnoreCase("Edit")) {
                             if (messageReceived.getStatus() == "done") {
 
-                                System.out.println("Done login......." + messageReceived.getPlayers().get(0));
+//                                System.out.println("Done login......." + messageReceived.getPlayers().get(0));
                             } else if (messageReceived.getStatus() == "wrong") {
 
-                                System.out.println("something wrong, check password or username..");
+//                                System.out.println("something wrong, check password or username..");
                             }
 
                         } else if (messageReceived.getOperation().equalsIgnoreCase("register")) {
@@ -324,30 +300,25 @@ public class Network implements Runnable {
                                 thread.sleep(100);
                             } else if (messageReceived.getStatus() == "wrong") {
 
-                                System.out.println("something wrong, check password or username..");
+//                                System.out.println("something wrong, check password or username..");
                                 thread.sleep(100);
                             }
 
                         } else if (messageReceived.getOperation().equals("getOnlineList")) {
                             if (messageReceived.getStatus() == "done") {
-                                System.out.println("Done getOnlineList.......");
-                                System.out.println(messageReceived.getPlayers());
+                                System.out.println("Done getOnlineList......." + messageReceived.getPlayers());
 
                             } else if (messageReceived.getStatus() == "wrong") {
-                                System.out.println("something wrong");
+                                System.out.println("something wrong in geting online list");
                             }
 
                         } else if (messageReceived.getOperation().equalsIgnoreCase("requestGame")) {
                             if (messageReceived.getStatus().equalsIgnoreCase("accept")) {
 
                                 System.out.println("game request accepted");
-
                             } else if (messageReceived.getStatus().equalsIgnoreCase("reject")) {
 
                                 System.out.println("game request rejected");
-                            } else {
-                                System.out.println("No response for a game request");
-
                             }
 
                         } else if (messageReceived.getOperation().equalsIgnoreCase("responseGame")) {
@@ -356,9 +327,6 @@ public class Network implements Runnable {
                             } else if (messageReceived.getStatus() == "wrong") {
 
                                 System.out.println("game request rejected");
-                            } else {
-                                System.out.println("No response for a game request");
-
                             }
                         } else if (messageReceived.getOperation().equalsIgnoreCase("requestGameFeedback")) {
                             if (messageReceived.getStatus().equalsIgnoreCase("accept")) {
@@ -381,18 +349,17 @@ public class Network implements Runnable {
 
                             OnlineListBase.dialog2.show();
                             System.out.println("game request.....");
-                        } else if (messageReceived.getOperation().equalsIgnoreCase("firstPlayerMove")) {
-//                            playerOne = messageReceived.getPlayers().get(0);
-//                            playerTwo = messageReceived.getPlayers().get(1);
-//
-//                            OnlineListBase.dialog2.show();
-                            System.out.println("first player move");
-                        } else if (messageReceived.getOperation().equalsIgnoreCase("secondPlayerMove")) {
-//                            playerOne = messageReceived.getPlayers().get(0);
-//                            playerTwo = messageReceived.getPlayers().get(1);
-//
-//                            OnlineListBase.dialog2.show();
-                            System.out.println("second player move.");
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("sendMove")) {
+                            GameBase.moves.add(messageReceived.getMoves().get(messageReceived.getMoves().size() - 1));
+                        } else if (messageReceived.getOperation().equalsIgnoreCase("updateScore")) {
+                            if (messageReceived.getStatus() == "done") {
+                                System.out.println("Update Score done......." + messageReceived.getPlayers().get(0));
+
+                            } else if (messageReceived.getStatus() == "wrong") {
+                                System.out.println("something wrong...............");
+
+                            }
+
                         }
                     }
                 }
@@ -430,9 +397,9 @@ public class Network implements Runnable {
             return null;
         }
     }
-    
-    public boolean isConnected(){
-       return socket != null && socket.isConnected();
+
+    public boolean isConnected() {
+        return socket != null && socket.isConnected();
     }
 
 }

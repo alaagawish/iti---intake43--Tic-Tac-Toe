@@ -23,9 +23,6 @@ import tictactoe.screens.dualmode.DualModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.utils.Dialogs;
 
-
-
-
 public class LoginBase extends BorderPane {
 
     protected final VBox vBox;
@@ -350,7 +347,25 @@ public class LoginBase extends BorderPane {
                 passwordField.setText("");
 
             }
+//            navigateUser(userName, password, stage);
         }
     }
+
+//    private void navigateUser(String userName, String password, Stage stage) {
+//        Player player = DualModeBase.network.login(userName, password);
+//        if (player != null) {
+//            System.out.println("loginBase done");
+//            Parent pane = new OnlineListBase(stage, player);
+//            stage.getScene().setRoot(pane);
+//        } else {
+//            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
+//                    "Error",
+//                    "Login Error",
+//                    "UserName or Password are incorrect check you UserName and Password");
+//            userNameTextField.setText("");
+//            passwordField.setText("");
+//
+//        }
+//    }
 
 }
