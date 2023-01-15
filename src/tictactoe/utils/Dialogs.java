@@ -49,8 +49,6 @@ public class Dialogs {
         alert.showAndWait();
     }
 
-   
-
     public static void invitationDialog(String title) {
         Dialog dialog = new Dialog();
         dialog.setTitle(title);
@@ -108,7 +106,8 @@ public class Dialogs {
             System.out.println("the second player accepted the game");
             Player playerOne = DualModeBase.network.responseGame(true);
             OnlineListBase.dialog2.close();
-            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo,Constants.O);
+
+            Parent pane = new GameBase(stage, Level.ONLINE, playerOne, playerTwo, Constants.O);
             stage.getScene().setRoot(pane);
         });
         actionParent.setSpacing(20);

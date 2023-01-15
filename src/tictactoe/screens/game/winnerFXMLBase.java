@@ -86,6 +86,14 @@ public class winnerFXMLBase extends AnchorPane {
 
         });
 
+        PlayAgainButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Parent pane = new GameBase(stage, level, firstPlayer, secondPlayer, ' ');
+                stage.getScene().setRoot(pane);
+                mediaPlayer.stop();
+            }
+        });
         if (level != Level.ONLINE) {
             PlayAgainButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
