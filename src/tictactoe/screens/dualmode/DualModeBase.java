@@ -223,7 +223,7 @@ public class DualModeBase extends AnchorPane {
             stage.getScene().setRoot(pane);
 
         });
-
+        
         onlineButton.setOnAction(e -> {
             networkFlag = true;
             network = new Network();

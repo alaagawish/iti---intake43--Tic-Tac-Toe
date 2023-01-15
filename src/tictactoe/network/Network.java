@@ -16,6 +16,7 @@ import tictactoe.models.Player;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.utils.Dialogs;
 import tictactoe.screens.game.GameBase;
+import tictactoe.utils.Dialogs;
 
 public class Network implements Runnable {
 
@@ -243,12 +244,13 @@ public class Network implements Runnable {
         while (true) {
             try {
                 if (socket != null && socket.isConnected()) {
+
                     System.out.println("im online");
                     String messageReceivedFromServer = "";
                     System.out.println("messageReceivedFromServer: " + messageReceivedFromServer);
                     messageReceivedFromServer = dataInputStream.readLine();
                     messageReceivedFromServer = messageReceivedFromServer.replaceAll("\r?\n", "");
-                    System.out.println("meeeee:::" + messageReceivedFromServer);
+                    System.out.println(" " + messageReceivedFromServer);
 
                     if (!messageReceivedFromServer.isEmpty()) {
 
@@ -279,11 +281,8 @@ public class Network implements Runnable {
 
                         } else if (messageReceived.getOperation().equalsIgnoreCase("logout")) {
                             if (messageReceived.getStatus() == "done") {
-//                                System.err.println(messageReceived.getStatus() + "From network in client side");
-//                                System.err.println("Done Logout.........." + messageReceived.getPlayers().get(0));
                                 thread.sleep(100);
                             } else if (messageReceived.getStatus() == "wrong") {
-//                                System.err.println("something wrong, in Logout");
                                 thread.sleep(100);
                             }
                         } else if (messageReceived.getOperation().equalsIgnoreCase("Edit")) {

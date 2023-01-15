@@ -3,7 +3,6 @@ package tictactoe.screens.profile;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -31,7 +30,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import tictactoe.constants.Level;
 import tictactoe.models.GameModel;
-import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.repositories.PlayerRepository;
 import tictactoe.screens.dualmode.DualModeBase;
@@ -309,14 +307,12 @@ public class ProfileBase extends ScrollPane {
                 String gameName = gamesNames[i];
 
                 GameModel recordedGame = PlayerRepository.readGame(playerr.getUsername(), gameName);
-                Move move = recordedGame.getMovesList().get(i);
 
                 imageView.setOnMouseClicked((MouseEvent e) -> {
                     System.out.println("Game: " + recordedGame);
                     System.out.println("xPlayer: " + recordedGame.getxPlayer());
                     System.out.println("oPlayer: " + recordedGame.getoPlayer());
 
-                    System.out.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
                     GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
@@ -359,7 +355,7 @@ public class ProfileBase extends ScrollPane {
                 if (result == ButtonType.OK) {
                     userName = player.getUsername();
                     DualModeBase.network.logout(userName);
-                    System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
+//                    System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
                     DualModeBase.network.closeConnection();
                     Parent pane = new DualModeBase(stage);
                     stage.getScene().setRoot(pane);
@@ -412,7 +408,6 @@ public class ProfileBase extends ScrollPane {
                 if (result == ButtonType.OK) {
                     userName = player.getUsername();
                     DualModeBase.network.logout(userName);
-                    System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
                     DualModeBase.network.closeConnection();
                 } else if (result == ButtonType.CANCEL) {
                     event.consume();

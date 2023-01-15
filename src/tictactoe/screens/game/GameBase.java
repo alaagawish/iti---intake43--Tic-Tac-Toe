@@ -23,8 +23,6 @@ import tictactoe.models.GameModel;
 import tictactoe.models.Move;
 import tictactoe.models.Player;
 import tictactoe.screens.dualmode.DualModeBase;
-import tictactoe.theme.CustomStyles;
-import tictactoe.screens.modes.ModeBase;
 import tictactoe.screens.dualmode.OnlineListBase;
 import tictactoe.theme.CustomStyles;
 import tictactoe.screens.modes.ModeBase;
@@ -303,7 +301,6 @@ public class GameBase extends AnchorPane implements Runnable {
 
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
 
-
         exitButton.setId("exitButton");
         exitButton.setLayoutX(65.0);
         exitButton.setLayoutY(674.0);
@@ -504,7 +501,6 @@ public class GameBase extends AnchorPane implements Runnable {
             @Override
             public void run() {
                 while (true) {
-                    System.out.println("jjjjjjjjjjjjjjjjjjjjjj");
                     if (updateFlag && moves.size() > 0 && moves.get(moves.size() - 1).getSymbol() != playerSymbol) {
                         updateBoard();
                         updateFlag = false;
@@ -680,7 +676,6 @@ public class GameBase extends AnchorPane implements Runnable {
     }
 
     public void switchButtons() {
-        System.out.println("switchbuttons" + playerSymbol);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
