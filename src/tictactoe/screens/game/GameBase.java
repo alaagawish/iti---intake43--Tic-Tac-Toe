@@ -62,12 +62,14 @@ public class GameBase extends AnchorPane implements Runnable {
     Thread thread, th;
     protected Player firstPlayer, secondPlayer;
     Move m;
+    public boolean updateFlag = true;
 
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, char playerSymbol) {
         this.playerSymbol = playerSymbol;
         thread = new Thread(this);
         this.stageVideo = stage;
         this.gameLevel = level;
+
         moves = new ArrayList<>();
         firstPlayerCircle = new Circle();
         secondPlayerCircle = new Circle();
@@ -499,8 +501,9 @@ public class GameBase extends AnchorPane implements Runnable {
             @Override
             public void run() {
                 while (true) {
-                    if (moves.size() > 1 && moves.get(moves.size() - 1).getSymbol() != playerSymbol) {
+                    if (updateFlag && moves.size() > 0 && moves.get(moves.size() - 1).getSymbol() != playerSymbol) {
                         updateBoard();
+                        updateFlag = false;
                     }
 
                     if (moves.size() % 2 == 0 && playerSymbol == Constants.X) {
@@ -511,6 +514,16 @@ public class GameBase extends AnchorPane implements Runnable {
                         disableButtons();
                     } else if (moves.size() % 2 == 1 && playerSymbol == Constants.O) {
                         switchButtons();
+                    }
+                    try {
+                        th.sleep(200);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    }
+                    if (playerSymbol == Constants.X) {
+                        findWinner();
+                    } else if (playerSymbol == Constants.O) {
+                        findWinnerO();
                     }
 
                 }
@@ -524,6 +537,7 @@ public class GameBase extends AnchorPane implements Runnable {
     }
 
     private void updateBoard() {
+        Platform.setImplicitExit(false);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -532,19 +546,173 @@ public class GameBase extends AnchorPane implements Runnable {
                     computerMove(moves.get(i));
                 }
 
-                if (moves.size() > 1) {
-                    m = moves.get(moves.size() - 2);
-                    board[m.getRow()][m.getColumn()] = m.getSymbol();
+                if (moves.size() > 0) {
+
                     m = moves.get(moves.size() - 1);
+                    recordGameSteps(m.getRow(), m.getColumn(), m.getSymbol());
                     board[m.getRow()][m.getColumn()] = m.getSymbol();
                 }
                 if (playerSymbol == Constants.X) {
                     findWinner();
-                } else {
+                } else if (playerSymbol == Constants.O) {
                     findWinnerO();
                 }
+
             }
         });
+    }
+
+    public void handleButtonOnline(Button button, int i, int j, Level level) {
+        updateFlag = true;
+        if (playerSymbol == Constants.X) {
+            System.out.println("kjhlkmjnhbvcvbnm,l.;");
+            findWinner();
+        } else if (playerSymbol == Constants.O) {
+            System.out.println("-----------------------------");
+
+            findWinnerO();
+        }
+
+        moves.add(new Move(i, j, playerSymbol));
+        board[i][j] = playerSymbol;
+
+        computerMove(moves.get(moves.size() - 1));
+        DualModeBase.network.sendMove(firstPlayer, secondPlayer, moves);
+
+        int row = moves.get(moves.size() - 1).getRow();
+        int col = moves.get(moves.size() - 1).getColumn();
+        recordGameSteps(row, col, board[row][col]);
+
+    }
+
+    public void findWinner() {
+        Parent pane;
+        int winner = GameManager.checkWinner();
+
+        switch (winner) {
+            case 2:
+                disableButtons();
+                winnerFXMLBase.video = "/assets/images/losser.mp4";
+                winnerFXMLBase.message = "Hard Luck Next Time";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                th.stop();
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            case -2:
+                disableButtons();
+                winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
+                winnerFXMLBase.message = "Winner Winner Chiken Dinner";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                //DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            case 0:
+                //x=o
+                winnerFXMLBase.video = "/assets/images/draw.mp4";
+                winnerFXMLBase.message = "No Winner, Try Play Again";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void findWinnerO() {
+        Parent pane;
+        int winner = GameManager.checkWinner();
+        switch (winner) {
+            case -2:
+                disableButtons();
+                winnerFXMLBase.video = "/assets/images/losser.mp4";
+                winnerFXMLBase.message = "Hard Luck Next Time";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            case 2:
+                disableButtons();
+                winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
+                winnerFXMLBase.message = "Winner Winner Chiken Dinner";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                //DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            case 0:
+                //x=o
+                winnerFXMLBase.video = "/assets/images/draw.mp4";
+                winnerFXMLBase.message = "No Winner, Try Play Again";
+                setNames(firstPlayerNameText, secondPlayerNameText);
+                th.stop();
+                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
+                stageVideo.getScene().setRoot(pane);
+                gameManager.printArray();
+                if (recordFlag) {
+                    gameManager.saveGame();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void switchButtons() {
+        System.out.println("switchbuttons" + playerSymbol);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == ' ') {
+                    if (i == 0 && j == 0) {
+                        button00.setDisable(false);
+                    } else if (i == 0 && j == 1) {
+                        button01.setDisable(false);
+                    } else if (i == 0 && j == 2) {
+                        button02.setDisable(false);
+                    } else if (i == 1 && j == 0) {
+                        button10.setDisable(false);
+                    } else if (i == 1 && j == 1) {
+                        button11.setDisable(false);
+                    } else if (i == 1 && j == 2) {
+                        button12.setDisable(false);
+                    } else if (i == 2 && j == 0) {
+                        button20.setDisable(false);
+                    } else if (i == 2 && j == 1) {
+                        button21.setDisable(false);
+                    } else if (i == 2 && j == 2) {
+                        button22.setDisable(false);
+                    }
+                }
+            }
+        }
     }
 
     public synchronized void displayRecord(GameModel recordedGamee) {
@@ -663,108 +831,6 @@ public class GameBase extends AnchorPane implements Runnable {
         }
     }
 
-    public void findWinner() {
-        Parent pane;
-        int winner = GameManager.checkWinner();
-
-        switch (winner) {
-            case 2:
-                disableButtons();
-                winnerFXMLBase.video = "/assets/images/losser.mp4";
-                winnerFXMLBase.message = "Hard Luck Next Time";
-                setNames(firstPlayerNameText, secondPlayerNameText);
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-                th.stop();
-                stageVideo.getScene().setRoot(pane);
-                gameManager.printArray();
-                DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
-                if (recordFlag) {
-                    gameManager.saveGame();
-                }
-                break;
-            case -2:
-                disableButtons();
-                winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
-                winnerFXMLBase.message = "Winner Winner Chiken Dinner";
-                setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-                stageVideo.getScene().setRoot(pane);
-                gameManager.printArray();
-                //DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
-                if (recordFlag) {
-                    gameManager.saveGame();
-                }
-                break;
-            case 0:
-                //x=o
-                winnerFXMLBase.video = "/assets/images/draw.mp4";
-                winnerFXMLBase.message = "No Winner, Try Play Again";
-                setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-                stageVideo.getScene().setRoot(pane);
-                gameManager.printArray();
-                if (recordFlag) {
-                    gameManager.saveGame();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void findWinnerO() {
-        Parent pane;
-        int winner = GameManager.checkWinner();
-//        System.out.println("finding winner" + winner);
-        switch (winner) {
-            case -2:
-                disableButtons();
-                winnerFXMLBase.video = "/assets/images/losser.mp4";
-                winnerFXMLBase.message = "Hard Luck Next Time";
-                setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-                stageVideo.getScene().setRoot(pane);
-                gameManager.printArray();
-                DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
-                if (recordFlag) {
-                    gameManager.saveGame();
-                }
-                break;
-            case 2:
-                disableButtons();
-                winnerFXMLBase.video = "/assets/images/winnerVideo.mp4";
-                winnerFXMLBase.message = "Winner Winner Chiken Dinner";
-                setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-                stageVideo.getScene().setRoot(pane);
-                gameManager.printArray();
-                //DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
-                if (recordFlag) {
-                    gameManager.saveGame();
-                }
-                break;
-            case 0:
-                //x=o
-                winnerFXMLBase.video = "/assets/images/draw.mp4";
-                winnerFXMLBase.message = "No Winner, Try Play Again";
-                setNames(firstPlayerNameText, secondPlayerNameText);
-                th.stop();
-                pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
-                stageVideo.getScene().setRoot(pane);
-                gameManager.printArray();
-                if (recordFlag) {
-                    gameManager.saveGame();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
     private void setNames(Text firstPlayerName, Text secondPlayerName) {
         firstPlayer.setUsername(firstPlayerName.getText());
         secondPlayer.setUsername(secondPlayerName.getText());
@@ -853,69 +919,4 @@ public class GameBase extends AnchorPane implements Runnable {
         }
     }
 
-    public void handleButtonOnline(Button button, int i, int j, Level level) {
-        moves.add(new Move(i, j, playerSymbol));
-        System.out.println("============" + playerSymbol);
-        board[i][j] = playerSymbol;
-        if (moves.size() > 0) {
-
-            computerMove(moves.get(moves.size() - 1));
-        }
-        if (moves.size() > 1) {
-            computerMove(moves.get(moves.size() - 2));
-        }
-        if (moves.size() % 2 == 0 && playerSymbol == Constants.X) {
-            switchButtons();
-        } else if (moves.size() % 2 == 0 && playerSymbol == Constants.O) {
-            disableButtons();
-        } else if (moves.size() % 2 == 1 && playerSymbol == Constants.X) {
-            disableButtons();
-        } else if (moves.size() % 2 == 1 && playerSymbol == Constants.O) {
-            switchButtons();
-        }
-        if (moves.size() > 1) {
-            m = moves.get(moves.size() - 2);
-            board[m.getRow()][m.getColumn()] = m.getSymbol();
-            m = moves.get(moves.size() - 1);
-            board[m.getRow()][m.getColumn()] = m.getSymbol();
-        }
-
-        DualModeBase.network.sendMove(firstPlayer, secondPlayer, moves);
-
-        computerMove(moves.get(moves.size() - 1));
-
-        int row = moves.get(moves.size() - 1).getRow();
-        int col = moves.get(moves.size() - 1).getColumn();
-        recordGameSteps(row, col, board[row][col]);
-
-    }
-
-    public void switchButtons() {
-        System.out.println("switchbuttons" + playerSymbol);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == ' ') {
-                    if (i == 0 && j == 0) {
-                        button00.setDisable(false);
-                    } else if (i == 0 && j == 1) {
-                        button01.setDisable(false);
-                    } else if (i == 0 && j == 2) {
-                        button02.setDisable(false);
-                    } else if (i == 1 && j == 0) {
-                        button10.setDisable(false);
-                    } else if (i == 1 && j == 1) {
-                        button11.setDisable(false);
-                    } else if (i == 1 && j == 2) {
-                        button12.setDisable(false);
-                    } else if (i == 2 && j == 0) {
-                        button20.setDisable(false);
-                    } else if (i == 2 && j == 1) {
-                        button21.setDisable(false);
-                    } else if (i == 2 && j == 2) {
-                        button22.setDisable(false);
-                    }
-                }
-            }
-        }
-    }
 }
