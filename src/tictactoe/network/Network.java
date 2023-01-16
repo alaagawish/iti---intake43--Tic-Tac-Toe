@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -386,7 +387,7 @@ public class Network implements Runnable {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (messageReceived.getPlayers().get(0).getUsername() != null) {
+        if (messageReceived.getPlayers().size() > 1 && messageReceived.getPlayers().get(0).getUsername() != null) {
 
             List<Player> p = messageReceived.getPlayers();
             messageReceived.setStatus("nothing");
@@ -394,7 +395,7 @@ public class Network implements Runnable {
             return p;
 
         } else {
-            return null;
+            return new ArrayList<Player>();
         }
     }
 

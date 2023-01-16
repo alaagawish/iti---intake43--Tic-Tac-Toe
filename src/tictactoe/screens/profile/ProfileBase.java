@@ -313,7 +313,7 @@ public class ProfileBase extends ScrollPane {
                     System.out.println("xPlayer: " + recordedGame.getxPlayer());
                     System.out.println("oPlayer: " + recordedGame.getoPlayer());
 
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
+                    GameBase pane = new GameBase(stage, Level.ONLINERECORD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
 
