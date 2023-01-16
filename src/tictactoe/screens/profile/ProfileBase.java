@@ -3,10 +3,11 @@ package tictactoe.screens.profile;
 import com.jfoenix.controls.JFXDialog;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -39,10 +40,10 @@ import tictactoe.utils.Dialogs;
 public class ProfileBase extends ScrollPane {
 
     protected final BorderPane borderPane;
-    protected final BorderPane borderPane0;
-    protected final VBox vBox;
+    protected final BorderPane headerBorderPane;
+    protected final VBox profilePicVBox;
     protected final Circle profileCircle;
-    protected final HBox hBox;
+    protected final HBox scoreHBox;
     protected final Label label;
     protected final Label scoreLabel;
     protected final VBox profileVBox;
@@ -63,24 +64,24 @@ public class ProfileBase extends ScrollPane {
     protected final List<ImageView> gameImage;
     protected final List<Line> gameLine;
 
-    protected final ImageView backImageView, backImageView2;
+    protected final ImageView backImageView, logoutImageView;
     protected boolean toggleFlag;
     public Stage stage;
     Player playerr;
     String[] gamesNames;
     String userName;
+    private int i;
 
     public ProfileBase(Stage stage, Player player) {
 
         this.stage = stage;
         playerr = player;
         gamesNames = PlayerRepository.getRecordedGames(player.getUsername());
-
         borderPane = new BorderPane();
-        borderPane0 = new BorderPane();
-        vBox = new VBox();
+        headerBorderPane = new BorderPane();
+        profilePicVBox = new VBox();
         profileCircle = new Circle();
-        hBox = new HBox();
+        scoreHBox = new HBox();
         label = new Label();
         scoreLabel = new Label();
         profileVBox = new VBox();
@@ -102,7 +103,7 @@ public class ProfileBase extends ScrollPane {
         gameLine = new ArrayList<>();
 
         backImageView = new ImageView();
-        backImageView2 = new ImageView();
+        logoutImageView = new ImageView();
         toggleFlag = false;
 
         setId("profileScrollPane");
@@ -120,17 +121,17 @@ public class ProfileBase extends ScrollPane {
         borderPane.setStyle("-fx-background-color: linear-gradient(#ffffff,#E5EDEE);");
         borderPane.getStyleClass().add("mainBorderPane");
 
-        BorderPane.setAlignment(borderPane0, javafx.geometry.Pos.CENTER);
-        borderPane0.setPrefHeight(302.0);
-        borderPane0.setPrefWidth(1280.0);
+        BorderPane.setAlignment(headerBorderPane, javafx.geometry.Pos.CENTER);
+        headerBorderPane.setPrefHeight(302.0);
+        headerBorderPane.setPrefWidth(1280.0);
 
-        BorderPane.setAlignment(vBox, javafx.geometry.Pos.CENTER);
-        vBox.setAlignment(javafx.geometry.Pos.CENTER);
-        vBox.setMaxWidth(231.0);
-        vBox.setMinWidth(135.0);
-        vBox.setPrefHeight(256.0);
-        vBox.setPrefWidth(231.0);
-        BorderPane.setMargin(vBox, new Insets(0.0, 0.0, 30.0, 0.0));
+        BorderPane.setAlignment(profilePicVBox, javafx.geometry.Pos.CENTER);
+        profilePicVBox.setAlignment(javafx.geometry.Pos.CENTER);
+        profilePicVBox.setMaxWidth(231.0);
+        profilePicVBox.setMinWidth(135.0);
+        profilePicVBox.setPrefHeight(256.0);
+        profilePicVBox.setPrefWidth(231.0);
+        BorderPane.setMargin(profilePicVBox, new Insets(0.0, 0.0, 30.0, 0.0));
 
         profileCircle.setFill(javafx.scene.paint.Color.valueOf("#ffffff00"));
         profileCircle.setId("profileCircle");
@@ -142,8 +143,8 @@ public class ProfileBase extends ScrollPane {
         Image profilePic = new Image("/assets/images/profilePicture.png", false);
         profileCircle.setFill(new ImagePattern(profilePic));
 
-        hBox.setPrefHeight(56.0);
-        hBox.setPrefWidth(175.0);
+        scoreHBox.setPrefHeight(56.0);
+        scoreHBox.setPrefWidth(175.0);
 
         label.setPrefHeight(56.0);
         label.setPrefWidth(147.0);
@@ -158,9 +159,9 @@ public class ProfileBase extends ScrollPane {
         scoreLabel.setText(player.getScore() + "");
         scoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#fccf28"));
         scoreLabel.setFont(new Font("Comic Sans MS Bold", 40.0));
-        borderPane0.setCenter(vBox);
-        BorderPane.setMargin(vBox, new Insets(90.0, 0.0, 30.0, 0.0));
-        borderPane.setTop(borderPane0);
+        headerBorderPane.setCenter(profilePicVBox);
+        BorderPane.setMargin(profilePicVBox, new Insets(90.0, 0.0, 30.0, 0.0));
+        borderPane.setTop(headerBorderPane);
 
         profileVBox.setPrefHeight(598.0);
         profileVBox.setPrefWidth(1280.0);
@@ -188,32 +189,17 @@ public class ProfileBase extends ScrollPane {
         backImageView.setPickOnBounds(true);
         backImageView.setPreserveRatio(true);
         backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
-        borderPane0.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
-        borderPane0.setLeft(backImageView);
+        headerBorderPane.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
+        headerBorderPane.setLeft(backImageView);
 
-        backImageView2.setFitHeight(106.0);
-        backImageView2.setFitWidth(120.0);
-        backImageView2.setPickOnBounds(true);
-        backImageView2.setPreserveRatio(true);
-        backImageView2.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
-        backImageView2.setVisible(false);
-        borderPane0.setRight(backImageView2);
-
-        backImageView.setFitHeight(106.0);
-        backImageView.setFitWidth(120.0);
-        backImageView.setPickOnBounds(true);
-        backImageView.setPreserveRatio(true);
-        backImageView.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
-        borderPane0.setMargin(backImageView, new Insets(30.0, 0.0, 0.0, 30.0));
-        borderPane0.setLeft(backImageView);
-
-        backImageView2.setFitHeight(106.0);
-        backImageView2.setFitWidth(120.0);
-        backImageView2.setPickOnBounds(true);
-        backImageView2.setPreserveRatio(true);
-        backImageView2.setImage(new Image(getClass().getResource("/assets/images/back.png").toExternalForm()));
-        backImageView2.setVisible(false);
-        borderPane0.setRight(backImageView2);
+        logoutImageView.setFitHeight(106.0);
+        logoutImageView.setFitWidth(120.0);
+        logoutImageView.setPickOnBounds(true);
+        logoutImageView.setPreserveRatio(true);
+        logoutImageView.setImage(new Image(getClass().getResource("/assets/images/logout.png").toExternalForm()));
+        logoutImageView.setVisible(true);
+        headerBorderPane.setMargin(logoutImageView, new Insets(30.0, 30.0, 0.0, 0.0));
+        headerBorderPane.setRight(logoutImageView);
 
         dropShadow.setColor(Color.rgb(140, 140, 140));
         dropShadow.setHeight(1.0);
@@ -274,12 +260,12 @@ public class ProfileBase extends ScrollPane {
 
         BorderPane.setMargin(profileVBox, new Insets(0.0, 0.0, 0.0, 60.0));
         borderPane.setCenter(profileVBox);
-        setContent(borderPane);
 
-        vBox.getChildren().add(profileCircle);
-        hBox.getChildren().add(label);
-        hBox.getChildren().add(scoreLabel);
-        vBox.getChildren().add(hBox);
+        profilePicVBox.getChildren().add(profileCircle);
+        scoreHBox.getChildren().add(label);
+        scoreHBox.getChildren().add(scoreLabel);
+        profilePicVBox.getChildren().add(scoreHBox);
+
         infoHBox.getChildren().add(infoLabel);
         infoHBox.getChildren().add(editInfoButton);
         profileVBox.getChildren().add(infoHBox);
@@ -292,13 +278,12 @@ public class ProfileBase extends ScrollPane {
 
         if (gamesNames != null && gamesNames.length > 0) {
             profileVBox.getChildren().add(savedGamesLabel);
-            for (int i = 0; i < gamesNames.length; i++) {
+            for (i = 0; i < gamesNames.length; i++) {
                 HBox hbox = new HBox();
 
                 hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 hbox.setPrefHeight(100.0);
                 hbox.setPrefWidth(200.0);
-                gameHBox.add(hbox);
 
                 Label glabel = new Label();
 
@@ -319,22 +304,22 @@ public class ProfileBase extends ScrollPane {
                 imageView.setPreserveRatio(true);
                 imageView.setImage(new Image(getClass().getResource("/assets/images/play.png").toExternalForm()));
 
-                gameImage.add(imageView);
+                String gameName = gamesNames[i];
 
-                gameImage.get(i).setOnMouseClicked((MouseEvent e) -> {
+                GameModel recordedGame = PlayerRepository.readGame(playerr.getUsername(), gameName);
 
-                    GameModel recordedGame = PlayerRepository.readGame(playerr.getUsername(), gamesNames[0]);
-                    System.err.println("Game: " + recordedGame);
-                    System.err.println("xPlayer: " + recordedGame.getxPlayer());
-                    System.err.println("oPlayer: " + recordedGame.getoPlayer());
-                    System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
-                    GameBase pane = new GameBase(stage, Level.ONLINERECORD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
+                imageView.setOnMouseClicked((MouseEvent e) -> {
+                    System.out.println("Game: " + recordedGame);
+                    System.out.println("xPlayer: " + recordedGame.getxPlayer());
+                    System.out.println("oPlayer: " + recordedGame.getoPlayer());
+
+                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
 
                 });
 
-                VBox.setMargin(gameHBox.get(i), new Insets(10.0, 0.0, 10.0, 60.0));
+                VBox.setMargin(hbox, new Insets(10.0, 0.0, 10.0, 60.0));
 
                 Line gLine = new Line();
                 gLine.setEndX(1027.2928466796875);
@@ -342,13 +327,14 @@ public class ProfileBase extends ScrollPane {
                 gLine.setStartX(2154.585693359375);
                 gLine.setStartY(70.58578491210938);
 
+                hbox.getChildren().add(glabel);
+                hbox.getChildren().add(imageView);
+                profileVBox.getChildren().add(hbox);
+                profileVBox.getChildren().add(gLine);
+
+                gameImage.add(imageView);
+                gameHBox.add(hbox);
                 gameLine.add(gLine);
-
-                gameHBox.get(i).getChildren().add(gameLabel.get(i));
-                gameHBox.get(i).getChildren().add(gameImage.get(i));
-                profileVBox.getChildren().add(gameHBox.get(i));
-                profileVBox.getChildren().add(gameLine.get(i));
-
             }
         }
 
@@ -361,15 +347,34 @@ public class ProfileBase extends ScrollPane {
 
         });
 
+        logoutImageView.setOnMousePressed(event -> {
+
+            ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
+
+            if (result != null) {
+                if (result == ButtonType.OK) {
+                    userName = player.getUsername();
+                    DualModeBase.network.logout(userName);
+//                    System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
+                    DualModeBase.network.closeConnection();
+                    Parent pane = new DualModeBase(stage);
+                    stage.getScene().setRoot(pane);
+                } else if (result == ButtonType.CANCEL) {
+                    event.consume();
+                }
+            }
+
+        });
+
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(borderPane);
         BoxBlur blur = new BoxBlur(3, 3, 3);
         JFXDialog dialog = Dialogs.createBlurSimpleDialog("Password length must be more than 8", stackpane, "-fx-background-color: rgba(255,255,255,1); -fx-background-radius: 10 10 10 10 ;");
+        setContent(stackpane);
 
         dialog.setOnDialogClosed((event) -> {
             borderPane.setEffect(null);
         });
-        setContent(stackpane);
 
         editInfoButton.setOnAction(e -> {
 
@@ -396,14 +401,19 @@ public class ProfileBase extends ScrollPane {
 
         });
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                userName = player.getUsername();
-                DualModeBase.network.logout(userName);
-                System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
-                DualModeBase.network.closeConnection();
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            ButtonType result = Dialogs.showAlertDialogWithTwoButton(Alert.AlertType.CONFIRMATION, "CONFIRMATION", "Are you sure to logout", "");
+
+            if (result != null) {
+                if (result == ButtonType.OK) {
+                    userName = player.getUsername();
+                    DualModeBase.network.logout(userName);
+                    DualModeBase.network.closeConnection();
+                } else if (result == ButtonType.CANCEL) {
+                    event.consume();
+                }
             }
+
         });
 
     }

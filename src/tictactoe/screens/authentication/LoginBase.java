@@ -337,25 +337,35 @@ public class LoginBase extends BorderPane {
                     "Insert your Passowrd First");
 
         } else {
-            navigateUser(userName, password, stage);
+            Player player = DualModeBase.network.login(userNameTextField.getText(), passwordField.getText());
+            if (player != null) {
+                System.out.println("loginBase done");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                userNameTextField.setText("");
+                passwordField.setText("");
+
+            }
+//            navigateUser(userName, password, stage);
         }
     }
 
-    private void navigateUser(String userName, String password, Stage stage) {
-        Player player = DualModeBase.network.login(userName, password);
-        if (player != null) {
-            System.out.println("loginBase done");
-            Parent pane = new OnlineListBase(stage, player);
-            stage.getScene().setRoot(pane);
-        } else {
-            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
-                    "Error",
-                    "Login Error",
-                    "UserName or Password are incorrect check you UserName and Password");
-            userNameTextField.setText("");
-            passwordField.setText("");
-
-        }
-    }
+//    private void navigateUser(String userName, String password, Stage stage) {
+//        Player player = DualModeBase.network.login(userName, password);
+//        if (player != null) {
+//            System.out.println("loginBase done");
+//            Parent pane = new OnlineListBase(stage, player);
+//            stage.getScene().setRoot(pane);
+//        } else {
+//            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
+//                    "Error",
+//                    "Login Error",
+//                    "UserName or Password are incorrect check you UserName and Password");
+//            userNameTextField.setText("");
+//            passwordField.setText("");
+//
+//        }
+//    }
 
 }
