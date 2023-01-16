@@ -347,24 +347,19 @@ public class LoginBase extends BorderPane {
                 passwordField.setText("");
 
             }
-            navigateUser(userName, password, stage);
-        }
-    }
+            if (player != null) {
+                System.out.println("loginBase done");
+                Parent pane = new OnlineListBase(stage, player);
+                stage.getScene().setRoot(pane);
+            } else {
+                Dialogs.showAlertDialog(Alert.AlertType.ERROR,
+                        "Error",
+                        "Login Error",
+                        "UserName or Password are incorrect check you UserName and Password");
+                userNameTextField.setText("");
+                passwordField.setText("");
 
-    private void navigateUser(String userName, String password, Stage stage) {
-        Player player = DualModeBase.network.login(userName, password);
-        if (player != null) {
-            System.out.println("loginBase done");
-            Parent pane = new OnlineListBase(stage, player);
-            stage.getScene().setRoot(pane);
-        } else {
-            Dialogs.showAlertDialog(Alert.AlertType.ERROR,
-                    "Error",
-                    "Login Error",
-                    "UserName or Password are incorrect check you UserName and Password");
-            userNameTextField.setText("");
-            passwordField.setText("");
-
+            }
         }
     }
 

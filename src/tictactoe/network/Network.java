@@ -387,7 +387,7 @@ public class Network implements Runnable {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (messageReceived.getPlayers().size() > 0 && messageReceived.getPlayers().get(0).getUsername() != null) {
+        if (messageReceived.getPlayers().size() > 1 && messageReceived.getPlayers().get(0).getUsername() != null) {
 
             List<Player> p = messageReceived.getPlayers();
             messageReceived.setStatus("nothing");
