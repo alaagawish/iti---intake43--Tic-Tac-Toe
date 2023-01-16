@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -394,7 +395,7 @@ public class Network implements Runnable {
             return p;
 
         } else {
-            return null;
+            return new ArrayList<Player>();
         }
     }
 
