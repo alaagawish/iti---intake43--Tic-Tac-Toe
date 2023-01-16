@@ -131,11 +131,8 @@ public class OfflineGameRecordsBase2 extends ScrollPane {
                 gameImage.get(i).setOnMouseClicked((MouseEvent e) -> {
 
                     GameModel recordedGame = PlayerRepository.readGame(Constants.RECORDEDGAMEPATH_LOCAL, gameNames[0]);
-//                    System.err.println("Game: " + recordedGame);
-//                    System.err.println("xPlayer: " + recordedGame.getxPlayer());
-//                    System.err.println("oPlayer: " + recordedGame.getoPlayer());
-//                    System.err.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
-                    GameBase pane = new GameBase(stage, Level.HARD, recordedGame.getxPlayer(), recordedGame.getoPlayer(),' ');
+                    System.out.println("Move 0: " + recordedGame.getMovesList().get(0).getColumn());
+                    GameBase pane = new GameBase(stage, Level.LOCALRECORD, recordedGame.getxPlayer(), recordedGame.getoPlayer(), ' ');
                     stage.getScene().setRoot(pane);
                     pane.displayRecord(recordedGame);
 
