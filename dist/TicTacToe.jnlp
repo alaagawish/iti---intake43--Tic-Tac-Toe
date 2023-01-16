@@ -9,9 +9,13 @@
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <jar href="TicTacToe.jar" size="4707938" download="eager" />
 =======
     <jar href="TicTacToe.jar" size="4712548" download="eager" />
+>>>>>>> Master0
+=======
+    <jar href="TicTacToe.jar" size="4714337" download="eager" />
 >>>>>>> Master0
     <jar href="lib\gson-2.2.4.jar" size="190418" download="eager" />
     <jar href="lib\jfoenix-8.0.2.jar" size="2442326" download="eager" />
