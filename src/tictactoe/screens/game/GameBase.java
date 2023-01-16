@@ -532,6 +532,8 @@ public class GameBase extends AnchorPane implements Runnable {
         });
         if (level == Level.ONLINE) {
             th.start();
+        } else if (level == Level.LOCALRECORD || level == Level.ONLINERECORD) {
+            disableButtons();
         }
     }
 
@@ -548,6 +550,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 if (moves.size() > 0) {
 
                     m = moves.get(moves.size() - 1);
+                    System.out.println("before recordGameSteps" + m);
                     recordGameSteps(m.getRow(), m.getColumn(), m.getSymbol());
                     board[m.getRow()][m.getColumn()] = m.getSymbol();
                 }
@@ -575,6 +578,7 @@ public class GameBase extends AnchorPane implements Runnable {
 
         int row = moves.get(moves.size() - 1).getRow();
         int col = moves.get(moves.size() - 1).getColumn();
+        System.out.println("row:" + row + "col:" + col);
         recordGameSteps(row, col, board[row][col]);
         DualModeBase.network.sendMove(firstPlayer, secondPlayer, moves);
 
@@ -591,10 +595,17 @@ public class GameBase extends AnchorPane implements Runnable {
             setNames(firstPlayerNameText, secondPlayerNameText);
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
             stageVideo.getScene().setRoot(pane);
+            if (recordFlag) {
+                System.out.println("winnero2");
+
+                gameManager.saveGame();
+            }
             th.stop();
             gameManager.printArray();
             DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
             if (recordFlag) {
+                System.out.println("findwinner2");
+
                 gameManager.saveGame();
             }
         } else if (winner == -2) {
@@ -604,9 +615,16 @@ public class GameBase extends AnchorPane implements Runnable {
             setNames(firstPlayerNameText, secondPlayerNameText);
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
             stageVideo.getScene().setRoot(pane);
+            if (recordFlag) {
+                System.out.println("winnero2");
+
+                gameManager.saveGame();
+            }
             th.stop();
             gameManager.printArray();
             if (recordFlag) {
+                System.out.println("findwinner-2");
+
                 gameManager.saveGame();
             }
         } else if (winner == 0) {
@@ -616,9 +634,16 @@ public class GameBase extends AnchorPane implements Runnable {
             setNames(firstPlayerNameText, secondPlayerNameText);
             pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
             stageVideo.getScene().setRoot(pane);
+            if (recordFlag) {
+                System.out.println("winnero2");
+
+                gameManager.saveGame();
+            }
             th.stop();
             gameManager.printArray();
             if (recordFlag) {
+                System.out.println("findwinner0");
+
                 gameManager.saveGame();
             }
         }
@@ -637,10 +662,16 @@ public class GameBase extends AnchorPane implements Runnable {
                 setNames(firstPlayerNameText, secondPlayerNameText);
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
+                if (recordFlag) {
+                    System.out.println("winnero2");
+
+                    gameManager.saveGame();
+                }
                 th.stop();
                 gameManager.printArray();
                 DualModeBase.network.updateScore(secondPlayer.getUsername(), secondPlayer.getScore() + 5);
                 if (recordFlag) {
+                    System.out.println("winnero-2");
                     gameManager.saveGame();
                 }
                 break;
@@ -651,9 +682,16 @@ public class GameBase extends AnchorPane implements Runnable {
                 setNames(firstPlayerNameText, secondPlayerNameText);
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
+                if (recordFlag) {
+                    System.out.println("winnero2");
+
+                    gameManager.saveGame();
+                }
                 th.stop();
                 gameManager.printArray();
                 if (recordFlag) {
+                    System.out.println("winnero2");
+
                     gameManager.saveGame();
                 }
                 break;
@@ -664,9 +702,16 @@ public class GameBase extends AnchorPane implements Runnable {
                 setNames(firstPlayerNameText, secondPlayerNameText);
                 pane = new winnerFXMLBase(stageVideo, gameLevel, firstPlayer, secondPlayer);
                 stageVideo.getScene().setRoot(pane);
+                if (recordFlag) {
+                    System.out.println("winnero2");
+
+                    gameManager.saveGame();
+                }
                 th.stop();
                 gameManager.printArray();
                 if (recordFlag) {
+                    System.out.println("winnero0");
+
                     gameManager.saveGame();
                 }
                 break;
@@ -759,6 +804,7 @@ public class GameBase extends AnchorPane implements Runnable {
     }
 
     private void recordGameSteps(int i, int j, char symbol) {
+        System.out.println("recordGameSteps" + i + " " + j + " " + symbol);
         if (gameManager.isRecorded()) {
             gameManager.addMove(i, j, symbol);
         }
@@ -786,6 +832,8 @@ public class GameBase extends AnchorPane implements Runnable {
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
+                    System.out.println("flipturn 2");
+
                     gameManager.saveGame();
                 }
                 break;
@@ -798,6 +846,8 @@ public class GameBase extends AnchorPane implements Runnable {
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
+                    System.out.println("flipturn -2");
+
                     gameManager.saveGame();
                 }
                 break;
@@ -810,6 +860,8 @@ public class GameBase extends AnchorPane implements Runnable {
                 stageVideo.getScene().setRoot(pane);
                 gameManager.printArray();
                 if (recordFlag) {
+                    System.out.println("flipturn 0");
+
                     gameManager.saveGame();
                 }
                 break;
