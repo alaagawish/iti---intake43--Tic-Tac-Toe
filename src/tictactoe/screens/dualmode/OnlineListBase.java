@@ -64,9 +64,9 @@ public class OnlineListBase extends ScrollPane implements Runnable {
         savedPlayer = player;
 
         players = DualModeBase.network.getOnlineList();
-        playerNumbers = players.size();
 
         if (players != null) {
+            playerNumbers = players.size();
             System.out.println("Players:" + players);
         }
 

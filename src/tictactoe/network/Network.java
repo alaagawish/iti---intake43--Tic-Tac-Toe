@@ -391,11 +391,11 @@ public class Network implements Runnable {
 
             List<Player> p = messageReceived.getPlayers();
             messageReceived.setStatus("nothing");
-            messageReceived = null;
+//            messageReceived = null;
             return p;
 
         } else {
-            return new ArrayList<Player>();
+            return null;
         }
     }
 
