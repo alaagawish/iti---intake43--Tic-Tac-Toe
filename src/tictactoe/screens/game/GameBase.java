@@ -30,7 +30,7 @@ import tictactoe.screens.profile.ProfileBase;
 import tictactoe.screens.singlemode.LevelsBase;
 
 public class GameBase extends AnchorPane implements Runnable {
-
+    
     protected final Circle firstPlayerCircle;
     protected final Circle secondPlayerCircle;
     public Button button00;
@@ -63,7 +63,7 @@ public class GameBase extends AnchorPane implements Runnable {
     protected Player firstPlayer, secondPlayer;
     Move m;
     public boolean updateFlag = true;
-
+    
     public GameBase(Stage stage, Level level, Player playerOne, Player playerTwo, char playerSymbol) {
         this.playerSymbol = playerSymbol;
         thread = new Thread(this);
@@ -98,21 +98,21 @@ public class GameBase extends AnchorPane implements Runnable {
         setPrefHeight(800.0);
         setPrefWidth(1280.0);
         setStyle(CustomStyles.GRADIENTBACKGROUND);
-
+        
         firstPlayerCircle.setFill(javafx.scene.paint.Color.WHITE);
         firstPlayerCircle.setLayoutX(134.0);
         firstPlayerCircle.setLayoutY(135.0);
         firstPlayerCircle.setRadius(60.0);
         firstPlayerCircle.setStroke(javafx.scene.paint.Color.YELLOW);
         firstPlayerCircle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-
+        
         secondPlayerCircle.setFill(javafx.scene.paint.Color.WHITE);
         secondPlayerCircle.setLayoutX(1146.0);
         secondPlayerCircle.setLayoutY(135.0);
         secondPlayerCircle.setRadius(60.0);
         secondPlayerCircle.setStroke(javafx.scene.paint.Color.AQUAMARINE);
         secondPlayerCircle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-
+        
         button00.setAlignment(javafx.geometry.Pos.CENTER);
         button00.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         button00.setId("button00");
@@ -130,7 +130,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button00.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button00.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
         button00.setStyle("-fx-background-radius: 25; -fx-effect: dropshadow(one-pass-box ,#BFBFC3,10,0.3,-5,5); -fx-background-color: #EAE9E9;");
-
+        
         button01.setId("button01");
         button01.setLayoutX(528.0);
         button01.setLayoutY(182.0);
@@ -146,7 +146,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button01.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button01.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button01.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
-
+        
         button02.setId("button02");
         button02.setLayoutX(793.0);
         button02.setLayoutY(182.0);
@@ -162,7 +162,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button02.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button02.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button02.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
-
+        
         button10.setId("button10");
         button10.setLayoutX(263.0);
         button10.setLayoutY(381.0);
@@ -178,7 +178,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button10.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button10.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button10.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
-
+        
         button11.setId("button11");
         button11.setLayoutX(528.0);
         button11.setLayoutY(381.0);
@@ -194,7 +194,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button11.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button11.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button11.setPadding(new Insets(-10.0, 0.0, 15.0, 0.0));
-
+        
         button12.setId("button12");
         button12.setLayoutX(793.0);
         button12.setLayoutY(381.0);
@@ -210,7 +210,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button12.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button12.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button12.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
-
+        
         button20.setId("button20");
         button20.setLayoutX(263.0);
         button20.setLayoutY(580.0);
@@ -226,7 +226,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button20.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button20.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button20.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
-
+        
         button21.setId("button21");
         button21.setLayoutX(528.0);
         button21.setLayoutY(580.0);
@@ -242,7 +242,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button21.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button21.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button21.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
-
+        
         button22.setId("button22");
         button22.setLayoutX(793.0);
         button22.setLayoutY(580.0);
@@ -258,7 +258,7 @@ public class GameBase extends AnchorPane implements Runnable {
         button22.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         button22.setFont(new Font(Constants.COMICFONTBOLD, 130.0));
         button22.setPadding(new Insets(-10.0, 0.0, 0.0, 0.0));
-
+        
         addButtonsToBoard();
         tacText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
         tacText.setId("tacText");
@@ -269,7 +269,7 @@ public class GameBase extends AnchorPane implements Runnable {
         tacText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         tacText.setText("Tac");
         tacText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
-
+        
         toeText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         toeText.setId("toeText");
         toeText.setLayoutX(685.0);
@@ -279,7 +279,7 @@ public class GameBase extends AnchorPane implements Runnable {
         toeText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         toeText.setText("Toe");
         toeText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
-
+        
         ticText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         ticText.setId("ticText");
         ticText.setLayoutX(373.0);
@@ -289,7 +289,7 @@ public class GameBase extends AnchorPane implements Runnable {
         ticText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         ticText.setText("Tic");
         ticText.setFont(new Font(Constants.COMICFONTBOLD, 96.0));
-
+        
         recordButton.setId("recordButton");
         recordButton.setLayoutX(1060.0);
         recordButton.setLayoutY(674.0);
@@ -298,9 +298,9 @@ public class GameBase extends AnchorPane implements Runnable {
         recordButton.setText("Record");
         recordButton.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         recordButton.setFont(new Font(Constants.COMICFONTBOLD, 35.0));
-
+        
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
-
+        
         exitButton.setId("exitButton");
         exitButton.setLayoutX(65.0);
         exitButton.setLayoutY(674.0);
@@ -309,7 +309,7 @@ public class GameBase extends AnchorPane implements Runnable {
         exitButton.setText("Exit");
         exitButton.setTextFill(javafx.scene.paint.Color.valueOf("#3dc0c2"));
         exitButton.setFont(new Font("Comic Sans MS Bold", 35.0));
-
+        
         firstPlayerNameText.setFill(javafx.scene.paint.Color.valueOf("#ffde59"));
         firstPlayerNameText.setId("firstPlayerNameText");
         firstPlayerNameText.setLayoutX(60.0);
@@ -319,7 +319,7 @@ public class GameBase extends AnchorPane implements Runnable {
         firstPlayerNameText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         firstPlayerNameText.setText("Alaa");
         firstPlayerNameText.setFont(new Font(Constants.COMICFONTBOLD, 60.0));
-
+        
         firstPlayerSignText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.YELLOW));
         firstPlayerSignText.setId("firstPlayerSignText");
         firstPlayerSignText.setLayoutX(110.0);
@@ -329,7 +329,7 @@ public class GameBase extends AnchorPane implements Runnable {
         firstPlayerSignText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         firstPlayerSignText.setText(Constants.X + "");
         firstPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 60.0));
-
+        
         secondPlayerNameText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         secondPlayerNameText.setId("secondPlayerNameText");
         secondPlayerNameText.setLayoutX(1076.0);
@@ -339,7 +339,7 @@ public class GameBase extends AnchorPane implements Runnable {
         secondPlayerNameText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         secondPlayerNameText.setText("Alaa");
         secondPlayerNameText.setFont(new Font(Constants.COMICFONTBOLD, 70.0));
-
+        
         secondPlayerSignText.setFill(javafx.scene.paint.Color.valueOf(CustomStyles.BLUE));
         secondPlayerSignText.setId("secondPlayerSignText");
         secondPlayerSignText.setLayoutX(1076.0);
@@ -349,7 +349,7 @@ public class GameBase extends AnchorPane implements Runnable {
         secondPlayerSignText.setStyle(CustomStyles.DRPDOWNSHADOW_TEXT);
         secondPlayerSignText.setText(Constants.O + "");
         secondPlayerSignText.setFont(new Font(Constants.COMICFONTBOLD, 70.0));
-
+        
         getChildren().add(firstPlayerCircle);
         getChildren().add(secondPlayerCircle);
         getChildren().add(button00);
@@ -370,10 +370,10 @@ public class GameBase extends AnchorPane implements Runnable {
         getChildren().add(secondPlayerNameText);
         getChildren().add(secondPlayerSignText);
         getChildren().add(exitButton);
-
+        
         firstPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
         secondPlayerCircle.setFill(new ImagePattern(new Image(getClass().getResource("/assets/images/profilePicture.png").toExternalForm())));
-
+        
         firstPlayerNameText.setText(playerOne.getUsername());
         secondPlayerNameText.setText(playerTwo.getUsername());
         if (level == Level.ONLINE) {
@@ -395,7 +395,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 handleButton(button00, 0, 0, level);
             }
         });
-
+        
         button01.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button01, 0, 1, Level.ONLINE);
@@ -403,7 +403,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 handleButton(button01, 0, 1, level);
             }
         });
-
+        
         button02.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button02, 0, 2, Level.ONLINE);
@@ -411,7 +411,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 handleButton(button02, 0, 2, level);
             }
         });
-
+        
         button10.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button10, 1, 0, Level.ONLINE);
@@ -420,15 +420,15 @@ public class GameBase extends AnchorPane implements Runnable {
             }
         });
         button11.setOnAction(e -> {
-
+            
             if (level == Level.ONLINE) {
                 handleButtonOnline(button11, 1, 1, Level.ONLINE);
             } else {
-
+                
                 handleButton(button11, 1, 1, level);
             }
         });
-
+        
         button12.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button12, 1, 2, Level.ONLINE);
@@ -436,7 +436,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 handleButton(button12, 1, 2, level);
             }
         });
-
+        
         button20.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button20, 2, 0, Level.ONLINE);
@@ -444,7 +444,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 handleButton(button20, 2, 0, level);
             }
         });
-
+        
         button21.setOnAction(e -> {
             if (level == Level.ONLINE) {
                 handleButtonOnline(button21, 2, 1, Level.ONLINE);
@@ -467,9 +467,9 @@ public class GameBase extends AnchorPane implements Runnable {
             recordButton.setStyle(CustomStyles.RECORDBUTTONSTYLE);
             recordButton.setText("Record");
             recordButton.setTextFill(javafx.scene.paint.Color.valueOf(CustomStyles.WHITE));
-
+            
         });
-
+        
         exitButton.setOnAction(e -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -495,7 +495,7 @@ public class GameBase extends AnchorPane implements Runnable {
                     stage.getScene().setRoot(pane);
                 }
             });
-
+            
         });
         th = new Thread(new Runnable() {
             @Override
@@ -524,11 +524,11 @@ public class GameBase extends AnchorPane implements Runnable {
                     } else if (playerSymbol == Constants.O) {
                         findWinnerO();
                     }
-
+                    
                 }
-
+                
             }
-
+            
         });
         if (level == Level.ONLINE) {
             th.start();
@@ -536,19 +536,19 @@ public class GameBase extends AnchorPane implements Runnable {
             disableButtons();
         }
     }
-
+    
     private void updateBoard() {
         Platform.setImplicitExit(false);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
+                
                 for (int i = 0; i < moves.size(); i++) {
                     computerMove(moves.get(i));
                 }
-
+                
                 if (moves.size() > 0) {
-
+                    
                     m = moves.get(moves.size() - 1);
                     System.out.println("before recordGameSteps" + m);
                     recordGameSteps(m.getRow(), m.getColumn(), m.getSymbol());
@@ -559,11 +559,11 @@ public class GameBase extends AnchorPane implements Runnable {
                 } else if (playerSymbol == Constants.O) {
                     findWinnerO();
                 }
-
+                
             }
         });
     }
-
+    
     public void handleButtonOnline(Button button, int i, int j, Level level) {
         updateFlag = true;
         if (playerSymbol == Constants.X) {
@@ -573,21 +573,21 @@ public class GameBase extends AnchorPane implements Runnable {
         }
         moves.add(new Move(i, j, playerSymbol));
         board[i][j] = playerSymbol;
-
+        
         computerMove(moves.get(moves.size() - 1));
-
+        
         int row = moves.get(moves.size() - 1).getRow();
         int col = moves.get(moves.size() - 1).getColumn();
         System.out.println("row:" + row + "col:" + col);
         recordGameSteps(row, col, board[row][col]);
         DualModeBase.network.sendMove(firstPlayer, secondPlayer, moves);
-
+        
     }
-
+    
     public synchronized void findWinner() {
         Parent pane;
         int winner = GameManager.checkWinner();
-
+        
         if (winner == 2) {
             disableButtons();
             winnerFXMLBase.video = "/assets/images/losser.mp4";
@@ -597,7 +597,7 @@ public class GameBase extends AnchorPane implements Runnable {
             stageVideo.getScene().setRoot(pane);
             if (recordFlag) {
                 System.out.println("winnero2");
-
+                
                 gameManager.saveGame();
             }
             th.stop();
@@ -605,7 +605,7 @@ public class GameBase extends AnchorPane implements Runnable {
             DualModeBase.network.updateScore(firstPlayer.getUsername(), firstPlayer.getScore() + 5);
             if (recordFlag) {
                 System.out.println("findwinner2");
-
+                
                 gameManager.saveGame();
             }
         } else if (winner == -2) {
@@ -617,14 +617,14 @@ public class GameBase extends AnchorPane implements Runnable {
             stageVideo.getScene().setRoot(pane);
             if (recordFlag) {
                 System.out.println("winnero2");
-
+                
                 gameManager.saveGame();
             }
             th.stop();
             gameManager.printArray();
             if (recordFlag) {
                 System.out.println("findwinner-2");
-
+                
                 gameManager.saveGame();
             }
         } else if (winner == 0) {
@@ -636,24 +636,24 @@ public class GameBase extends AnchorPane implements Runnable {
             stageVideo.getScene().setRoot(pane);
             if (recordFlag) {
                 System.out.println("winnero2");
-
+                
                 gameManager.saveGame();
             }
             th.stop();
             gameManager.printArray();
             if (recordFlag) {
                 System.out.println("findwinner0");
-
+                
                 gameManager.saveGame();
             }
         }
-
+        
     }
-
+    
     public synchronized void findWinnerO() {
         Parent pane;
         int winner = GameManager.checkWinner();
-
+        
         switch (winner) {
             case -2:
                 disableButtons();
@@ -664,7 +664,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 stageVideo.getScene().setRoot(pane);
                 if (recordFlag) {
                     System.out.println("winnero2");
-
+                    
                     gameManager.saveGame();
                 }
                 th.stop();
@@ -684,14 +684,14 @@ public class GameBase extends AnchorPane implements Runnable {
                 stageVideo.getScene().setRoot(pane);
                 if (recordFlag) {
                     System.out.println("winnero2");
-
+                    
                     gameManager.saveGame();
                 }
                 th.stop();
                 gameManager.printArray();
                 if (recordFlag) {
                     System.out.println("winnero2");
-
+                    
                     gameManager.saveGame();
                 }
                 break;
@@ -704,14 +704,14 @@ public class GameBase extends AnchorPane implements Runnable {
                 stageVideo.getScene().setRoot(pane);
                 if (recordFlag) {
                     System.out.println("winnero2");
-
+                    
                     gameManager.saveGame();
                 }
                 th.stop();
                 gameManager.printArray();
                 if (recordFlag) {
                     System.out.println("winnero0");
-
+                    
                     gameManager.saveGame();
                 }
                 break;
@@ -719,7 +719,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 break;
         }
     }
-
+    
     public void switchButtons() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -747,17 +747,18 @@ public class GameBase extends AnchorPane implements Runnable {
             }
         }
     }
-
+    
     public synchronized void displayRecord(GameModel recordedGamee) {
         this.recordedGamee = recordedGamee;
+        recordButton.setVisible(false);
         thread.start();
     }
-
+    
     @Override
     public void run() {
         System.out.println("move" + recordedGamee.getMovesList());
         System.out.println("i=" + "" + recordedGamee.getMovesList());
-
+        
         for (int i = 0; i < recordedGamee.getMovesList().size(); i++) {
             Move move = recordedGamee.getMovesList().get(i);
             try {
@@ -767,27 +768,27 @@ public class GameBase extends AnchorPane implements Runnable {
                         computerMove(move);
                     }
                 });
-
+                
                 thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(GameBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
         }
         thread.stop();
-
+        
     }
-
+    
     private void handleButton(Button button, int i, int j, Level level) {
-
+        
         button.setTextFill(javafx.scene.paint.Color.valueOf(GameManager.getTurn() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
         button.setTextFill(javafx.scene.paint.Color.valueOf(
                 GameManager.getTurn() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+        
         button.setText(GameManager.getTurn() + "");
         button.setDisable(true);
         board[i][j] = GameManager.getTurn();
         recordGameSteps(i, j, board[i][j]);
-
+        
         flipTurn();
         if (gameManager.checkWinner() == 1) {
             if (level == Level.Easy || level == Level.MEDIUM || level == Level.HARD) {
@@ -800,26 +801,26 @@ public class GameBase extends AnchorPane implements Runnable {
                 }
             }
         }
-
+        
     }
-
+    
     private void recordGameSteps(int i, int j, char symbol) {
         System.out.println("recordGameSteps" + i + " " + j + " " + symbol);
         if (gameManager.isRecorded()) {
             gameManager.addMove(i, j, symbol);
         }
     }
-
+    
     public void flipTurn() {
         recordButton.setDisable(true);
         Parent pane;
         if (GameManager.getTurn() == Constants.X) {
-
+            
             GameManager.setTurn(Constants.O);
-
+            
         } else {
             GameManager.setTurn(Constants.X);
-
+            
         }
         int winner = GameManager.checkWinner();
         switch (winner) {
@@ -833,7 +834,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 gameManager.printArray();
                 if (recordFlag) {
                     System.out.println("flipturn 2");
-
+                    
                     gameManager.saveGame();
                 }
                 break;
@@ -847,7 +848,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 gameManager.printArray();
                 if (recordFlag) {
                     System.out.println("flipturn -2");
-
+                    
                     gameManager.saveGame();
                 }
                 break;
@@ -861,7 +862,7 @@ public class GameBase extends AnchorPane implements Runnable {
                 gameManager.printArray();
                 if (recordFlag) {
                     System.out.println("flipturn 0");
-
+                    
                     gameManager.saveGame();
                 }
                 break;
@@ -869,13 +870,13 @@ public class GameBase extends AnchorPane implements Runnable {
                 break;
         }
     }
-
+    
     private void setNames(Text firstPlayerName, Text secondPlayerName) {
         firstPlayer.setUsername(firstPlayerName.getText());
         secondPlayer.setUsername(secondPlayerName.getText());
-
+        
     }
-
+    
     private void addButtonsToBoard() {
         board = new char[3][3];
         for (int i = 0; i < 3; i++) {
@@ -884,7 +885,7 @@ public class GameBase extends AnchorPane implements Runnable {
             }
         }
     }
-
+    
     public void disableButtons() {
         if (!recordFlag) {
             recordButton.setDisable(true);
@@ -899,51 +900,51 @@ public class GameBase extends AnchorPane implements Runnable {
         button21.setDisable(true);
         button22.setDisable(true);
     }
-
+    
     public void computerMove(Move move) {
-
+        
         if (move.getRow() == 0 && move.getColumn() == 0) {
             button00.setText(move.getSymbol() + "");
             button00.setDisable(true);
             button00.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 0 && move.getColumn() == 1) {
             button01.setText(move.getSymbol() + "");
             button01.setDisable(true);
             button01.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 0 && move.getColumn() == 2) {
             button02.setText(move.getSymbol() + "");
             button02.setDisable(true);
             button02.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 1 && move.getColumn() == 0) {
             button10.setText(move.getSymbol() + "");
             button10.setDisable(true);
             button10.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 1 && move.getColumn() == 1) {
             button11.setText(move.getSymbol() + "");
             button11.setDisable(true);
             button11.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 1 && move.getColumn() == 2) {
             button12.setText(move.getSymbol() + "");
             button12.setDisable(true);
             button12.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 2 && move.getColumn() == 0) {
             button20.setText(move.getSymbol() + "");
             button20.setDisable(true);
             button20.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         } else if (move.getRow() == 2 && move.getColumn() == 1) {
             button21.setText(move.getSymbol() + "");
             button21.setDisable(true);
@@ -954,8 +955,8 @@ public class GameBase extends AnchorPane implements Runnable {
             button22.setDisable(true);
             button22.setTextFill(javafx.scene.paint.Color.valueOf(
                     move.getSymbol() == Constants.X ? CustomStyles.YELLOW : CustomStyles.BLUE));
-
+            
         }
     }
-
+    
 }

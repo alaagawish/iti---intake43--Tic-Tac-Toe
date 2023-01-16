@@ -235,12 +235,13 @@ public class OnlineListBase extends ScrollPane implements Runnable {
             if (result == ButtonType.OK) {
 
                 userName = player.getUsername();
-                thread.stop();
+
                 DualModeBase.network.logout(userName);
 //                System.err.println(player.getUsername() + "\t and status of player" + player.getStatus());
                 DualModeBase.network.closeConnection();
                 Parent pane = new DualModeBase(stage);
                 stage.getScene().setRoot(pane);
+                thread.stop();
 
             }
 
